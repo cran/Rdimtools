@@ -15,7 +15,7 @@ do.mvu(X, ndim = 2, type = c("proportion", 0.1), preprocess = "null",
 
 \item{type}{a vector of neighborhood graph construction. Following types are supported;
 \code{c("knn",k)}, \code{c("enn",radius)}, and \code{c("proportion",ratio)}.
-Default is \code{c("proportion",0.1)}, connecting about 10% of nearest data points
+Default is \code{c("proportion",0.1)}, connecting about 1/10 of nearest data points
 among all data points. See also \code{\link{aux.graphnbd}} for more details.}
 
 \item{preprocess}{an additional option for preprocessing the data.
@@ -36,7 +36,7 @@ to exploit semidefinite programming in performing nonlinear dimensionality reduc
 neighborhood graph constructed in the original high-dimensional space. Its unfolding generates a gram
 matrix \eqn{K} in that we can choose from either directly finding embeddings (\code{"spectral"}) or
 use again Kernel PCA technique (\code{"kpca"}) to find low-dimensional representations. Note that
-since \code{do.mvu} depends on \code{\link[Rcsdp]{csdp}}, we cannot guarantee its computational
+since \code{do.mvu} depends on \url{https://CRAN.R-project.org/package=Rcsdp}{Rcsdp}, we cannot guarantee its computational
 efficiency as we are given a large dataset.
 }
 \examples{

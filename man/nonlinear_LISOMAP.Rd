@@ -24,7 +24,7 @@ for more details.}
 
 \item{type}{a vector of neighborhood graph construction. Following types are supported;
 \code{c("knn",k)}, \code{c("enn",radius)}, and \code{c("proportion",ratio)}.
-Default is \code{c("proportion",0.1)}, connecting about 10% of nearest data points
+Default is \code{c("proportion",0.1)}, connecting about 1/10 of nearest data points
 among all data points. See also \code{\link{aux.graphnbd}} for more details.}
 
 \item{symmetric}{one of \code{"intersect"}, \code{"union"} or \code{"asymmetric"} is supported. Default is \code{"union"}. See also \code{\link{aux.graphnbd}} for more details.}

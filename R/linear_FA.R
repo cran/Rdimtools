@@ -10,8 +10,8 @@
 #' @param ndim an integer-valued number of loading variables, or target dimension.
 #' @param preprocess an additional option for preprocessing the data.
 #' Default is ``center'' and other methods of ``decorrelate'', or ``whiten''
-#' are supported. See also \code{\link{aux.preprocess}} for more details.#' @param maxiter maximum number of iterations for updating.
-#' @param maxiter maximum number of iterations.
+#' are supported. See also \code{\link{aux.preprocess}} for more details.
+#' @param maxiter maximum number of iterations for updating.
 #' @param tolerance stopping criterion in a Frobenius norm.
 #'
 #' @return a named list containing

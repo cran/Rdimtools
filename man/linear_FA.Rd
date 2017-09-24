@@ -15,9 +15,9 @@ and columns represent independent variables.}
 
 \item{preprocess}{an additional option for preprocessing the data.
 Default is ``center'' and other methods of ``decorrelate'', or ``whiten''
-are supported. See also \code{\link{aux.preprocess}} for more details.#' @param maxiter maximum number of iterations for updating.}
+are supported. See also \code{\link{aux.preprocess}} for more details.}
 
-\item{maxiter}{maximum number of iterations.}
+\item{maxiter}{maximum number of iterations for updating.}
 
 \item{tolerance}{stopping criterion in a Frobenius norm.}
 }

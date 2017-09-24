@@ -109,7 +109,7 @@ Rcpp::List aux_perplexity(arma::mat& X,const double perplexity){
   mat D(n,n);
   for (int i=0;i<n;i++){
     for (int j=(i+1);j<n;j++){
-      double dval = pow(norm(X.col(i)-X.col(j)),2);
+      double dval = std::pow(norm(X.col(i)-X.col(j)),2);
       D(i,j) = dval;
       D(j,i) = dval;
     }
@@ -145,7 +145,7 @@ Rcpp::List aux_perplexity(arma::mat& X,const double perplexity){
   // 2-4. now we have all the values - just compute it again.
   for (int i=0;i<n;i++){
     double cdenom = 0;
-    double pval2 = 2*pow(beta(i),2);
+    double pval2 = 2*std::pow(beta(i),2);
     for (int k=0;k<n;k++){
       if (k!=i){
         cdenom += exp(-D(i,k)/pval2);
@@ -463,7 +463,8 @@ Rcpp::List aux_kernelcov(arma::mat& tX, const int knumber, const double par1, co
   }
 
   // 5-4. centering of K
-  Kcenter = K - ((onesN*K)/N) - ((K*onesN)/N) + (onesN*K*onesN)/(pow(N,2));
+  double constN2 = std::pow(N,2);
+  Kcenter = K - ((onesN*K)/N) - ((K*onesN)/N) + (onesN*K*onesN)/constN2;
 
   // 5-5. return output
   return Rcpp::List::create(Rcpp::Named("K")=K,

@@ -28,10 +28,12 @@
 #'   \item \code{\link{do.cisomap}} for Conformal Isometric Feature Mapping.
 #'   \item \code{\link{do.dm}} for Diffusion Maps.
 #'   \item \code{\link{do.isomap}} for Isometric Feature Mapping.
+#'   \item \code{\link{do.keca}} for Kernel Entropy Component Analysis.
 #'   \item \code{\link{do.kpca}} for Kernel Principal Component Analysis.
 #'   \item \code{\link{do.lapeig}} for Laplacian Eigenmaps.
 #'   \item \code{\link{do.lisomap}} for Landmark Isometric Feature Mapping.
 #'   \item \code{\link{do.lle}} for Locally Linear Embedding.
+#'   \item \code{\link{do.ltsa}} for Local Tangent Space Alignment.
 #'   \item \code{\link{do.mvu}} for Maximum Variance Unfolding / Semidefinite Embedding.
 #'   \item \code{\link{do.plp}} for Piecewise Laplacian Projection.
 #'   \item \code{\link{do.sammon}} for Sammon Mapping.

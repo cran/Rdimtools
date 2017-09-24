@@ -48,16 +48,16 @@ aux.typecheck <- function(data){
 #' to have diagonal covariance terms only. \code{"whiten"} option sets the sample
 #' covariance to have all diagonal terms equal to 1, equally weighting each variable.
 #'
-#' @param data an \eqn{(n-by-p)} matrix or data frame whose rows are observations
+#' @param data an \code{(n-by-p)} matrix or data frame whose rows are observations
 #' and columns represent independent variables.
 #' @param type one of "center", "decorrelate", or "whiten". See below for more details.
 #' @return named list containing:
 #' \describe{
-#' \item{pX}{an \eqn{(n-by-p)} matrix after preprocessing in accordance with \code{type} parameter}
+#' \item{pX}{an \code{(n-by-p)} matrix after preprocessing in accordance with \code{type} parameter}
 #' \item{info}{a list containing \itemize{
 #' \item \code{type:} name of preprocessing procedure.
 #' \item \code{mean:} a mean vector of length \eqn{p}.
-#' \item \code{multiplier:} a \eqn{(p-by-p)} matrix for "decorrelate" or "whiten" or 1 for "center".}}
+#' \item \code{multiplier:} a \code{(p-by-p)} matrix for "decorrelate" or "whiten" or 1 for "center".}}
 #' }
 #' @examples
 #' ## Generate data
@@ -274,14 +274,14 @@ aux.gensamples <- function(n=496,noise=0.1,dname="swiss"){
 #' graph should be constructed. Finally, \code{symmetric} parameter controls how
 #' nearest neighborhood graph should be symmetrized.
 #'
-#' @section nearest neighbor(NN) search:
+#' @section Nearest Neighbor(NN) search:
 #' Our package supports three ways of defining nearest neighborhood. First is
 #' \emph{knn}, which finds \code{k} nearest points and flag them as neighbors.
 #' Second is \emph{enn} - epsilon nearest neighbor - that connects all the
 #' data poinst within a certain radius. Finally, \emph{proportion} flag is to
 #' connect proportion-amount of data points sequentially from the nearest to farthest.
 #'
-#' @section symmetrization:
+#' @section Symmetrization:
 #' In many graph setting, it starts from dealing with undirected graphs.
 #' NN search, however, does not necessarily guarantee if symmetric connectivity
 #' would appear or not. There are two easy options for symmetrization;
@@ -292,9 +292,9 @@ aux.gensamples <- function(n=496,noise=0.1,dname="swiss"){
 #' @param data an \code{(n-by-p)} data matrix.
 #' @param method type of distance to be used. See also \code{\link[stats]{dist}}.
 #' @param type a defining pattern of neighborhood criterion. One of \describe{
-#' \item{c("knn",k)}{knn with k a positive integer.}
-#' \item{c("enn",radius)}{enn with a positive radius.}
-#' \item{c("proportion",ratio)}{takes an \code{ratio} in (0,1) portion of edges to be connected.}
+#' \item{c("knn", k)}{knn with \code{k} a positive integer.}
+#' \item{c("enn", radius)}{enn with a positive radius.}
+#' \item{c("proportion", ratio)}{takes an \code{ratio} in (0,1) portion of edges to be connected.}
 #' }
 #' @param symmetric either ``intersect'' or ``union'' for symmetrization, or ``asymmetric''.
 #' @param pval a \code{p}-norm option for Minkowski distance.

@@ -402,4 +402,3 @@ Rcpp::List method_lleM(arma::mat& W){
   return Rcpp::List::create(Rcpp::Named("eigval")=eigval,
                             Rcpp::Named("eigvec")=eigvec);
 }
-

@@ -1,7 +1,7 @@
 .pkgenv <- new.env(parent = emptyenv())
 
 .onAttach <- function(libname, pkgname){
-  packageStartupMessage("\n * Rdimtools for dimension deduction and estimation is authored by Kisung You (University of Notre Dame), Donggun Kim (Yonsei University), and Yoon Mo Jung (Sungkyunkwan University) under License GPL 3.\n\n * We are continuously developing this package. Please feel free to make comments or bug reports to the maintainer.")
+  packageStartupMessage("\n * Rdimtools for Dimension Reduction and Estimation is authored by Kisung You (University of Notre Dame), Donggun Kim (Yonsei University), and Yoon Mo Jung (Sungkyunkwan University) under License GPL 3.\n\n * We are continuously developing this package. Please feel free to make comments or bug reports to the maintainer.")
 }
 
 # .onLoad <- function(libname, pkgname){

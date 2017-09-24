@@ -18,7 +18,7 @@ are supported. See also \code{\link{aux.preprocess}} for more details.}
 
 \item{type}{a vector of neighborhood graph construction. Following types are supported;
 \code{c("knn",k)}, \code{c("enn",radius)}, and \code{c("proportion",ratio)}.
-Default is \code{c("proportion",0.1)}, connecting about 10% of nearest data points
+Default is \code{c("proportion",0.1)}, connecting about 1/10 of nearest data points
 among all data points. See also \code{\link{aux.graphnbd}} for more details.}
 }
 \value{

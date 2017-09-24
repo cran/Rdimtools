@@ -26,9 +26,9 @@ chosen as ``auto''.}
 \value{
 a named list containing
 \describe{
-\item{Y}{an \eqn{(n-by-ndim)} matrix whose rows are embedded observations.}
+\item{Y}{an \code{(n-by-ndim)} matrix whose rows are embedded observations.}
 \item{vars}{a vector containing variances of projected data onto principal components.}
-\item{projection}{a \eqn{(p-by-ndim)} whose columns are principal components.}
+\item{projection}{a \code{(p-by-ndim)} whose columns are principal components.}
 \item{trfinfo}{a list containing information for out-of-sample prediction.}
 }
 }

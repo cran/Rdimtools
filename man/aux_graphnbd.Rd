@@ -13,9 +13,9 @@ aux.graphnbd(data, method = "euclidean", type = c("proportion", 0.1),
 \item{method}{type of distance to be used. See also \code{\link[stats]{dist}}.}
 
 \item{type}{a defining pattern of neighborhood criterion. One of \describe{
-\item{c("knn",k)}{knn with k a positive integer.}
-\item{c("enn",radius)}{enn with a positive radius.}
-\item{c("proportion",ratio)}{takes an \code{ratio} in (0,1) portion of edges to be connected.}
+\item{c("knn", k)}{knn with \code{k} a positive integer.}
+\item{c("enn", radius)}{enn with a positive radius.}
+\item{c("proportion", ratio)}{takes an \code{ratio} in (0,1) portion of edges to be connected.}
 }}
 
 \item{symmetric}{either ``intersect'' or ``union'' for symmetrization, or ``asymmetric''.}
@@ -34,7 +34,7 @@ defined from \code{\link[stats]{dist}} function. Then, \code{type} controls how 
 graph should be constructed. Finally, \code{symmetric} parameter controls how
 nearest neighborhood graph should be symmetrized.
 }
-\section{nearest neighbor(NN) search}{
+\section{Nearest Neighbor(NN) search}{
 
 Our package supports three ways of defining nearest neighborhood. First is
 \emph{knn}, which finds \code{k} nearest points and flag them as neighbors.
@@ -43,7 +43,7 @@ data poinst within a certain radius. Finally, \emph{proportion} flag is to
 connect proportion-amount of data points sequentially from the nearest to farthest.
 }
 
-\section{symmetrization}{
+\section{Symmetrization}{
 
 In many graph setting, it starts from dealing with undirected graphs.
 NN search, however, does not necessarily guarantee if symmetric connectivity
