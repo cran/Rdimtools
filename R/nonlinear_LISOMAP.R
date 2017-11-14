@@ -49,8 +49,9 @@
 #'
 #'
 #' @seealso \code{\link{do.isomap}}
-#' @references de Silva, V. and Tenenbaum, J.B. (2003) \emph{Global versus local methods in
-#' nonlinear dimensionality reduction}. Advances in Neural Information Processing Systems, Vol.15:705-712.
+#' @references
+#' \insertRef{silva_global_2003}{Rdimtools}
+#'
 #' @author Kisung You
 #' @rdname nonlinear_LISOMAP
 #' @export

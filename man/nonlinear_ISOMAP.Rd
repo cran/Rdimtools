@@ -62,8 +62,7 @@ plot(output3$Y[,1],output3$Y[,2],main="10\%+Binary")
 
 }
 \references{
-Tenenbaum, J.B., de Silva, V., and Langford, J.C. (2000) \emph{A Global
-Geometric Framework for Nonlinear Dimensionality Reduction}. Science Vol.290:2319-2323.
+\insertRef{silva_global_2003}{Rdimtools}
 }
 \author{
 Kisung You

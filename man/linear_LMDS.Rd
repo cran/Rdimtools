@@ -56,8 +56,9 @@ plot(output3$Y[,1],output3$Y[,2],main="original MDS")
 
 }
 \references{
-de Silva, V. and Tenenbaum, J.B. (2003) \emph{Global versus local methods in
-nonlinear dimensionality reduction}. Advances in Neural Information Processing Systems, Vol.15:705-712.
+\insertRef{silva_global_2002}{Rdimtools}
+
+\insertRef{lee_landmark_2009}{Rdimtools}
 }
 \seealso{
 \code{\link{do.mds}}

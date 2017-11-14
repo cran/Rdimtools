@@ -30,5 +30,10 @@ arma::vec method_lleW(arma::mat& mat_tgt, arma::vec& vec_tgt, const double regpa
 Rcpp::List method_lleWauto(arma::mat& mat_tgt, arma::vec& vec_tgt);
 // 8. LLE M
 Rcpp::List method_lleM(arma::mat& W);
+// 9. REE
+double method_ree_cost(arma::mat W, arma::mat D, arma::mat B);
+arma::mat method_ree_subgradient(arma::mat B, arma::mat W, arma::mat D);
+Rcpp::List method_ree(arma::mat& B, arma::mat& W, arma::mat& D, const double initc,
+                      const double abstol, const int maxiter);
 
 #endif

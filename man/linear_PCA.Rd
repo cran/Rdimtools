@@ -55,8 +55,7 @@ output <- do.pca(X,ndim="auto",varratio=0.98)           # perform PCA
 plot(seq_len(length(output$vars)),output$vars,type="b") # plot variances
 }
 \references{
-Pearson, Karl (1901). \emph{LIII. On lines and planes of closest fit to systems of points in space}.
-Philosophical Magazine Series 6, 2 11:559-572.
+\insertRef{pearson_liii._1901}{Rdimtools}
 }
 \author{
 Kisung You

@@ -58,12 +58,13 @@
 #'plot(output2$Y[,1],output2$Y[,2],main="Arclioptas")
 #'plot(output3$Y[,1],output3$Y[,2],main="Sparse")
 #'
-#'@references Johnson, W. and Lindenstrauss, J. (1984) \emph{Extensions of Lipschitz mappings into a Hilbert space}.
-#'Contemporary Mathematics, 26:189-206.
-#'@references Achlioptas, Dimitris (2003) \emph{Database-friendly random projections:Johnson-Lindenstrauss with binary coins}.
-#'Journal of Computer and System Sciences, 66 4:671-687.
-#'@references Li, P., Hastie, T.J., and Church, K.W. (2006) \emph{Very sparse random projections}.
-#'Proceedings of the 12th ACMS SIGKDD international conference on Knowledge discovery and data mining, 287-296.
+#'@references
+#'\insertRef{beals_extensions_1984}{Rdimtools}
+#'
+#'\insertRef{achlioptas_database-friendly_2003}{Rdimtools}
+#'
+#'\insertRef{li_very_2006}{Rdimtools}
+#'
 #'
 #' @rdname linear_RNDPROJ
 #' @export

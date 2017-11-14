@@ -39,8 +39,9 @@
 #'output <- do.pca(X,ndim="auto",varratio=0.98)           # perform PCA
 #'plot(seq_len(length(output$vars)),output$vars,type="b") # plot variances
 #' @author Kisung You
-#' @references Pearson, Karl (1901). \emph{LIII. On lines and planes of closest fit to systems of points in space}.
-#' Philosophical Magazine Series 6, 2 11:559-572.
+#' @references
+#' \insertRef{pearson_liii._1901}{Rdimtools}
+#'
 #' @rdname linear_PCA
 #' @export
 do.pca <- function(X,ndim="auto",cor=FALSE,preprocess="center",varratio=0.9){

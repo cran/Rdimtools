@@ -74,8 +74,7 @@ plot(output3$Y[,1],output3$Y[,2],main="50\%")
 
 }
 \references{
-He, Xiaofei et al. (2005) \emph{Neighborhood Preserving Embedding}. Proceedings of the 10th IEEE
-International Conference on Computer Vision, Vol.2:1208-1213.
+\insertRef{he_neighborhood_2005}{Rdimtools}
 }
 \author{
 Kisung You

@@ -45,8 +45,9 @@
 #'
 #'
 #'
-#' @references Tenenbaum, J.B., de Silva, V., and Langford, J.C. (2000) \emph{A Global
-#' Geometric Framework for Nonlinear Dimensionality Reduction}. Science Vol.290:2319-2323.
+#' @references
+#' \insertRef{silva_global_2003}{Rdimtools}
+#'
 #' @rdname nonlinear_ISOMAP
 #' @author Kisung You
 #' @export

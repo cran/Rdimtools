@@ -51,8 +51,9 @@
 #'     plot(out$Y[,1],out$Y[,2],main=pm)
 #' }
 #'
-#' @references Paulovich et al. (2011) \emph{Piecewise Laplacian-based Projection for Interactive Data Exploration and Organization}.
-#' Computer Graphics Forum, 30 3:1091-1100.
+#' @references
+#' \insertRef{paulovich_piece_2011}{Rdimtools}
+#'
 #' @author Kisung You
 #' @rdname nonlinear_PLP
 #' @export

@@ -53,8 +53,7 @@ plot(output3$Y[,1],output3$Y[,2],main="Laplacian kernel")
 
 }
 \references{
-Jenssen, R. (2009) \emph{Kernel Entropy Component Analysis}. IEEE Transactions
-on Pattern Analysis and Machine Learning, Vol.32(5):847-860.
+\insertRef{jenssen_kernel_2010}{Rdimtools}
 }
 \seealso{
 \code{\link{aux.kernelcov}}

@@ -43,8 +43,9 @@
 #'plot(output3$Y[,1],output3$Y[,2],main="Binarized C-Isomap")
 #'
 #'
-#' @references de Silva, V. and Tenenbaum, J.B. (2003) \emph{Global versus local methods in nonlinear dimensionality reduction}.
-#' Advances in Neural Information Processing Systems, Vol.15:705-712.
+#' @references
+#' \insertRef{silva_global_2003}{Rdimtools}
+#'
 #' @author Kisung You
 #' @rdname nonlinear_CISOMAP
 #' @export

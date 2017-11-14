@@ -44,9 +44,10 @@
 #'plot(output2$Y[,1],output2$Y[,2],main="25%")
 #'plot(output3$Y[,1],output3$Y[,2],main="50%")
 #'
-#' @references Zhang, Z. and Zha, H. (2004) \emph{Principal Manifolds and
-#' Nonlinear Dimension Reduction via Local Tangent Space Alignment}.
-#' SIAM Journal on Scientific Computing, Vol.26(1):313-338.
+#' @references
+#' \insertRef{zhang_linear_2007}{Rdimtools}
+#'
+#'
 #' @author Kisung You
 #' @rdname nonlinear_LTSA
 #' @export

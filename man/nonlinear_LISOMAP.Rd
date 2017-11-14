@@ -68,8 +68,7 @@ plot(output3$Y[,1],output3$Y[,2],main="50\%")
 
 }
 \references{
-de Silva, V. and Tenenbaum, J.B. (2003) \emph{Global versus local methods in
-nonlinear dimensionality reduction}. Advances in Neural Information Processing Systems, Vol.15:705-712.
+\insertRef{silva_global_2003}{Rdimtools}
 }
 \seealso{
 \code{\link{do.isomap}}

@@ -73,6 +73,12 @@ method_npe <- function(X, W) {
 }
 
 #' @keywords internal
+NULL
+
+#' @keywords internal
+NULL
+
+#' @keywords internal
 method_sne <- function(P, ndim, eta, maxiter, jitter, decay, momentum) {
     .Call('_Rdimtools_method_sne', PACKAGE = 'Rdimtools', P, ndim, eta, maxiter, jitter, decay, momentum)
 }
@@ -110,5 +116,10 @@ method_lleWauto <- function(mat_tgt, vec_tgt) {
 #' @keywords internal
 method_lleM <- function(W) {
     .Call('_Rdimtools_method_lleM', PACKAGE = 'Rdimtools', W)
+}
+
+#' @keywords internal
+method_ree <- function(B, W, D, initc, abstol, maxiter) {
+    .Call('_Rdimtools_method_ree', PACKAGE = 'Rdimtools', B, W, D, initc, abstol, maxiter)
 }
 

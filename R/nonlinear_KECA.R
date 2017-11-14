@@ -41,8 +41,9 @@
 #' plot(output3$Y[,1],output3$Y[,2],main="Laplacian kernel")
 #'
 #' @seealso \code{\link{aux.kernelcov}}
-#' @references Jenssen, R. (2009) \emph{Kernel Entropy Component Analysis}. IEEE Transactions
-#' on Pattern Analysis and Machine Learning, Vol.32(5):847-860.
+#' @references
+#' \insertRef{jenssen_kernel_2010}{Rdimtools}
+#'
 #' @author Kisung You
 #' @rdname nonlinear_KECA
 #' @export

@@ -402,3 +402,118 @@ Rcpp::List method_lleM(arma::mat& W){
   return Rcpp::List::create(Rcpp::Named("eigval")=eigval,
                             Rcpp::Named("eigvec")=eigvec);
 }
+
+
+// 9. REE : Robust Euclidean Embedding
+//' @keywords internal
+arma::mat method_ree_subgradient(arma::mat B, arma::mat W, arma::mat D){
+  const int n = B.n_cols;
+  arma::mat GB(n,n,fill::zeros);
+  arma::mat distB(n,n,fill::zeros);
+  // fill in the distB
+  for (int i=0;i<n;i++){
+    for (int j=0;j<n;j++){
+      distB(i,j) = B(i,i)+B(j,j)-B(i,j)-B(j,i);
+    }
+  }
+  // main computation
+  // off diagonals first
+  double tgt = 0.0;
+  for (int i=0;i<n;i++){
+    for (int j=0;j<n;j++){
+      if (i!=j){
+        tgt = distB(i,j);
+        if (tgt<D(i,j)){
+          GB(i,j) = W(i,j)*1.0;
+        } else {
+          GB(i,j) = W(i,j)*(-1.0);
+        }
+      }
+    }
+  }
+  // diagonals
+  for (int i=0;i<n;i++){
+    tgt = 0.0;
+    for (int k=0;k<n;k++){
+      if (distB(i,k)>D(i,k)){
+        tgt += W(i,k);
+      } else {
+        tgt -= W(i,k);
+      }
+    }
+    GB(i,i) = tgt;
+  }
+  return(GB);
+}
+
+//' @keywords internal
+double method_ree_cost(arma::mat W, arma::mat D, arma::mat B){
+  const int n = W.n_cols;
+  double score = 0.0;
+  double term1 = 0.0;
+  double term2 = 0.0;
+  for (int i=0;i<n;i++){
+    for (int j=0;j<n;j++){
+      term1 = W(i,j);
+      term2 = std::abs(D(i,j)-(B(i,i)+B(j,j)-B(i,j)-B(j,i)));
+      score += (term1*term2);
+    }
+  }
+  return(score);
+}
+
+//' @keywords internal
+// [[Rcpp::export]]
+Rcpp::List method_ree(arma::mat& B, arma::mat& W, arma::mat& D, const double initc,
+                      const double abstol, const int maxiter){
+  // 1. settings
+  const int n = B.n_cols;
+  arma::mat Bold = B;
+  arma::mat Bnew(n,n,fill::zeros);
+  arma::mat Btmp(n,n,fill::zeros);
+  arma::mat Btgt(n,n,fill::zeros);
+
+  // 2. iterate
+  double alpha  = 0.0;  // subgradient stepsize
+  double gap    = 10.0;
+  int    iter   = 1;
+  double cost   = 10000.0;
+  double cost_k = 0.0;
+  while (gap > abstol){
+    // 2-1. update
+    alpha = initc/static_cast<double>(iter);
+    Btmp  = Bold - alpha*method_ree_subgradient(Bold, W, D);
+
+    // 2-2. spectral decomposition
+    arma::vec eigval;
+    arma::mat eigvec;
+    eig_sym(eigval, eigvec, Btmp);
+
+    // 2-3. eigenvalue removal of zeros
+    for (int i=0;i<n;i++){
+      if (eigval(i)<0){
+        eigval(i)=0;
+      }
+    }
+    Bnew = eigvec*diagmat(eigval)*eigvec.t();
+
+    // 2-4. compute newer cost
+    cost_k = method_ree_cost(W,D,Bnew);
+    if (cost_k < cost){
+      cost = cost;
+      Btgt = Bnew;
+    }
+
+    // 2-5. stopping criterion and iteration update
+    iter += 1;
+    gap  = norm(Bnew-Bold,"f");
+    Bold = Bnew;
+    if (iter >= maxiter){
+      gap = abstol/10.0;
+    }
+  }
+
+  // 3. return results
+  return Rcpp::List::create(Rcpp::Named("B")=Bold,
+                            Rcpp::Named("iter")=iter);
+}

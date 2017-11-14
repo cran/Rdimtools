@@ -66,9 +66,9 @@ plot(out9$Y[,1],out9$Y[,2],main="(diff=10,time=10)")
 
 }
 \references{
-Coifman et al. (2005) \emph{Geometric diffusion as a tool for harmonic analysis and structure definition of data: Multiscale methods}. PNAS 105 21:7432-7437.
+\insertRef{nadler_diffusion_2005}{Rdimtools}
 
-Coifman, R. and Lafon, S. (2006) \emph{Diffusion Maps}. Applied and Computational Harmonic Analysis, 21 1:5-30.
+\insertRef{coifman_diffusion_2006}{Rdimtools}
 }
 \author{
 Kisung You

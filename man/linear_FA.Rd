@@ -26,8 +26,8 @@ a named list containing
 \describe{
 \item{Y}{an \code{(n-by-ndim)} matrix whose rows are embedded observations.}
 \item{trfinfo}{a list containing information for out-of-sample prediction.}
-\item{projection}{a \eqn{(p-by-ndim)} whose columns are basis for projection.}
-\item{loadings}{an \code{(p-by-ndim)} matrix whose rows are extracted loading factors.}
+\item{projection}{a \code{(p-by-ndim)} whose columns are basis for projection.}
+\item{loadings}{a \code{(p-by-ndim)} matrix whose rows are extracted loading factors.}
 \item{noise}{a length-\code{p} vector of estimated noise.}
 }
 }
@@ -55,8 +55,9 @@ plot(output1$Y[,1],output1$Y[,2],main="centered")
 plot(output2$Y[,1],output2$Y[,2],main="decorrelated")
 plot(output3$Y[,1],output3$Y[,2],main="whitened")
 
-
-
+}
+\references{
+\insertRef{spearman_general_1904}{Rdimtools}
 }
 \author{
 Kisung You

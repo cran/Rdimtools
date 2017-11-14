@@ -65,8 +65,7 @@ plot(output3$Y[,1],output3$Y[,2],main="poly")
 
 }
 \references{
-Hyvarinen, A. and Oja, E. (2000) \emph{Independent component analysis: Algorithms
-and applications}. Neural Networks, Vol.13(4-5):411-430.
+\insertRef{hyvarinen_independent_2001}{Rdimtools}
 }
 \author{
 Kisung You

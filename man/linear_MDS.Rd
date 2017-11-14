@@ -47,8 +47,7 @@ plot(output3$Y[,1],output3$Y[,2],main="whiten")
 
 }
 \references{
-Kruskal, J.B. (1964). \emph{Multidimensional scaling by optimizing goodness of fit to a nonmetric hypothesis}.
-Psychometrika, 29 1:1-27.
+\insertRef{kruskal_multidimensional_1964}{Rdimtools}
 }
 \author{
 Kisung You

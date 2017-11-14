@@ -68,8 +68,7 @@ plot(output3$Y[,1],output3$Y[,2],main="10\%+Binary")
 
 }
 \references{
-Roweis, S.T. and Saul, L.K. (2000) \emph{Nonlinear Dimensionality Reduction by
-Locally Linear Embedding}. Science Vol.290:2323-2326.
+\insertRef{roweis_nonlinear_2000}{Rdimtools}
 }
 \seealso{
 \href{https://www.cs.nyu.edu/~roweis/lle/}{Prof.Roweis' website}

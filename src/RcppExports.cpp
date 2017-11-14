@@ -314,6 +314,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// method_ree
+Rcpp::List method_ree(arma::mat& B, arma::mat& W, arma::mat& D, const double initc, const double abstol, const int maxiter);
+RcppExport SEXP _Rdimtools_method_ree(SEXP BSEXP, SEXP WSEXP, SEXP DSEXP, SEXP initcSEXP, SEXP abstolSEXP, SEXP maxiterSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type B(BSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type W(WSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type D(DSEXP);
+    Rcpp::traits::input_parameter< const double >::type initc(initcSEXP);
+    Rcpp::traits::input_parameter< const double >::type abstol(abstolSEXP);
+    Rcpp::traits::input_parameter< const int >::type maxiter(maxiterSEXP);
+    rcpp_result_gen = Rcpp::wrap(method_ree(B, W, D, initc, abstol, maxiter));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_Rdimtools_aux_preprocess", (DL_FUNC) &_Rdimtools_aux_preprocess, 2},
@@ -340,6 +356,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Rdimtools_method_lleW", (DL_FUNC) &_Rdimtools_method_lleW, 3},
     {"_Rdimtools_method_lleWauto", (DL_FUNC) &_Rdimtools_method_lleWauto, 2},
     {"_Rdimtools_method_lleM", (DL_FUNC) &_Rdimtools_method_lleM, 1},
+    {"_Rdimtools_method_ree", (DL_FUNC) &_Rdimtools_method_ree, 6},
     {NULL, NULL, 0}
 };
 

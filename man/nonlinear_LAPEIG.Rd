@@ -57,8 +57,7 @@ plot(out2$Y[,1],out2$Y[,2],main="combinatorial")
 
 }
 \references{
-Belkin, M. and Niyogi, P. (2003) \emph{Laplacian Eigenmaps for Dimensionality Reduction and Data Representation}.
-Neural Computation, 15 6:1373-1396.
+\insertRef{belkin_laplacian_2003}{Rdimtools}
 }
 \author{
 Kisung You

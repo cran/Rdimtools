@@ -71,7 +71,7 @@ if ((length(output1)!=1)&&(!is.na(output3))){plot(output3$Y[,1],output3$Y[,2],ma
 
 }
 \references{
-Hinton, G. and Roweis, S. (2002) \emph{Stochastic Neighbor Embedding}. Proceedings of the 15th International Conference on Neural Information Processing Systems, 857-864.
+\insertRef{hinton_stochastic_2003}{Rdimtools}
 }
 \author{
 Kisung You

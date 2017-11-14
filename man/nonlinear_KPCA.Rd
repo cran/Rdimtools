@@ -52,8 +52,7 @@ plot(output3$Y[,1],output3$Y[,2],main="Laplacian kernel")
 
 }
 \references{
-Scholkopf, B., Smola, A., and Muller K-R. (1997) \emph{Kernel principal component analysis}.
-International Conference on Artificial Neural Networks, Part 4:583-588.
+\insertRef{goos_kernel_1997}{Rdimtools}
 }
 \seealso{
 \code{\link{aux.kernelcov}}

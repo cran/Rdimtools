@@ -44,10 +44,13 @@ out2 = do.sammon(X,ndim=2,initialize="pca")  # pca as initialization
 par(mfrow=c(1,2))
 plot(out1$Y[,1],out1$Y[,2],main="out1:rndproj")
 plot(out2$Y[,1],out2$Y[,2],main="out2:pca")
+
 }
 \references{
 Sammon, J.W. (1969) \emph{A Nonlinear Mapping for Data Structure Analysis}.
 IEEE Transactions on Computers, C-18 5:401-409.
+
+\insertRef{sammon_nonlinear_1969}{Rdimtools}
 }
 \author{
 Kisung You

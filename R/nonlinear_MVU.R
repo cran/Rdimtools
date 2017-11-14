@@ -44,8 +44,9 @@
 #' plot(output2$Y[,1],output2$Y[,2],main="kpca projection")
 #' plot(output3$Y[,1],output3$Y[,2],main="densely connected graph")
 #'
-#' @references Weinberger, K.Q. and Saul, L.K. (2006) \emph{Unsupervised learning of image manifolds
-#' by semidefinite programming}. International Journal of Computer Vision, Vol.70(1):77-90.
+#' @references
+#' \insertRef{weinberger_unsupervised_2006}{Rdimtools}
+#'
 #' @author Kisung You
 #' @aliases do.sde
 #' @rdname nonlinear_MVU

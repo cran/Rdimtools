@@ -51,8 +51,9 @@
 #' if ((length(output1)!=1)&&(!is.na(output3))){plot(output3$Y[,1],output3$Y[,2],main="Setting 3")}
 #'
 #' @seealso \code{\link{do.sne}}, \code{\link[Rtsne]{Rtsne}}.
-#' @references van der Maaten, L. and Hinton, G. (2008) \emph{Visualizing data using t-SNE}. The
-#' Journal of Machine Learning Research, Vol.9:2579-2605.
+#' @references
+#' \insertRef{van_der_maaten_visualizing_2008}{Rdimtools}
+#'
 #' @author Kisung You
 #' @rdname nonlinear_TSNE
 #' @export

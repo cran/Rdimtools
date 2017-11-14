@@ -24,6 +24,7 @@ embedding mappings. For \emph{linear} methods, we have
 \itemize{
   \item \code{\link{do.fa}} for (Exploratory) Factor Analysis.
   \item \code{\link{do.ica}} for Independent Component Analysis.
+  \item \code{\link{do.lda}} for Linear Discriminant Analysis.
   \item \code{\link{do.lmds}} for Landmark Multidimensional Scaling.
   \item \code{\link{do.lpp}} for Locality Preserving Embedding (LPP)
   \item \code{\link{do.mds}} for Multidimensional Scaling.
@@ -44,6 +45,7 @@ Also, we have \emph{nonlinear} methods implemented
   \item \code{\link{do.ltsa}} for Local Tangent Space Alignment.
   \item \code{\link{do.mvu}} for Maximum Variance Unfolding / Semidefinite Embedding.
   \item \code{\link{do.plp}} for Piecewise Laplacian Projection.
+  \item \code{\link{do.ree}} for Robust Euclidean Embedding.
   \item \code{\link{do.sammon}} for Sammon Mapping.
   \item \code{\link{do.sne}} for Stochastic Neighbor Embedding.
   \item \code{\link{do.tsne}} for t-distributed Stochastic Neighbor Embedding.

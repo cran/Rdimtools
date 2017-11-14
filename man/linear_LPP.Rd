@@ -65,8 +65,7 @@ message("* do.lpp : example : one of three trials must have failed.")
 
 }
 \references{
-He, X. and Niyogi, P. (2003) \emph{Locality Preserving Projections}. Proceedings In Advances in
-Neural Information Processing Systems, 16.
+\insertRef{he_locality_2005}{Rdimtools}
 }
 \author{
 Kisung You

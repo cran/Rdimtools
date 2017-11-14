@@ -50,8 +50,12 @@
 #'plot(out8$Y[,1],out8$Y[,2],main="(diff=5,time=10)")
 #'plot(out9$Y[,1],out9$Y[,2],main="(diff=10,time=10)")
 #'
-#'@references Coifman et al. (2005) \emph{Geometric diffusion as a tool for harmonic analysis and structure definition of data: Multiscale methods}. PNAS 105 21:7432-7437.
-#'@references Coifman, R. and Lafon, S. (2006) \emph{Diffusion Maps}. Applied and Computational Harmonic Analysis, 21 1:5-30.
+#'@references
+#'\insertRef{nadler_diffusion_2005}{Rdimtools}
+#'
+#'\insertRef{coifman_diffusion_2006}{Rdimtools}
+#'
+#'
 #' @rdname nonlinear_DM
 #' @author Kisung You
 #' @export
