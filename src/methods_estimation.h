@@ -10,5 +10,7 @@ using namespace arma;
 
 // 1. boxcounting
 arma::mat methods_boxcount(arma::mat& X, arma::vec& Imin, const double currentr);
+// 2. numerical derivative
+arma::vec aux_numderiv(arma::vec& x, arma::vec& y);
 
 #endif

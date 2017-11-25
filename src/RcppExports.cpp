@@ -91,6 +91,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// aux_regout
+arma::mat aux_regout(arma::mat& X, arma::rowvec tgt);
+RcppExport SEXP _Rdimtools_aux_regout(SEXP XSEXP, SEXP tgtSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< arma::rowvec >::type tgt(tgtSEXP);
+    rcpp_result_gen = Rcpp::wrap(aux_regout(X, tgt));
+    return rcpp_result_gen;
+END_RCPP
+}
 // methods_boxcount
 arma::mat methods_boxcount(arma::mat& tX, arma::vec& Imin, const double currentr);
 RcppExport SEXP _Rdimtools_methods_boxcount(SEXP tXSEXP, SEXP IminSEXP, SEXP currentrSEXP) {
@@ -101,6 +113,18 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec& >::type Imin(IminSEXP);
     Rcpp::traits::input_parameter< const double >::type currentr(currentrSEXP);
     rcpp_result_gen = Rcpp::wrap(methods_boxcount(tX, Imin, currentr));
+    return rcpp_result_gen;
+END_RCPP
+}
+// aux_numderiv
+arma::vec aux_numderiv(arma::vec& x, arma::vec& y);
+RcppExport SEXP _Rdimtools_aux_numderiv(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(aux_numderiv(x, y));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -201,6 +225,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::mat& >::type X(XSEXP);
     Rcpp::traits::input_parameter< arma::mat& >::type W(WSEXP);
     rcpp_result_gen = Rcpp::wrap(method_npe(X, W));
+    return rcpp_result_gen;
+END_RCPP
+}
+// method_olpp
+arma::mat method_olpp(arma::mat& X, arma::mat& S, const int ndim);
+RcppExport SEXP _Rdimtools_method_olpp(SEXP XSEXP, SEXP SSEXP, SEXP ndimSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type S(SSEXP);
+    Rcpp::traits::input_parameter< const int >::type ndim(ndimSEXP);
+    rcpp_result_gen = Rcpp::wrap(method_olpp(X, S, ndim));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -339,7 +376,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Rdimtools_aux_kernelcov", (DL_FUNC) &_Rdimtools_aux_kernelcov, 4},
     {"_Rdimtools_aux_eigendecomposition", (DL_FUNC) &_Rdimtools_aux_eigendecomposition, 1},
     {"_Rdimtools_aux_minmax", (DL_FUNC) &_Rdimtools_aux_minmax, 2},
+    {"_Rdimtools_aux_regout", (DL_FUNC) &_Rdimtools_aux_regout, 2},
     {"_Rdimtools_methods_boxcount", (DL_FUNC) &_Rdimtools_methods_boxcount, 3},
+    {"_Rdimtools_aux_numderiv", (DL_FUNC) &_Rdimtools_aux_numderiv, 2},
     {"_Rdimtools_method_pca", (DL_FUNC) &_Rdimtools_method_pca, 1},
     {"_Rdimtools_method_mds", (DL_FUNC) &_Rdimtools_method_mds, 1},
     {"_Rdimtools_method_mdsD", (DL_FUNC) &_Rdimtools_method_mdsD, 1},
@@ -348,6 +387,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Rdimtools_method_fa", (DL_FUNC) &_Rdimtools_method_fa, 4},
     {"_Rdimtools_method_lpp", (DL_FUNC) &_Rdimtools_method_lpp, 2},
     {"_Rdimtools_method_npe", (DL_FUNC) &_Rdimtools_method_npe, 2},
+    {"_Rdimtools_method_olpp", (DL_FUNC) &_Rdimtools_method_olpp, 3},
     {"_Rdimtools_method_sne", (DL_FUNC) &_Rdimtools_method_sne, 7},
     {"_Rdimtools_method_snesym", (DL_FUNC) &_Rdimtools_method_snesym, 7},
     {"_Rdimtools_method_tsne", (DL_FUNC) &_Rdimtools_method_tsne, 7},

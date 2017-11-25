@@ -1,6 +1,8 @@
 #' Locality Preserving Projections
 #'
-#' \code{do.lpp} is a linear approximation to Laplacian Eigenmaps.
+#' \code{do.lpp} is a linear approximation to Laplacian Eigenmaps. More precisely,
+#' it aims at finding a linear approximation to the eigenfunctions of the Laplace-Beltrami
+#' operator on the graph-approximated data manifold.
 #'
 #' @param X an \code{(n-by-p)} matrix or data frame whose rows are observations
 #' @param ndim an integer-valued target dimension.
@@ -39,7 +41,7 @@
 #'## Visualize three different projections
 #'if ((!is.na(output1))&&(!is.na(output2))&&(!is.na(output3))){
 #'par(mfrow=c(1,3))
-#'plot(output1$Y[,1],output1$Y[,2],main="5%")
+#'plot(output1$Y[,1],output1$Y[,2],main="10%")
 #'plot(output2$Y[,1],output2$Y[,2],main="25%")
 #'plot(output3$Y[,1],output3$Y[,2],main="50%")
 #'} else {

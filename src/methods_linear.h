@@ -25,5 +25,7 @@ Rcpp::List method_fa(arma::mat& X, const int k, const int maxiter, const double 
 Rcpp::List method_lpp(arma::mat& X, arma::mat& W);
 // 8. NPE
 Rcpp::List method_npe(arma::mat& X, arma::mat& W);
+// 9. OLPP
+arma::mat method_olpp(arma::mat& X, arma::mat& S, const int ndim);
 
 #endif

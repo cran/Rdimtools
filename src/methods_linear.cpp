@@ -1,3 +1,15 @@
+/*
+ * 01. PCA
+ * 02. MDS
+ * 03. MDS given D
+ * 04. ICA
+ * 05. RNDPROJ
+ * 06. FA
+ * 07. LPP
+ * 08. NPE
+ * 09. OLPP
+*/
+
 #include <RcppArmadillo.h>
 #include "methods_linear.h"
 
@@ -379,4 +391,50 @@ Rcpp::List method_npe(arma::mat& X, arma::mat& W){
   // 08-5. return results
   return Rcpp::List::create(Rcpp::Named("eigval")=eigval,
                             Rcpp::Named("eigvec")=eigvec);
+}
+
+/*
+ * 09. Orthogonal Locality Preserving Projection (OLPP)
+ * NOTE : X in (p-by-n) type for consistency to the notes.
+ */
+//' @keywords internal
+// [[Rcpp::export]]
+arma::mat method_olpp(arma::mat& X, arma::mat& S, const int ndim){
+  // 9-1. basic settings
+  const int n = S.n_cols;
+  const int p = X.n_rows;
+  // 9-2. laplacian
+  arma::mat D = arma::diagmat(sum(S,1));
+  arma::mat L = D-S;
+  // 9-3. complementary setups
+  arma::mat XDXT = X*D*X.t();
+  arma::mat XLXT = X*L*X.t();
+  // 9-4. ready for accumulations
+  arma::mat A(p,ndim,fill::zeros);
+  // 9-5. compute the first eigenvector
+  arma::vec vals1;
+  arma::mat vecs1;
+  arma::mat XDLXT = arma::solve(XDXT, XLXT);
+  arma::eig_sym(vals1, vecs1, XDLXT);
+  A.col(0) = vecs1.col(0);
+  // 9-6. main iterations
+  arma::mat Ak1; // this is for A(k-1)
+  arma::mat Bk1;
+  arma::mat Mk;
+  arma::mat eyeP(p,p,fill::eye);
+  arma::vec valsi; // eigendecomposition of Mk
+  arma::mat vecsi; // eigendecomposition of Mk
+  for (int i=1;i<ndim;i++){
+    // 9-6-1. subsetting
+    Ak1 = A.cols(0,i);
+    Bk1 = Ak1.t()*(arma::solve(XDXT, Ak1));
+    // 9-6-2. compute Mk
+    Mk = (eyeP - arma::solve(XDXT, Ak1)*arma::solve(Bk1, Ak1.t()))*XDLXT;
+    // 9-6-3. get the smallest eigenvector
+    eig_sym(valsi, vecsi, Mk);
+    A.col(i) = vecsi.col(0);
+  }
+
+  // 9-7. return results
+  return(A);
 }

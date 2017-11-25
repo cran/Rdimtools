@@ -11,7 +11,8 @@ using namespace arma;
  * 1. boxcounting
  *    generate integer-valued data labeling
  */
-//[[Rcpp::export]]
+//' @keywords internal
+// [[Rcpp::export]]
 arma::mat methods_boxcount(arma::mat& tX, arma::vec& Imin, const double currentr){
   // 1-1. basic settings
   const int d = tX.n_rows;
@@ -36,3 +37,18 @@ arma::mat methods_boxcount(arma::mat& tX, arma::vec& Imin, const double currentr
   return(intmat);
 }
 
+/*
+ * 2. numderiv : use all forward difference except the last one
+ */
+//' @keywords internal
+// [[Rcpp::export]]
+arma::vec aux_numderiv(arma::vec& x, arma::vec& y){
+  const int n = x.n_elem;
+  arma::vec deriv(n,fill::zeros);
+
+  deriv(n-1) = (y(n-1)-y(n-2))/(x(n-1)-x(n-2));
+  for (int i=0;i<(n-1);i++){
+    deriv(i) = (y(i+1)-y(i))/(x(i+1)-x(i));
+  }
+  return(deriv);
+}

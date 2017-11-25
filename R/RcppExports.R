@@ -29,8 +29,18 @@ aux_minmax <- function(X, gap) {
     .Call('_Rdimtools_aux_minmax', PACKAGE = 'Rdimtools', X, gap)
 }
 
+aux_regout <- function(X, tgt) {
+    .Call('_Rdimtools_aux_regout', PACKAGE = 'Rdimtools', X, tgt)
+}
+
+#' @keywords internal
 methods_boxcount <- function(tX, Imin, currentr) {
     .Call('_Rdimtools_methods_boxcount', PACKAGE = 'Rdimtools', tX, Imin, currentr)
+}
+
+#' @keywords internal
+aux_numderiv <- function(x, y) {
+    .Call('_Rdimtools_aux_numderiv', PACKAGE = 'Rdimtools', x, y)
 }
 
 #' @keywords internal
@@ -70,6 +80,11 @@ method_lpp <- function(X, W) {
 #' @keywords internal
 method_npe <- function(X, W) {
     .Call('_Rdimtools_method_npe', PACKAGE = 'Rdimtools', X, W)
+}
+
+#' @keywords internal
+method_olpp <- function(X, S, ndim) {
+    .Call('_Rdimtools_method_olpp', PACKAGE = 'Rdimtools', X, S, ndim)
 }
 
 #' @keywords internal

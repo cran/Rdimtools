@@ -7,6 +7,7 @@
 # 5. aux.MaxMinLandmark : choose a single landmark point
 # 6. aux.kernelcov      : build K and centerd K matrix for kernel tricks
 # 7. aux.eigendec       : use Armadillo in a descending order
+# 8. aux.shownfunc      : show number of available functions.
 
 
 #  ------------------------------------------------------------------------
@@ -907,3 +908,32 @@ aux.eigendec <- function(X){
   result$eigvec = output$eigvec[,rev(seq_len(length(output$eigval)))]
   return(result)
 }
+
+
+# pkgstat : show the number of available functions. ---------------------
+#' Show the number of functions for \pkg{Rdimtools}.
+#'
+#' This function is mainly used for tracking progress for this package.
+#'
+#' @examples
+#' ## run with following command
+#' aux.pkgstat()
+#'
+#' @rdname aux_pkgstat
+#' @export
+aux.pkgstat <- function(){
+  ndo  = (sum(unlist(lapply(ls("package:Rdimtools"), startsWith, "do."))))
+  nest = (sum(unlist(lapply(ls("package:Rdimtools"), startsWith, "est."))))
+  naux = (sum(unlist(lapply(ls("package:Rdimtools"), startsWith, "aux."))))
+
+  "*  dimension reduction : "
+  mdo  = paste("*  cat1. manifold learning techniques           : ",ndo,sep="")
+  mest = paste("*  cat2. intrinsic dimension estimation methods : ",nest,sep="")
+  maux = paste("*  cat3. auxiliary functions available          : ",naux,sep="")
+  print("* Number of functions available in Rdimtools package")
+  print(mdo)
+  print(mest)
+  print(maux)
+}
+
+

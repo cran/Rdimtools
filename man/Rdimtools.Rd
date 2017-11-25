@@ -23,13 +23,17 @@ A simple taxonomy of the methods would be to categorize based on the linearity o
 embedding mappings. For \emph{linear} methods, we have
 \itemize{
   \item \code{\link{do.fa}} for (Exploratory) Factor Analysis.
+  \item \code{\link{do.cca}} for Canonical Correlation Analysis.
   \item \code{\link{do.ica}} for Independent Component Analysis.
   \item \code{\link{do.lda}} for Linear Discriminant Analysis.
   \item \code{\link{do.lmds}} for Landmark Multidimensional Scaling.
-  \item \code{\link{do.lpp}} for Locality Preserving Embedding (LPP)
+  \item \code{\link{do.lpp}} for Locality Preserving Embedding.
   \item \code{\link{do.mds}} for Multidimensional Scaling.
   \item \code{\link{do.npe}} for Neighborhood Preserving Embedding.
+  \item \code{\link{do.olpp}} for Orthogonal Locality Preserving Embedding.
+  \item \code{\link{do.opls}} for Orthogonal Partial Least Squares.
   \item \code{\link{do.pca}} for Principal Component Analysis.
+  \item \code{\link{do.pls}} for Partial Least Squares.
   \item \code{\link{do.rndproj}} for Random Projection.
 }
 Also, we have \emph{nonlinear} methods implemented
@@ -64,6 +68,7 @@ Finally, there are some auxiliary functions (\bold{\code{aux.}} family),
   \item \code{\link{aux.kernelcov}} that computes a centered gram matrix with 20 kernels supported.
   \item \code{\link{aux.preprocess}} to perform preprocessing of centering, decorrelating, or whitening.
   \item \code{\link{aux.shortestpath}} is an efficient implementation of Floyd-Warshall algorithm.
+  \item \code{\link{aux.pkgstat}} reports the number of functions available for each category as described.
 }
 }
 

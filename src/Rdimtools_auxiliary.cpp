@@ -1,3 +1,14 @@
+/*
+ * 1. aux_preprocess : center, decorrelate, or whiten
+ * 2. aux_perplexity : given target perplexity, compute P
+ * 3. aux_shortestpath : Floyd-Warshall algorithm.
+ * 4. aux_landmarkMaxMin : select landmark points using MaxMin tactic
+ * 5. aux_kernelcov : compute K and centered K matrix
+ * 6. aux_eigendecomposition : eigendecomposition of a given symmetric matrix
+ * 7. aux_minmax : find minimum and maximum values for each dimension
+ * 8. aux_regout : regress out a vector on a matrix : row-sense
+ *
+ */
 #include <RcppArmadillo.h>
 // [[Rcpp::depends(RcppArmadillo)]]
 
@@ -477,11 +488,11 @@ Rcpp::List aux_kernelcov(arma::mat& tX, const int knumber, const double par1, co
  */
 // [[Rcpp::export]]
 Rcpp::List aux_eigendecomposition(arma::mat& X){
-  vec eigval;
-  mat eigvec;
-  mat sX = ((X+X.t())/2);
+  arma::vec eigval;
+  arma::mat eigvec;
+  arma::mat sX = ((X+X.t())/2);
 
-  eig_sym(eigval, eigvec, sX);
+  arma::eig_sym(eigval, eigvec, sX);
   return Rcpp::List::create(Rcpp::Named("eigval")=eigval,
                             Rcpp::Named("eigvec")=eigvec);
 }
@@ -503,6 +514,26 @@ arma::mat aux_minmax(arma::mat& X, const double gap){
   }
 
   // 7-3. return output
+  return(output);
+}
+
+/*
+ * 8. aux_regout : regress out a vector on a matrix : row-sense
+ */
+// [[Rcpp::export]]
+arma::mat aux_regout(arma::mat& X, arma::rowvec tgt){
+  // 8-1. basic setting
+  const int n = X.n_rows;
+  const int p = X.n_cols;
+  arma::mat output(n,p,fill::zeros);
+
+  // 8-2. main iteration
+  // Note that vector 'tgt' should be a length of p.
+  for (int i=0;i<n;i++){
+    output.row(i) = X.row(i) - (dot(X.row(i),tgt))*tgt;
+  }
+
+  // 8-3. return output
   return(output);
 }
 
