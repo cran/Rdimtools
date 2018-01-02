@@ -5,7 +5,7 @@
 #' It adopts PCA as preprocessing step and uses only one eigenvector at each iteration in that
 #' it might incur warning messages for solving near-singular system of linear equations.
 #'
-#' @param X an \code{(n-by-p)} matrix or data frame whose rows are observations
+#' @param X an \eqn{(n\times p)} matrix or data frame whose rows are observations
 #' @param ndim an integer-valued target dimension.
 #' @param type a vector of neighborhood graph construction. Following types are supported;
 #'  \code{c("knn",k)}, \code{c("enn",radius)}, and \code{c("proportion",ratio)}.
@@ -19,12 +19,13 @@
 #'
 #' @return a named list containing
 #' \describe{
-#' \item{Y}{an \code{(n-by-ndim)} matrix whose rows are embedded observations.}
-#' \item{projection}{a \code{(p-by-ndim)} whose columns are basis for projection.}
+#' \item{Y}{an \eqn{(n\times ndim)} matrix whose rows are embedded observations.}
+#' \item{projection}{a \eqn{(p\times ndim)} whose columns are basis for projection.}
 #' \item{trfinfo}{a list containing information for out-of-sample prediction.}
 #' }
 #'
 #' @examples
+#' \dontrun{
 #' ## generate 2 normal groups of data that are far away
 #' X = rbind(matrix(rnorm(200),nrow=20), (matrix(rnorm(200),nrow=20)+10))
 #'
@@ -37,6 +38,7 @@
 #' par(mfrow=c(1,2))
 #' plot(output1$Y[,1],output1$Y[,2],main="10% connected")
 #' plot(output2$Y[,1],output2$Y[,2],main="25% connected")
+#' }
 #'
 #' @references
 #' \insertRef{cai_orthogonal_2006}{Rdimtools}
@@ -115,9 +117,12 @@ do.olpp <- function(X,ndim=2,type=c("proportion",0.1),symmetric=c("union","inter
   Wolpp = (method_olpp(t(Xpca), wD, ndim));
 
   #   step 4. computation !
+  #   1. adjust projection matrix
+  proj_all = aux.adjprojection(Wpca%*%Wolpp)
+  #   2. return output
   result = list()
-  result$Y = Xpca%*%Wolpp
-  result$projection = Wpca%*%Wolpp
+  result$Y = pX%*%proj_all
+  result$projection = proj_all
   trfinfo$algtype = "linear"
   result$trfinfo = trfinfo
   return(result)

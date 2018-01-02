@@ -2,13 +2,13 @@
 % Please edit documentation in R/linear_LPP.R
 \name{do.lpp}
 \alias{do.lpp}
-\title{Locality Preserving Projections}
+\title{Locality Preserving Projection}
 \usage{
 do.lpp(X, ndim = 2, type = c("proportion", 0.1), symmetric = "union",
-  weight = TRUE, preprocess = "null", t = 1)
+  weight = TRUE, preprocess = "center", t = 1)
 }
 \arguments{
-\item{X}{an \code{(n-by-p)} matrix or data frame whose rows are observations}
+\item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations}
 
 \item{ndim}{an integer-valued target dimension.}
 
@@ -22,16 +22,18 @@ See also \code{\link{aux.graphnbd}} for more details.}
 
 \item{weight}{\code{TRUE} to perform LPP on weighted graph, or \code{FALSE} otherwise.}
 
-\item{preprocess}{an additional option for preprocessing the data.}
+\item{preprocess}{an additional option for preprocessing the data.
+Default is "center" and other options of "decorrelate" and "whiten"
+are supported. See also \code{\link{aux.preprocess}} for more details.}
 
 \item{t}{bandwidth for heat kernel in \eqn{(0,\infty)}}
 }
 \value{
 a named list containing
 \describe{
-\item{Y}{an \code{(n-by-ndim)} matrix whose rows are embedded observations.}
+\item{Y}{an \eqn{(n\times ndim)} matrix whose rows are embedded observations.}
 \item{eigval}{a vector of eigenvalues corresponding to basis expansion in an ascending order.}
-\item{projection}{a \code{(p-by-ndim)} whose columns are basis for projection.}
+\item{projection}{a \eqn{(p\times ndim)} whose columns are basis for projection.}
 \item{trfinfo}{a list containing information for out-of-sample prediction.}
 }
 }

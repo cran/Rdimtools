@@ -2,13 +2,13 @@
 % Please edit documentation in R/auxiliary.R
 \name{aux.graphnbd}
 \alias{aux.graphnbd}
-\title{Find nearest neighborhood}
+\title{Construct Nearest-Neighborhood Graph}
 \usage{
 aux.graphnbd(data, method = "euclidean", type = c("proportion", 0.1),
   symmetric = "union", pval = 2)
 }
 \arguments{
-\item{data}{an \code{(n-by-p)} data matrix.}
+\item{data}{an \eqn{(n\times p)} data matrix.}
 
 \item{method}{type of distance to be used. See also \code{\link[stats]{dist}}.}
 
@@ -20,7 +20,7 @@ aux.graphnbd(data, method = "euclidean", type = c("proportion", 0.1),
 
 \item{symmetric}{either ``intersect'' or ``union'' for symmetrization, or ``asymmetric''.}
 
-\item{pval}{a \code{p}-norm option for Minkowski distance.}
+\item{pval}{a \eqn{p}-norm option for Minkowski distance.}
 }
 \value{
 a named list containing \describe{
@@ -53,6 +53,7 @@ nearest neighbors of each other and \code{union} for only either of them to be p
 }
 
 \examples{
+\dontrun{
 ## Generate data
 X = aux.gensamples()
 
@@ -66,6 +67,7 @@ par(mfrow=c(1,3))
 image(nn1$mask); title("knn with k=20")
 image(nn2$mask); title("enn with radius=1")
 image(nn3$mask); title("proportion of ratio=0.4")
+}
 
 }
 \author{

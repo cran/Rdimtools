@@ -8,7 +8,7 @@
 #' variance. Measured by summation of top eigenvalues from sample covariance,
 #' we use the minimal summation to be larger than \code{varratio}.
 #'
-#' @param X an \code{(n-by-p)} matrix or data frame whose rows are observations
+#' @param X an \eqn{(n\times p)} matrix or data frame whose rows are observations
 #' and columns represent independent variables.
 #' @param ndim an integer-valued target dimension or ``auto'' option using \emph{varratio.}
 #' @param cor mode of eigendecomposition. \code{FALSE} for decomposing covariance matrix,
@@ -20,24 +20,26 @@
 #' chosen as ``auto''.
 #' @return a named list containing
 #' \describe{
-#' \item{Y}{an \code{(n-by-ndim)} matrix whose rows are embedded observations.}
+#' \item{Y}{an \eqn{(n\times ndim)} matrix whose rows are embedded observations.}
 #' \item{vars}{a vector containing variances of projected data onto principal components.}
-#' \item{projection}{a \code{(p-by-ndim)} whose columns are principal components.}
+#' \item{projection}{a \eqn{(p\times ndim)} whose columns are principal components.}
 #' \item{trfinfo}{a list containing information for out-of-sample prediction.}
 #' }
 #'
+#' @examples
+#' \dontrun{
+#' # generate data
+#' X <- rbind(matrix(rnorm(100),nr=10),matrix(rnorm(100),nr=10)+10)
 #'
-#'@examples
-#'# generate data
-#'X <- rbind(matrix(rnorm(100),nr=10),matrix(rnorm(100),nr=10)+10)
+#' ## 1. projection using 2 principal components
+#' output <- do.pca(X,ndim=2)
+#' plot(output$Y[,1],output$Y[,2])
 #'
-#'## 1. projection using 2 principal components
-#'output <- do.pca(X,ndim=2)
-#'plot(output$Y[,1],output$Y[,2])
+#' ## 2. automatic detection of target dimension accounting for 98% of variance
+#' output <- do.pca(X,ndim="auto",varratio=0.98)           # perform PCA
+#' plot(seq_len(length(output$vars)),output$vars,type="b") # plot variances
+#' }
 #'
-#'## 2. automatic detection of target dimension accounting for 98% of variance
-#'output <- do.pca(X,ndim="auto",varratio=0.98)           # perform PCA
-#'plot(seq_len(length(output$vars)),output$vars,type="b") # plot variances
 #' @author Kisung You
 #' @references
 #' \insertRef{pearson_liii._1901}{Rdimtools}
@@ -102,7 +104,7 @@ do.pca <- function(X,ndim="auto",cor=FALSE,preprocess="center",varratio=0.9){
   }
 
   # 5. result
-  partials = eigvecs[,1:tgtidx]
+  partials = aux.adjprojection(eigvecs[,1:tgtidx])
   result = list()
   result$Y          = (pX %*% partials)
   result$vars       = eigvals[1:tgtidx]

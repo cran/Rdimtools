@@ -9,7 +9,7 @@ do.sne(X, ndim = 2, perplexity = 30, eta = 0.05, maxiter = 2000,
   pca = TRUE, pcaratio = 0.9, pcascale = FALSE, symmetric = FALSE)
 }
 \arguments{
-\item{X}{an \code{(n-by-p)} matrix or data frame whose rows are observations and columns represent independent variables.}
+\item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations and columns represent independent variables.}
 
 \item{ndim}{an integer-valued target dimension.}
 
@@ -21,7 +21,7 @@ do.sne(X, ndim = 2, perplexity = 30, eta = 0.05, maxiter = 2000,
 
 \item{jitter}{level of white noise added at the beginning.}
 
-\item{jitterdecay}{decay parameter in (0,1). The closer to 0, the faster artificial noise decays.}
+\item{jitterdecay}{decay parameter in \eqn{(0,1)}. The closer to 0, the faster artificial noise decays.}
 
 \item{momentum}{level of acceleration in learning.}
 
@@ -39,7 +39,7 @@ Default is ``null'', and other methods of ``decorrelate'',``center'' , and ``whi
 \value{
 a named list containing
 \describe{
-\item{Y}{an \code{(n-by-ndim)} matrix whose rows are embedded observations.}
+\item{Y}{an \eqn{(n\times ndim)} matrix whose rows are embedded observations.}
 \item{trfinfo}{a list containing information for out-of-sample prediction.}
 \item{vars}{a vector containing betas used in perplexity matching.}
 }
@@ -50,9 +50,10 @@ description in high-dimensional - possible, nonlinear - subspace on low-dimensio
 \code{do.sne} fully adopts algorithm details in an original paper by Hinton and Roweis (2002).
 }
 \examples{
+\dontrun{
 ## generate ribbon-shaped data
 ## in order to pass CRAN pretest, n is set to be small.
-X = aux.gensamples(dname="ribbon",n=28)
+X = aux.gensamples(dname="ribbon",n=99)
 
 ## 1. pca scaling with 90\% variances explained
 output1 <- do.sne(X,ndim=2,pca=TRUE)
@@ -68,6 +69,7 @@ par(mfrow=c(1,3))
 if ((length(output1)!=1)&&(!is.na(output1))){plot(output1$Y[,1],output1$Y[,2],main="Setting 1")}
 if ((length(output1)!=1)&&(!is.na(output2))){plot(output2$Y[,1],output2$Y[,2],main="Setting 2")}
 if ((length(output1)!=1)&&(!is.na(output3))){plot(output3$Y[,1],output3$Y[,2],main="Setting 3")}
+}
 
 }
 \references{

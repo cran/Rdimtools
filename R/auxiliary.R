@@ -1,14 +1,18 @@
 # LIST OF AUXILIARY FUNCTIONS
-# 0. aux.typecheck      : check whether the data is poorly given
-# 1. aux.preprocess     : preprocess of centering, decorrelation or whitening
-# 2. aux.gensamples     : generate a few popular data examples
-# 3. aux.graphnbd       : compute neighborhood graph structure
-# 4. aux.shortestpath   : compute shortest paths given neighborhood graph
-# 5. aux.MaxMinLandmark : choose a single landmark point
-# 6. aux.kernelcov      : build K and centerd K matrix for kernel tricks
-# 7. aux.eigendec       : use Armadillo in a descending order
-# 8. aux.shownfunc      : show number of available functions.
-
+# 00. aux.typecheck        : check whether the data is poorly given
+# 01. aux.preprocess       : preprocess of centering, decorrelation or whitening
+# 02. aux.gensamples       : generate a few popular data examples
+# 03. aux.graphnbd         : construct nearest-neighborhood graph
+#     aux.graphnbdD        : distance matrix is already given
+# 04. aux.shortestpath     : compute shortest paths given neighborhood graph
+# 05. aux.MaxMinLandmark   : choose a single landmark point
+# 06. aux.kernelcov        : build K and centerd K matrix for kernel tricks
+# 07. aux.eigendec         : use Armadillo in a descending order
+# 08. aux.pkgstat          : show number of available functions.
+# 09. aux.kernelcentering  : centering the kernel/gram matrix
+# 10. aux.kernelprojection : given uncentered gram matrix, find the projected data
+#                            note that it results (ndim-by-N) matrix, columns are projected vectors.
+# 11. aux.adjprojection    : adjust projection matrix
 
 #  ------------------------------------------------------------------------
 # 0. AUX.TYPECHECK
@@ -49,18 +53,19 @@ aux.typecheck <- function(data){
 #' to have diagonal covariance terms only. \code{"whiten"} option sets the sample
 #' covariance to have all diagonal terms equal to 1, equally weighting each variable.
 #'
-#' @param data an \code{(n-by-p)} matrix or data frame whose rows are observations
+#' @param data an \eqn{(n\times p)} matrix or data frame whose rows are observations
 #' and columns represent independent variables.
 #' @param type one of "center", "decorrelate", or "whiten". See below for more details.
 #' @return named list containing:
 #' \describe{
-#' \item{pX}{an \code{(n-by-p)} matrix after preprocessing in accordance with \code{type} parameter}
+#' \item{pX}{an \eqn{(n\times p)} matrix after preprocessing in accordance with \code{type} parameter}
 #' \item{info}{a list containing \itemize{
 #' \item \code{type:} name of preprocessing procedure.
 #' \item \code{mean:} a mean vector of length \eqn{p}.
-#' \item \code{multiplier:} a \code{(p-by-p)} matrix for "decorrelate" or "whiten" or 1 for "center".}}
+#' \item \code{multiplier:} a \eqn{(p\times p)} matrix for "decorrelate" or "whiten" or 1 for "center".}}
 #' }
 #' @examples
+#' \dontrun{
 #' ## Generate data
 #' X = aux.gensamples()
 #'
@@ -74,6 +79,7 @@ aux.typecheck <- function(data){
 #' image(cov(X_center$pX),zlim=c(-50,50)); title("center");
 #' image(cov(X_decorr$pX),zlim=c(-50,50)); title("decorrelate");
 #' image(cov(X_whiten$pX),zlim=c(-50,50)); title("whitening")
+#' }
 #'
 #' @rdname aux_preprocess
 #' @author Kisung You
@@ -150,21 +156,23 @@ aux.preprocess <- function(data,type="center"){
 #' \item{\code{"cswiss"}}{cut swiss}
 #' \item{\code{"twinpeaks"}}{two peaks}
 #' }
-#' @return an \code{(n-by-3)} matrix of generated data by row.
+#' @return an \eqn{(n\times 3)} matrix of generated data by row.
 #' @examples
 #' ## Generate samples for three different shapes
 #' d1 = aux.gensamples(dname="twinpeaks",noise=0.01)
 #' d2 = aux.gensamples(dname="ribbon",noise=0.01)
 #' d3 = aux.gensamples(dname="crown", noise=0.01)
 #'
-#' \dontshow{
+#' \dontrun{
 #' casenames = c("swiss","crown","helix","saddle","ribbon","bswiss","cswiss","twinpeaks")
 #' for (i in 1:length(casenames)){
 #'   data = aux.gensamples(n=sample(1000:2000,1),noise=runif(1)[1],dname=casenames[i])
 #' }
 #' }
-#' @references van der Maatehn, L., Postma, E. and van den Herik, J. (2009) \emph{Dimensionality
-#' Reduction : A Comparative Review}. TiCC Technical Report 2009-005.
+#' @references
+#' \insertRef{van_der_maaten_dimensionality_2009}{Rdimtools}
+#'
+#'
 #' @author Kisung You
 #' @rdname aux_gensamples
 #' @export
@@ -268,7 +276,7 @@ aux.gensamples <- function(n=496,noise=0.1,dname="swiss"){
 #  ------------------------------------------------------------------------
 # 3. AUX.GRAPHNBD
 #  ------------------------------------------------------------------------
-#' Find nearest neighborhood
+#' Construct Nearest-Neighborhood Graph
 #'
 #' Given data, it first computes pairwise distance (\code{method}) using one of measures
 #' defined from \code{\link[stats]{dist}} function. Then, \code{type} controls how nearest neighborhood
@@ -290,7 +298,7 @@ aux.gensamples <- function(n=496,noise=0.1,dname="swiss"){
 #' nearest neighbors of each other and \code{union} for only either of them to be present.
 #'
 #'
-#' @param data an \code{(n-by-p)} data matrix.
+#' @param data an \eqn{(n\times p)} data matrix.
 #' @param method type of distance to be used. See also \code{\link[stats]{dist}}.
 #' @param type a defining pattern of neighborhood criterion. One of \describe{
 #' \item{c("knn", k)}{knn with \code{k} a positive integer.}
@@ -298,13 +306,14 @@ aux.gensamples <- function(n=496,noise=0.1,dname="swiss"){
 #' \item{c("proportion", ratio)}{takes an \code{ratio} in (0,1) portion of edges to be connected.}
 #' }
 #' @param symmetric either ``intersect'' or ``union'' for symmetrization, or ``asymmetric''.
-#' @param pval a \code{p}-norm option for Minkowski distance.
+#' @param pval a \eqn{p}-norm option for Minkowski distance.
 #' @return a named list containing \describe{
 #' \item{mask}{a binary matrix of indicating existence of an edge for each element.}
 #' \item{dist}{corresponding distance matrix. \code{-Inf} is returned for non-connecting edges.}
 #' }
 #'
 #' @examples
+#' \dontrun{
 #' ## Generate data
 #' X = aux.gensamples()
 #'
@@ -318,6 +327,7 @@ aux.gensamples <- function(n=496,noise=0.1,dname="swiss"){
 #' image(nn1$mask); title("knn with k=20")
 #' image(nn2$mask); title("enn with radius=1")
 #' image(nn3$mask); title("proportion of ratio=0.4")
+#' }
 #'
 #' @author Kisung You
 #' @rdname aux_graphnbd
@@ -425,6 +435,100 @@ aux.graphnbd <- function(data,method="euclidean",type=c("proportion",0.1),symmet
 }
 
 
+#' @keywords internal
+#' @noRd
+aux.graphnbdD <- function(D,type=c("proportion",0.1),symmetric="union",pval=2.0){
+  # 1. type check & check parameter 'pval'
+  aux.typecheck(D)
+  if ((!is.numeric(pval))||is.na(pval)||is.infinite(pval)||(pval<=0)){
+    stop("* aux.graphnbd : pval should be a positive number as norm sign.")
+  }
+
+  # 2. compute distance matrix D : no I can pass it
+  # 3.type : vector of c("knn",k), c("enn",radius), or c("proportion",ratio)
+  #   note that in case of ratio, it can also be transformed into k
+  #   so that we need only two-case branching for the later use.
+  #   use a flag  : TRUE for knn style / FALSE for enn style
+  #         nnpar : k or epsilon
+  ndata = nrow(D)
+  if (type[1]=="knn"){
+    flag = TRUE
+    nnpar = as.double(type[2])
+    if (!is.numeric(nnpar)||is.na(nnpar)||is.infinite(nnpar)||(nnpar<1)||(nnpar>ndata)){
+      stop("* aux.graphnbd : for knn method, k should be a number in [1,#(data)]")
+    } else {
+      nnpar = as.integer(nnpar)
+    }
+  } else if (type[1]=="enn"){
+    flag = FALSE
+    nnpar = as.double(type[2])
+    if (!is.numeric(nnpar)||is.na(nnpar)||is.infinite(nnpar)||(nnpar<=0)){
+      stop("* aux.graphnbd : for enn method, radius should be a positive real number.")
+    } else {
+      nnpar = as.double(nnpar)
+    }
+  } else if (type[1]=="proportion"){
+    flag = TRUE
+    nnpar = max(as.double(type[2])*ndata,1)
+    if (!is.numeric(nnpar)||is.na(nnpar)||is.infinite(nnpar)||(nnpar<1)||(nnpar>ndata)){
+      stop("* aux.graphnbd : for 'proportion' method, ratiovalue should be a number in (0,1]")
+    } else {
+      nnpar = as.integer(min((ceiling(nnpar)),ndata))
+    }
+  } else {
+    stop("* aux.graphnbd : type pair is not well defined. This must be in a correct form.")
+  }
+
+  outMask = array(0,c(ndata,ndata))
+  if (flag){
+    for (i in 1:ndata){
+      tgt = D[i,]
+      idx = as.vector(which(tgt<=max((sort(tgt,decreasing=FALSE))[1:min((nnpar+1),ndata)]),arr.ind=T))
+      outMask[i,idx] = 1
+    }
+  } else {
+    for (i in 1:ndata){
+      tgt = D[i,]
+      idx = which(tgt < nnpar)
+      outMask[i,idx] = 1
+    }
+  }
+  for (i in 1:ndata){
+    outMask[i,i] = 0
+  }
+  outMask = matrix(as.logical(as.integer(outMask)),nrow=ndata)
+
+  # 4. symmetric="union"'intersect','union', or 'asymmetric'
+  if (symmetric=="union"){
+    outMask = matrix(as.logical(outMask + t(outMask)),nrow=ndata)
+  } else if (symmetric=="intersect"){
+    outMask = matrix(as.logical(outMask * t(outMask)),nrow=ndata)
+  } else if (symmetric=="asymmetric"){
+    outMask = outMask
+  } else {
+    stop("* aux.graphnbd : 'symmetric' option is invalid.")
+  }
+
+  if (sum(!outMask)==0){
+    message("* aux.graphnbd : this graph has no connecting edges.")
+  }
+
+  # 5. Computation : -Inf means they are not included
+  outD1 = outMask * D
+  outD2 = (!outMask) * array(-Inf,c(ndata,ndata))
+  outD2[which(is.na(outD2))] = 0
+
+  outD = outD1 + outD2
+  for (i in 1:ndata){
+    outD[i,i] = 0
+  }
+
+  result = list()
+  result$mask = outMask
+  result$dist = outD
+  return(result)
+}
+
 #  ------------------------------------------------------------------------
 # 4. AUX.SHORTESTPATH
 #  ------------------------------------------------------------------------
@@ -435,9 +539,10 @@ aux.graphnbd <- function(data,method="euclidean",type=c("proportion",0.1),symmet
 #' shortest path in a pairwise sense using 'RcppArmadillo'. A logical input
 #' is also accepted.
 #'
-#' @param dist either an \code{(n-by-n)} matrix or a \code{dist} class object.
-#' @return an \code{(n-by-n)} matrix containing pairwise shortest path.
+#' @param dist either an \eqn{(n\times n)} matrix or a \code{dist} class object.
+#' @return an \eqn{(n\times n)} matrix containing pairwise shortest path.
 #' @examples
+#' \dontrun{
 #' ## Generate 10-sample data
 #' X = aux.gensamples(n=10)
 #'
@@ -451,6 +556,7 @@ aux.graphnbd <- function(data,method="euclidean",type=c("proportion",0.1),symmet
 #' par(mfrow=c(1,2))
 #' image(W1); title("from binarized")
 #' image(W2); title("from Euclidean distance")
+#' }
 #'
 #' @author Kisung You
 #' @references Floyd, R.W. (1962) \emph{Algorithm 97: Shortest Path}. Commincations of the ACMS, Vol.5(6):345.
@@ -567,7 +673,7 @@ aux.MaxMinLandmark <- function(X,npoints,pdflag=FALSE){
 #' \item{generalized Student-t}{\eqn{=1/(1+\|x-y\|^d)}, \eqn{d\ge 1}}
 #' }
 #'
-#' @param X an \code{(n-by-p)} data matrix
+#' @param X an \eqn{(n\times p)} data matrix
 #' @param ktype a vector containing the type of kernel and parameters involved. Below the usage is
 #' consistent with description
 #' \describe{
@@ -594,11 +700,12 @@ aux.MaxMinLandmark <- function(X,npoints,pdflag=FALSE){
 #' }
 #'
 #' @return a named list containing \describe{
-#' \item{K}{a \code{(p-by-p)} kernelizd gram matrix.}
-#' \item{Kcenter}{a \code{(p-by-p)} centered version of \code{K}.}
+#' \item{K}{a \eqn{(p\times p)} kernelizd gram matrix.}
+#' \item{Kcenter}{a \eqn{(p\times p)} centered version of \code{K}.}
 #' }
 #'
 #' @examples
+#' \dontrun{
 #' ## generate data
 #' X = aux.gensamples(n=100)
 #'
@@ -606,17 +713,8 @@ aux.MaxMinLandmark <- function(X,npoints,pdflag=FALSE){
 #' A1 = aux.kernelcov(X,c("spline"))
 #' A2 = aux.kernelcov(X,c("spline",1,2)) # these numbers will be disregarded.
 #' print(paste("* aux.kernelcov : abs.diff.",norm(A1$K-A2$K,"f"),"in norm"))
+#' }
 #'
-#' \dontshow{
-#' minx = min(X)
-#' X = X + (abs(minx) + 1e-6)
-#' thenames = c("linear","polynomial","gaussian","laplacian","anova","sigmoid",
-#' "rq","mq","iq","imq","spherical","power","log","spline","cauchy","chisq","histintx","ghistintx","t")
-#' ntest = length(thenames)
-#' for (i in 1:ntest){
-#' aux.kernelcov(X,thenames[i])
-#' }
-#' }
 #'
 #' @references Hofmann, T., Scholkopf, B., and Smola, A.J. (2008) \emph{Kernel methods in
 #' machine learning}. arXiv:math/0701907.
@@ -925,15 +1023,60 @@ aux.pkgstat <- function(){
   ndo  = (sum(unlist(lapply(ls("package:Rdimtools"), startsWith, "do."))))
   nest = (sum(unlist(lapply(ls("package:Rdimtools"), startsWith, "est."))))
   naux = (sum(unlist(lapply(ls("package:Rdimtools"), startsWith, "aux."))))
+  noos = (sum(unlist(lapply(ls("package:Rdimtools"), startsWith, "oos."))))
 
-  "*  dimension reduction : "
-  mdo  = paste("*  cat1. manifold learning techniques           : ",ndo,sep="")
-  mest = paste("*  cat2. intrinsic dimension estimation methods : ",nest,sep="")
-  maux = paste("*  cat3. auxiliary functions available          : ",naux,sep="")
+  mdo  = paste("*  cat1{do.}  manifold learning techniques           : ",ndo,sep="")
+  mest = paste("*  cat2{est.} intrinsic dimension estimation methods : ",nest,sep="")
+  moos = paste("*  cat3{oos.} out-of-sample projection methods       : ",noos,sep="")
+  maux = paste("*  cat4{aux.} auxiliary functions available          : ",naux,sep="")
   print("* Number of functions available in Rdimtools package")
   print(mdo)
   print(mest)
+  print(moos)
   print(maux)
 }
 
 
+# 09. aux.kernelcentering -------------------------------------------------
+#     centering the kernel/gram matrix
+#' @keywords internal
+#' @noRd
+aux.kernelcentering <- function(K){
+  N = nrow(K)
+  if (ncol(K)!=N){
+    stop("* aux.kernelcentering : an input K should be a square matrix.")
+  }
+  onesN  = array(1,c(N,N))/N
+  Ktilde = K-(onesN%*%K)-(K%*%onesN)+(onesN%*%K%*%onesN)
+  return(Ktilde)
+}
+
+
+# 10. aux.kernelprojection ------------------------------------------------
+# given uncentered gram matrix, find the projected data
+# note that it returns (ndim-by-N)
+#' @keywords internal
+#' @noRd
+aux.kernelprojection <- function(KK, ndim){
+  KKcentered = aux.kernelcentering(KK)
+  KKceigen   = eigen(KKcentered)
+  Y          = (t(KKceigen$vectors[,1:ndim]) %*% KK)
+  return(Y)
+}
+
+
+
+
+# 11. aux.adjprojection : adjust projection matrix ------------------------
+#' @keywords internal
+#' @noRd
+aux.adjprojection <- function(P){
+  p = ncol(P)
+  Pid = (t(P)%*%P)
+  if (max(abs(diag(p)-Pid))>1e-10){
+    output = qr.Q(qr(P))
+  } else {
+    output = P
+  }
+  return(output)
+}

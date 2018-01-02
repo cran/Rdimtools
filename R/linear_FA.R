@@ -5,7 +5,7 @@
 #' explains similarities and intrinsic differences between a closely-related method of Principal Component Analysis (PCA).
 #'
 #'
-#' @param X an \code{(n-by-p)} matrix or data frame whose rows are observations
+#' @param X an \eqn{(n\times p)} matrix or data frame whose rows are observations
 #' and columns represent independent variables.
 #' @param ndim an integer-valued number of loading variables, or target dimension.
 #' @param preprocess an additional option for preprocessing the data.
@@ -16,16 +16,16 @@
 #'
 #' @return a named list containing
 #' \describe{
-#' \item{Y}{an \code{(n-by-ndim)} matrix whose rows are embedded observations.}
+#' \item{Y}{an \eqn{(n\times ndim)} matrix whose rows are embedded observations.}
 #' \item{trfinfo}{a list containing information for out-of-sample prediction.}
-#' \item{projection}{a \code{(p-by-ndim)} whose columns are basis for projection.}
-#' \item{loadings}{a \code{(p-by-ndim)} matrix whose rows are extracted loading factors.}
-#' \item{noise}{a length-\code{p} vector of estimated noise.}
+#' \item{projection}{a \eqn{(p\times ndim)} whose columns are basis for projection.}
+#' \item{loadings}{a \eqn{(p\times ndim)} matrix whose rows are extracted loading factors.}
+#' \item{noise}{a length-\eqn{p} vector of estimated noise.}
 #' }
 #'
 #' @examples
 #' ## generate data
-#' X = aux.gensamples()
+#' X = aux.gensamples(n=496)
 #'
 #' ## 1. use centered data
 #' output1 <- do.fa(X,ndim=2)
@@ -49,7 +49,7 @@
 #' @rdname linear_FA
 #' @author Kisung You
 #' @export
-do.fa <- function(X,ndim=2,preprocess="center",maxiter=1000,tolerance=1e-10){
+do.fa <- function(X,ndim=2,preprocess="center",maxiter=1000,tolerance=1e-6){
   # 1. typecheck is always first step to perform.
   aux.typecheck(X)
   if ((!is.numeric(ndim))||(ndim<1)||(ndim>ncol(X))||is.infinite(ndim)||is.na(ndim)){

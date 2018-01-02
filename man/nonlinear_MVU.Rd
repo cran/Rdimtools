@@ -9,7 +9,7 @@ do.mvu(X, ndim = 2, type = c("proportion", 0.1), preprocess = "null",
   projtype = "spectral")
 }
 \arguments{
-\item{X}{an \code{(n-by-p)} matrix or data frame whose rows are observations and columns represent independent variables.}
+\item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations and columns represent independent variables.}
 
 \item{ndim}{an integer-valued target dimension.}
 
@@ -26,7 +26,7 @@ Default is ``null'', and other methods of ``decorrelate'',``center'' , and ``whi
 \value{
 a named list containing
 \describe{
-\item{Y}{an \code{(n-by-ndim)} matrix whose rows are embedded observations.}
+\item{Y}{an \eqn{(n\times ndim)} matrix whose rows are embedded observations.}
 \item{trfinfo}{a list containing information for out-of-sample prediction.}
 }
 }
@@ -36,8 +36,8 @@ to exploit semidefinite programming in performing nonlinear dimensionality reduc
 neighborhood graph constructed in the original high-dimensional space. Its unfolding generates a gram
 matrix \eqn{K} in that we can choose from either directly finding embeddings (\code{"spectral"}) or
 use again Kernel PCA technique (\code{"kpca"}) to find low-dimensional representations. Note that
-since \code{do.mvu} depends on \url{https://CRAN.R-project.org/package=Rcsdp}{Rcsdp}, we cannot guarantee its computational
-efficiency as we are given a large dataset.
+since \code{do.mvu} depends on \href{https://CRAN.R-project.org/package=Rcsdp}{Rcsdp}, we cannot guarantee its computational
+efficiency when given a large dataset.
 }
 \examples{
 ## generate ribbon-shaped data

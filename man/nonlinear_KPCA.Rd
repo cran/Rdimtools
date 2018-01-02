@@ -7,7 +7,7 @@
 do.kpca(X, ndim = 2, preprocess = "null", kernel = c("gaussian", 1))
 }
 \arguments{
-\item{X}{an \code{(n-by-p)} matrix or data frame whose rows are observations and columns represent independent variables.}
+\item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations and columns represent independent variables.}
 
 \item{ndim}{an integer-valued target dimension.}
 
@@ -19,7 +19,7 @@ Default is ``null'', and other methods of ``decorrelate'',``center'' , and ``whi
 \value{
 a named list containing
 \describe{
-\item{Y}{an \code{(n-by-ndim)} matrix whose rows are embedded observations.}
+\item{Y}{an \eqn{(n\times ndim)} matrix whose rows are embedded observations.}
 \item{trfinfo}{a list containing information for out-of-sample prediction.}
 \item{vars}{variances of projected data / eigenvalues from kernelized covariance matrix.}
 }
@@ -31,9 +31,9 @@ a common method of introducing nonlinearity by transforming, usually, covariance
 other gram-type estimate to make it flexible in Reproducing Kernel Hilbert Space.
 }
 \examples{
+\dontrun{
 ## generate ribbon-shaped data
-## in order to pass CRAN pretest, n is set to be small.
-X = aux.gensamples(dname="ribbon",n=28)
+X = aux.gensamples(dname="ribbon",n=123)
 
 ## 1. standard KPCA with gaussian kernel
 output1 <- do.kpca(X,ndim=2)
@@ -49,6 +49,7 @@ par(mfrow=c(1,3))
 plot(output1$Y[,1],output1$Y[,2],main="Gaussian kernel")
 plot(output2$Y[,1],output2$Y[,2],main="Gaussian kernel with sigma=5")
 plot(output3$Y[,1],output3$Y[,2],main="Laplacian kernel")
+}
 
 }
 \references{

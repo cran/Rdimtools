@@ -5,10 +5,10 @@
 \title{Exploratory Factor Analysis}
 \usage{
 do.fa(X, ndim = 2, preprocess = "center", maxiter = 1000,
-  tolerance = 1e-10)
+  tolerance = 1e-06)
 }
 \arguments{
-\item{X}{an \code{(n-by-p)} matrix or data frame whose rows are observations
+\item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
 and columns represent independent variables.}
 
 \item{ndim}{an integer-valued number of loading variables, or target dimension.}
@@ -24,11 +24,11 @@ are supported. See also \code{\link{aux.preprocess}} for more details.}
 \value{
 a named list containing
 \describe{
-\item{Y}{an \code{(n-by-ndim)} matrix whose rows are embedded observations.}
+\item{Y}{an \eqn{(n\times ndim)} matrix whose rows are embedded observations.}
 \item{trfinfo}{a list containing information for out-of-sample prediction.}
-\item{projection}{a \code{(p-by-ndim)} whose columns are basis for projection.}
-\item{loadings}{a \code{(p-by-ndim)} matrix whose rows are extracted loading factors.}
-\item{noise}{a length-\code{p} vector of estimated noise.}
+\item{projection}{a \eqn{(p\times ndim)} whose columns are basis for projection.}
+\item{loadings}{a \eqn{(p\times ndim)} matrix whose rows are extracted loading factors.}
+\item{noise}{a length-\eqn{p} vector of estimated noise.}
 }
 }
 \description{
@@ -38,7 +38,7 @@ explains similarities and intrinsic differences between a closely-related method
 }
 \examples{
 ## generate data
-X = aux.gensamples()
+X = aux.gensamples(n=496)
 
 ## 1. use centered data
 output1 <- do.fa(X,ndim=2)

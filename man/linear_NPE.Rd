@@ -8,7 +8,7 @@ do.npe(X, ndim = 2, type = c("proportion", 0.1), symmetric = "union",
   weight = TRUE, preprocess = "null", regtype = FALSE, regparam = 1)
 }
 \arguments{
-\item{X}{an \code{(n-by-p)} matrix or data frame whose rows are observations
+\item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
 and columns represent independent variables.}
 
 \item{ndim}{an integer-valued target dimension.}
@@ -34,19 +34,16 @@ or \code{TRUE} otherwise.}
 \value{
 a named list containing
 \describe{
-\item{Y}{an \code{(n-by-ndim)} matrix whose rows are embedded observations.}
+\item{Y}{an \eqn{(n\times ndim)} matrix whose rows are embedded observations.}
 \item{eigval}{a vector of eigenvalues corresponding to basis expansion in an ascending order.}
-\item{projection}{a \code{(p-by-ndim)} whose columns are basis for projection.}
+\item{projection}{a \eqn{(p\times ndim)} whose columns are basis for projection.}
 \item{trfinfo}{a list containing information for out-of-sample prediction.}
 }
 }
 \description{
 \code{do.npe} performs a linear dimensionality reduction using Neighborhood Preserving
 Embedding (NPE) proposed by He et al (2005). It can be regarded as a linear approximation
-to Laplacian Eigenmaps.
-}
-\details{
-Like Locally Linear Embedding (LLE), it is possible for the weight matrix being rank deficient.
+to Locally Linear Embedding (LLE). Like LLE, it is possible for the weight matrix being rank deficient.
 If \code{regtype} is set to \code{TRUE} with a proper value of \code{regparam}, it will
 perform Tikhonov regularization as designated. When regularization is needed
 with \code{regtype} parameter to be \code{FALSE}, it will automatically find a suitable
@@ -54,6 +51,7 @@ regularization parameter and put penalty for stable computation. See also
 \code{\link{do.lle}} for more details.
 }
 \examples{
+\dontrun{
 # generate data
 X <- aux.gensamples(n=333)
 
@@ -71,6 +69,7 @@ par(mfrow=c(1,3))
 plot(output1$Y[,1],output1$Y[,2],main="5\%")
 plot(output2$Y[,1],output2$Y[,2],main="25\%")
 plot(output3$Y[,1],output3$Y[,2],main="50\%")
+}
 
 }
 \references{

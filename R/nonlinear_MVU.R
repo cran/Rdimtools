@@ -5,10 +5,10 @@
 #' neighborhood graph constructed in the original high-dimensional space. Its unfolding generates a gram
 #' matrix \eqn{K} in that we can choose from either directly finding embeddings (\code{"spectral"}) or
 #' use again Kernel PCA technique (\code{"kpca"}) to find low-dimensional representations. Note that
-#' since \code{do.mvu} depends on \url{https://CRAN.R-project.org/package=Rcsdp}{Rcsdp}, we cannot guarantee its computational
-#' efficiency as we are given a large dataset.
+#' since \code{do.mvu} depends on \href{https://CRAN.R-project.org/package=Rcsdp}{Rcsdp}, we cannot guarantee its computational
+#' efficiency when given a large dataset.
 #'
-#' @param X an \code{(n-by-p)} matrix or data frame whose rows are observations and columns represent independent variables.
+#' @param X an \eqn{(n\times p)} matrix or data frame whose rows are observations and columns represent independent variables.
 #' @param ndim an integer-valued target dimension.
 #' @param type a vector of neighborhood graph construction. Following types are supported;
 #'  \code{c("knn",k)}, \code{c("enn",radius)}, and \code{c("proportion",ratio)}.
@@ -20,7 +20,7 @@
 #'
 #' @return a named list containing
 #' \describe{
-#' \item{Y}{an \code{(n-by-ndim)} matrix whose rows are embedded observations.}
+#' \item{Y}{an \eqn{(n\times ndim)} matrix whose rows are embedded observations.}
 #' \item{trfinfo}{a list containing information for out-of-sample prediction.}
 #' }
 #'
@@ -130,31 +130,26 @@ do.mvu <- function(X,ndim=2,type=c("proportion",0.1),preprocess="null",projtype=
   #   5-3. final update for mean centered constraint
   A[[iter]] = list(matrix(1,N,N)/N)
   b[iter]   = 0
-  outCSDP = csdp(C,A,b,K)
+  outCSDP = csdp(C,A,b,K,csdp.control(printlevel=0))
   KK      = as.matrix(outCSDP$X[[1]])
 
-  projtype
   if (projtype=="spectral"){
     # 6. Embedding : Spectral Method, directly from K
     KKeigen = eigen(KK)
     eigvals = KKeigen$values
     eigvecs = KKeigen$vectors
 
-    Y = (diag(sqrt(eigvals[1:ndim])) %*% t(eigvecs[,1:ndim]))
+    tY = (diag(sqrt(eigvals[1:ndim])) %*% t(eigvecs[,1:ndim]))
   } else if (projtype=="kpca"){
     # 7. Embedding : Kernel PCA method
-    onesN = matrix(1,n,n)
-    KKcentered = KK - (onesN%*%KK/n) - (KK%*%onesN/n) + (onesN%*%KK%*%onesN/(n^2))
-    KKceigen   = eigen(KKcentered)
-
-    Y     = (t(KKceigen$vectors[,1:ndim]) %*% KK)
+    tY = aux.kernelprojection(KK, ndim)
   } else {
     stop("* do.mvu : 'projtype' should be either 'spectral' or 'kpca'.")
   }
 
   # 8. Return output
   result = list()
-  result$Y = t(Y)
+  result$Y = t(tY)
   result$trfinfo = trfinfo
   return(result)
 }

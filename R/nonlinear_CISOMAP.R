@@ -4,7 +4,7 @@
 #' preserving full isometry, maintaining infinitestimal angles - conformality - in that
 #' it alters geodesic distance to reflect scale information.
 #'
-#' @param X an \code{(n-by-p)} matrix or data frame whose rows are observations
+#' @param X an \eqn{(n\times p)} matrix or data frame whose rows are observations
 #' and columns represent independent variables.
 #' @param ndim an integer-valued target dimension.
 #' @param type a vector of neighborhood graph construction. Following types are supported;
@@ -19,29 +19,31 @@
 #'
 #' @return a named list containing
 #' \describe{
-#' \item{Y}{an \code{(n-by-ndim)} matrix whose rows are embedded observations.}
+#' \item{Y}{an \eqn{(n\times ndim)} matrix whose rows are embedded observations.}
 #' \item{trfinfo}{a list containing information for out-of-sample prediction.}
 #' }
 #'
-#'@examples
-#'## generate data
-#'X <- aux.gensamples(dname="cswiss",n=500)
 #'
-#'## 1. original Isomap
-#'output1 <- do.isomap(X,ndim=2)
+#' @examples
+#' \dontrun{
+#' ## generate data
+#' X <- aux.gensamples(dname="cswiss",n=500)
 #'
-#'## 2. C-Isomap
-#'output2 <- do.cisomap(X,ndim=2)
+#' ## 1. original Isomap
+#' output1 <- do.isomap(X,ndim=2)
 #'
-#'## 3. C-Isomap on a binarized graph
-#'output3 <- do.cisomap(X,ndim=2,weight=FALSE)
+#' ## 2. C-Isomap
+#' output2 <- do.cisomap(X,ndim=2)
 #'
-#'## Visualize three different projections
-#'par(mfrow=c(1,3))
-#'plot(output1$Y[,1],output1$Y[,2],main="Isomap")
-#'plot(output2$Y[,1],output2$Y[,2],main="C-Isomap")
-#'plot(output3$Y[,1],output3$Y[,2],main="Binarized C-Isomap")
+#' ## 3. C-Isomap on a binarized graph
+#' output3 <- do.cisomap(X,ndim=2,weight=FALSE)
 #'
+#' ## Visualize three different projections
+#' par(mfrow=c(1,3))
+#' plot(output1$Y[,1],output1$Y[,2],main="Isomap")
+#' plot(output2$Y[,1],output2$Y[,2],main="C-Isomap")
+#' plot(output3$Y[,1],output3$Y[,2],main="Binarized C-Isomap")
+#' }
 #'
 #' @references
 #' \insertRef{silva_global_2003}{Rdimtools}

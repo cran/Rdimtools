@@ -23,7 +23,7 @@ aux.gensamples(n = 496, noise = 0.1, dname = "swiss")
 }}
 }
 \value{
-an \code{(n-by-3)} matrix of generated data by row.
+an \eqn{(n\times 3)} matrix of generated data by row.
 }
 \description{
 It generates samples from predefined 3-d shapes, set by \code{dname} parameter.
@@ -35,7 +35,7 @@ d1 = aux.gensamples(dname="twinpeaks",noise=0.01)
 d2 = aux.gensamples(dname="ribbon",noise=0.01)
 d3 = aux.gensamples(dname="crown", noise=0.01)
 
-\dontshow{
+\dontrun{
 casenames = c("swiss","crown","helix","saddle","ribbon","bswiss","cswiss","twinpeaks")
 for (i in 1:length(casenames)){
   data = aux.gensamples(n=sample(1000:2000,1),noise=runif(1)[1],dname=casenames[i])
@@ -43,8 +43,7 @@ for (i in 1:length(casenames)){
 }
 }
 \references{
-van der Maatehn, L., Postma, E. and van den Herik, J. (2009) \emph{Dimensionality
-Reduction : A Comparative Review}. TiCC Technical Report 2009-005.
+\insertRef{van_der_maaten_dimensionality_2009}{Rdimtools}
 }
 \author{
 Kisung You

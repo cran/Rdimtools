@@ -7,7 +7,7 @@
 #' For \code{do.tsne}, we implemented a naive version of t-SNE as well as an interface with Barnes-Hut algorithm,
 #' which takes advantage of speed in sacrifice of accuracy.
 #'
-#' @param X an \code{(n-by-p)} matrix or data frame whose rows are observations and columns represent independent variables.
+#' @param X an \eqn{(n\times p)} matrix or data frame whose rows are observations and columns represent independent variables.
 #' @param ndim an integer-valued target dimension.
 #' @param perplexity desired level of perplexity; ranging [5,50].
 #' @param eta learning parameter.
@@ -26,14 +26,14 @@
 #'
 #' @return a named list containing
 #' \describe{
-#' \item{Y}{an \code{(n-by-ndim)} matrix whose rows are embedded observations.}
+#' \item{Y}{an \eqn{(n\times ndim)} matrix whose rows are embedded observations.}
 #' \item{trfinfo}{a list containing information for out-of-sample prediction.}
 #' }
 #'
 #' @examples
+#' \dontrun{
 #' ## generate "cswiss" data
-#' ## in order to pass CRAN pretest, n is set to be small.
-#' X = aux.gensamples(dname="cswiss",n=28)
+#' X = aux.gensamples(dname="cswiss",n=99)
 #'
 #' ## 1. no pca scaling
 #' output1 <- do.tsne(X,ndim=2,pca=FALSE)
@@ -49,6 +49,7 @@
 #' if ((length(output1)!=1)&&(!is.na(output1))){plot(output1$Y[,1],output1$Y[,2],main="Setting 1")}
 #' if ((length(output1)!=1)&&(!is.na(output2))){plot(output2$Y[,1],output2$Y[,2],main="Setting 2")}
 #' if ((length(output1)!=1)&&(!is.na(output3))){plot(output3$Y[,1],output3$Y[,2],main="Setting 3")}
+#' }
 #'
 #' @seealso \code{\link{do.sne}}, \code{\link[Rtsne]{Rtsne}}.
 #' @references

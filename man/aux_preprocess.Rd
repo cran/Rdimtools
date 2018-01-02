@@ -7,7 +7,7 @@
 aux.preprocess(data, type = "center")
 }
 \arguments{
-\item{data}{an \code{(n-by-p)} matrix or data frame whose rows are observations
+\item{data}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
 and columns represent independent variables.}
 
 \item{type}{one of "center", "decorrelate", or "whiten". See below for more details.}
@@ -15,11 +15,11 @@ and columns represent independent variables.}
 \value{
 named list containing:
 \describe{
-\item{pX}{an \code{(n-by-p)} matrix after preprocessing in accordance with \code{type} parameter}
+\item{pX}{an \eqn{(n\times p)} matrix after preprocessing in accordance with \code{type} parameter}
 \item{info}{a list containing \itemize{
 \item \code{type:} name of preprocessing procedure.
 \item \code{mean:} a mean vector of length \eqn{p}.
-\item \code{multiplier:} a \code{(p-by-p)} matrix for "decorrelate" or "whiten" or 1 for "center".}}
+\item \code{multiplier:} a \eqn{(p\times p)} matrix for "decorrelate" or "whiten" or 1 for "center".}}
 }
 }
 \description{
@@ -33,6 +33,7 @@ to have diagonal covariance terms only. \code{"whiten"} option sets the sample
 covariance to have all diagonal terms equal to 1, equally weighting each variable.
 }
 \examples{
+\dontrun{
 ## Generate data
 X = aux.gensamples()
 
@@ -46,6 +47,7 @@ par(mfrow=c(1,3))
 image(cov(X_center$pX),zlim=c(-50,50)); title("center");
 image(cov(X_decorr$pX),zlim=c(-50,50)); title("decorrelate");
 image(cov(X_whiten$pX),zlim=c(-50,50)); title("whitening")
+}
 
 }
 \author{

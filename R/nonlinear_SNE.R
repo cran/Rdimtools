@@ -4,13 +4,13 @@
 #' description in high-dimensional - possible, nonlinear - subspace on low-dimensional target space.
 #' \code{do.sne} fully adopts algorithm details in an original paper by Hinton and Roweis (2002).
 #'
-#' @param X an \code{(n-by-p)} matrix or data frame whose rows are observations and columns represent independent variables.
+#' @param X an \eqn{(n\times p)} matrix or data frame whose rows are observations and columns represent independent variables.
 #' @param ndim an integer-valued target dimension.
 #' @param perplexity desired level of perplexity; ranging [5,50].
 #' @param eta learning parameter.
 #' @param maxiter maximum number of iterations.
 #' @param jitter level of white noise added at the beginning.
-#' @param jitterdecay decay parameter in (0,1). The closer to 0, the faster artificial noise decays.
+#' @param jitterdecay decay parameter in \eqn{(0,1)}. The closer to 0, the faster artificial noise decays.
 #' @param momentum level of acceleration in learning.
 #' @param preprocess an additional option for preprocessing the data.
 #' Default is ``null'', and other methods of ``decorrelate'',``center'' , and ``whiten'' are supported. See also \code{\link{aux.preprocess}} for more details.
@@ -21,15 +21,16 @@
 #'
 #' @return a named list containing
 #' \describe{
-#' \item{Y}{an \code{(n-by-ndim)} matrix whose rows are embedded observations.}
+#' \item{Y}{an \eqn{(n\times ndim)} matrix whose rows are embedded observations.}
 #' \item{trfinfo}{a list containing information for out-of-sample prediction.}
 #' \item{vars}{a vector containing betas used in perplexity matching.}
 #' }
 #'
 #' @examples
+#' \dontrun{
 #' ## generate ribbon-shaped data
 #' ## in order to pass CRAN pretest, n is set to be small.
-#' X = aux.gensamples(dname="ribbon",n=28)
+#' X = aux.gensamples(dname="ribbon",n=99)
 #'
 #' ## 1. pca scaling with 90% variances explained
 #' output1 <- do.sne(X,ndim=2,pca=TRUE)
@@ -45,6 +46,7 @@
 #' if ((length(output1)!=1)&&(!is.na(output1))){plot(output1$Y[,1],output1$Y[,2],main="Setting 1")}
 #' if ((length(output1)!=1)&&(!is.na(output2))){plot(output2$Y[,1],output2$Y[,2],main="Setting 2")}
 #' if ((length(output1)!=1)&&(!is.na(output3))){plot(output3$Y[,1],output3$Y[,2],main="Setting 3")}
+#' }
 #'
 #' @references
 #' \insertRef{hinton_stochastic_2003}{Rdimtools}

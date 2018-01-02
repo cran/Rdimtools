@@ -8,7 +8,7 @@ do.pca(X, ndim = "auto", cor = FALSE, preprocess = "center",
   varratio = 0.9)
 }
 \arguments{
-\item{X}{an \code{(n-by-p)} matrix or data frame whose rows are observations
+\item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
 and columns represent independent variables.}
 
 \item{ndim}{an integer-valued target dimension or ``auto'' option using \emph{varratio.}}
@@ -26,9 +26,9 @@ chosen as ``auto''.}
 \value{
 a named list containing
 \describe{
-\item{Y}{an \code{(n-by-ndim)} matrix whose rows are embedded observations.}
+\item{Y}{an \eqn{(n\times ndim)} matrix whose rows are embedded observations.}
 \item{vars}{a vector containing variances of projected data onto principal components.}
-\item{projection}{a \code{(p-by-ndim)} whose columns are principal components.}
+\item{projection}{a \eqn{(p\times ndim)} whose columns are principal components.}
 \item{trfinfo}{a list containing information for out-of-sample prediction.}
 }
 }
@@ -43,6 +43,7 @@ variance. Measured by summation of top eigenvalues from sample covariance,
 we use the minimal summation to be larger than \code{varratio}.
 }
 \examples{
+\dontrun{
 # generate data
 X <- rbind(matrix(rnorm(100),nr=10),matrix(rnorm(100),nr=10)+10)
 
@@ -53,6 +54,8 @@ plot(output$Y[,1],output$Y[,2])
 ## 2. automatic detection of target dimension accounting for 98\% of variance
 output <- do.pca(X,ndim="auto",varratio=0.98)           # perform PCA
 plot(seq_len(length(output$vars)),output$vars,type="b") # plot variances
+}
+
 }
 \references{
 \insertRef{pearson_liii._1901}{Rdimtools}

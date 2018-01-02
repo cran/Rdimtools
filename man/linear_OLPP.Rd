@@ -9,7 +9,7 @@ do.olpp(X, ndim = 2, type = c("proportion", 0.1), symmetric = c("union",
   "decorrelate", "whiten"), t = 1)
 }
 \arguments{
-\item{X}{an \code{(n-by-p)} matrix or data frame whose rows are observations}
+\item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations}
 
 \item{ndim}{an integer-valued target dimension.}
 
@@ -30,8 +30,8 @@ See also \code{\link{aux.graphnbd}} for more details.}
 \value{
 a named list containing
 \describe{
-\item{Y}{an \code{(n-by-ndim)} matrix whose rows are embedded observations.}
-\item{projection}{a \code{(p-by-ndim)} whose columns are basis for projection.}
+\item{Y}{an \eqn{(n\times ndim)} matrix whose rows are embedded observations.}
+\item{projection}{a \eqn{(p\times ndim)} whose columns are basis for projection.}
 \item{trfinfo}{a list containing information for out-of-sample prediction.}
 }
 }
@@ -42,6 +42,7 @@ It adopts PCA as preprocessing step and uses only one eigenvector at each iterat
 it might incur warning messages for solving near-singular system of linear equations.
 }
 \examples{
+\dontrun{
 ## generate 2 normal groups of data that are far away
 X = rbind(matrix(rnorm(200),nrow=20), (matrix(rnorm(200),nrow=20)+10))
 
@@ -54,6 +55,7 @@ output2 <- do.olpp(X,ndim=2,type=c("proportion",0.25))
 par(mfrow=c(1,2))
 plot(output1$Y[,1],output1$Y[,2],main="10\% connected")
 plot(output2$Y[,1],output2$Y[,2],main="25\% connected")
+}
 
 }
 \references{

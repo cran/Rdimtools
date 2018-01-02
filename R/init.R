@@ -1,7 +1,8 @@
 .pkgenv <- new.env(parent = emptyenv())
 
 .onAttach <- function(libname, pkgname){
-  packageStartupMessage("\n * Rdimtools for Dimension Reduction and Estimation is maintained by Kisung You (University of Notre Dame) under License GPL 3.\n\n * We are continuously developing this package. Please feel free to make comments or bug reports to the maintainer.")
+  packageStartupMessage("\n * Rdimtools for Dimension Reduction and Estimation maintained by Kisung You (University of Notre Dame).
+                         \n * We are continuously developing this package. Please feel free to share your comments, suggestions or bugs to the maintainer via either email or github issue page (http://github.com/kisungyou/Rdimtools/issues).")
 }
 
 # .onLoad <- function(libname, pkgname){
@@ -25,3 +26,8 @@
 #   .pkgenv[["RStudio_outofdate"]] <- RStudio_outofdate
 # zzzz = (sum(unlist(lapply(ls("package:Rdimtools"), startsWith, "do."))))
 # }
+
+
+# GITHUB
+# git remote add origin git@github.com:kisungyou/Rdimtools.git <- called origin
+# git push -u origin master

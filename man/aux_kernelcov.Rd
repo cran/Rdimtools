@@ -7,7 +7,7 @@
 aux.kernelcov(X, ktype)
 }
 \arguments{
-\item{X}{an \code{(n-by-p)} data matrix}
+\item{X}{an \eqn{(n\times p)} data matrix}
 
 \item{ktype}{a vector containing the type of kernel and parameters involved. Below the usage is
 consistent with description
@@ -36,8 +36,8 @@ consistent with description
 }
 \value{
 a named list containing \describe{
-\item{K}{a \code{(p-by-p)} kernelizd gram matrix.}
-\item{Kcenter}{a \code{(p-by-p)} centered version of \code{K}.}
+\item{K}{a \eqn{(p\times p)} kernelizd gram matrix.}
+\item{Kcenter}{a \eqn{(p\times p)} centered version of \code{K}.}
 }
 }
 \description{
@@ -85,6 +85,7 @@ There are 20 kernels supported. Belows are the kernels when given two vectors \e
 }
 }
 \examples{
+\dontrun{
 ## generate data
 X = aux.gensamples(n=100)
 
@@ -92,17 +93,8 @@ X = aux.gensamples(n=100)
 A1 = aux.kernelcov(X,c("spline"))
 A2 = aux.kernelcov(X,c("spline",1,2)) # these numbers will be disregarded.
 print(paste("* aux.kernelcov : abs.diff.",norm(A1$K-A2$K,"f"),"in norm"))
+}
 
-\dontshow{
-minx = min(X)
-X = X + (abs(minx) + 1e-6)
-thenames = c("linear","polynomial","gaussian","laplacian","anova","sigmoid",
-"rq","mq","iq","imq","spherical","power","log","spline","cauchy","chisq","histintx","ghistintx","t")
-ntest = length(thenames)
-for (i in 1:ntest){
-aux.kernelcov(X,thenames[i])
-}
-}
 
 }
 \references{

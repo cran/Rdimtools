@@ -88,6 +88,31 @@ method_olpp <- function(X, S, ndim) {
 }
 
 #' @keywords internal
+method_bpca <- function(T, reltol, maxiter) {
+    .Call('_Rdimtools_method_bpca', PACKAGE = 'Rdimtools', T, reltol, maxiter)
+}
+
+#' @keywords internal
+method_trfextlpp <- function(D, a, b) {
+    .Call('_Rdimtools_method_trfextlpp', PACKAGE = 'Rdimtools', D, a, b)
+}
+
+#' @keywords internal
+method_lspp_computeW <- function(S, svec) {
+    .Call('_Rdimtools_method_lspp_computeW', PACKAGE = 'Rdimtools', S, svec)
+}
+
+#' @keywords internal
+method_kmmcvec <- function(X, partmat, param) {
+    .Call('_Rdimtools_method_kmmcvec', PACKAGE = 'Rdimtools', X, partmat, param)
+}
+
+#' @keywords internal
+method_lfda_maximaldistance <- function(tvec, tmat) {
+    .Call('_Rdimtools_method_lfda_maximaldistance', PACKAGE = 'Rdimtools', tvec, tmat)
+}
+
+#' @keywords internal
 NULL
 
 #' @keywords internal
@@ -136,5 +161,17 @@ method_lleM <- function(W) {
 #' @keywords internal
 method_ree <- function(B, W, D, initc, abstol, maxiter) {
     .Call('_Rdimtools_method_ree', PACKAGE = 'Rdimtools', B, W, D, initc, abstol, maxiter)
+}
+
+method_spe <- function(R, iX, C, S, lambda, drate, matselector) {
+    .Call('_Rdimtools_method_spe', PACKAGE = 'Rdimtools', R, iX, C, S, lambda, drate, matselector)
+}
+
+method_ispe <- function(R, iX, C, S, lambda, drate, matselector, cutoff) {
+    .Call('_Rdimtools_method_ispe', PACKAGE = 'Rdimtools', R, iX, C, S, lambda, drate, matselector, cutoff)
+}
+
+method_crca <- function(Xij, Yinit, lambda, alpha, maxiter, tolerance, vecselector) {
+    .Call('_Rdimtools_method_crca', PACKAGE = 'Rdimtools', Xij, Yinit, lambda, alpha, maxiter, tolerance, vecselector)
 }
 

@@ -8,6 +8,11 @@
  * 07. LPP
  * 08. NPE
  * 09. OLPP
+ * 10. BPCA
+ * 11. EXTLPP
+ * 12. LSPP
+ * 13. KMCC
+ * 14. LFDA
 */
 
 #include <RcppArmadillo.h>
@@ -437,4 +442,207 @@ arma::mat method_olpp(arma::mat& X, arma::mat& S, const int ndim){
 
   // 9-7. return results
   return(A);
+}
+
+/*
+ * 10. Bayesian Principal Component Analysis (BPCA)
+ * NOTE : T in (d-by-N) type for consistency to the notes.
+ */
+arma::mat auxiliary_outer(arma::colvec x, arma::colvec y){
+  const int nx = x.n_elem;
+  const int ny = y.n_elem;
+  arma::mat output(nx,ny,fill::zeros);
+  for (int i=0;i<ny;i++){
+    output.col(i) = x*arma::as_scalar(y(i));
+  }
+  return(output);
+}
+//' @keywords internal
+// [[Rcpp::export]]
+Rcpp::List method_bpca(arma::mat& T, const double reltol, const int maxiter){
+  // 10-1. settings and preliminaries
+  int N = T.n_cols;
+  int d = T.n_rows;
+  int q = d-1;
+
+  // 10-2. initialize
+  arma::mat Wold(d,q,fill::randu);
+  arma::mat Wnew(d,q,fill::zeros);
+  double sig2old = 1.0;
+  double sig2new = 1.0;
+  arma::vec alpha(q,fill::randu);
+  arma::mat Iq(q,q,fill::eye);
+  arma::mat Mold = (Wold.t()*Wold) + (sig2old*Iq);
+  arma::mat Mnew(q,q,fill::zeros);
+
+  arma::mat MinvWt(q,d,fill::zeros); // precomputing inv(M)*t(W)
+  arma::mat emXn(q,N,fill::zeros);
+  arma::mat W_LHS(d,q,fill::zeros);  // W : outer products
+  arma::mat W_RHS(q,q,fill::zeros);  // W : before pinv
+
+  double term1, term2, term3;
+
+  // 10-3. iterate
+  int itercount = 0;
+  double tolgap = 100.0;
+  arma::vec stopper(2,fill::zeros);
+  while (tolgap > reltol){
+    // 10-3-1. precompute
+    MinvWt = solve(Mold,Wold.t()); // precomputing inv(M)*t(W)
+    for (int i=0;i<N;i++){
+      emXn.col(i) = MinvWt*T.col(i);
+    }
+
+    // 10-3-2. Wnew :: Update W
+    W_LHS.zeros(); // clear up previous values
+    for (int i=0;i<N;i++){
+      W_LHS = W_LHS + auxiliary_outer(T.col(i), emXn.col(i));
+    }
+    W_RHS = (sig2old*arma::diagmat(alpha)) + sig2old*(static_cast<double>(N))*Mold; // this part N
+    for (int i=0;i<N;i++){
+      W_RHS = W_RHS + auxiliary_outer(emXn.col(i), emXn.col(i));
+    }
+    Wnew = W_LHS*pinv(W_RHS);
+    Mnew = (Wnew.t()*Wnew) + (sig2old*Iq);
+
+    // 10-3-3. sig2new :: Update Sigma
+    sig2new = 0.0;
+    for (int i=0;i<N;i++){
+      term1 = std::pow(arma::norm(T.col(i),2),2);
+      term2 = -2*arma::dot(emXn.col(i), Wnew.t()*T.col(i));
+      term3 = arma::trace((sig2old*Mold + auxiliary_outer(emXn.col(i), emXn.col(i)))*Wnew.t()*Wnew);
+      sig2new = sig2new + (term1+term2+term3);
+    }
+    sig2new = sig2new/(static_cast<double>(d*N));
+
+    // 10-3-4. update alpha
+    for (int i=0;i<q;i++){
+      alpha(i) = static_cast<double>(d)/std::pow(arma::norm(Wnew.col(i)), 2);
+    }
+
+    // 10-3-5. stopping criterion
+    itercount += 1;
+    stopper(0) = norm(Wnew-Wold);
+    stopper(1) = std::sqrt(std::pow(sig2new-sig2old,2));
+    tolgap = arma::min(stopper);
+
+    // 10-3-6. update
+    Wold = Wnew;
+    Mold = Mnew;
+    sig2old = sig2new;
+    if (itercount > maxiter){
+      break;
+    }
+  }
+
+  // 10-4. return list of objects
+  return Rcpp::List::create(Rcpp::Named("W")=Wold,
+                            Rcpp::Named("alpha")=alpha,
+                            Rcpp::Named("sig2")=sig2old,
+                            Rcpp::Named("itercount")=itercount
+                            );
+}
+
+/*
+ * 11. Extended Locality Preserving Projection
+ * NOTE : simply Z-transform via the S_ij mapping
+ */
+//' @keywords internal
+// [[Rcpp::export]]
+arma::mat method_trfextlpp(arma::mat& D, double a, double b){
+  const int n = D.n_rows;
+  arma::mat output(n,n,fill::zeros);
+  double tval = 0.0;
+  double outval = 0.0;
+  for (int i=0;i<(n-1);i++){
+    for (int j=i;j<n;j++){
+      tval = D(i,j);
+
+      if (tval<=a){
+        outval = 1.0;
+      } else if ((a<tval)&&(tval<=((a+b)/2.0))){
+        outval = 1-2*std::pow((tval-a)/(b-a), 2.0);
+      } else if ((((a+b)/2)<tval)&&(tval<=b)){
+        outval = 2*std::pow((tval-a)/(b-a),2);
+      } else {
+        outval = 0.0;
+      }
+
+      output(i,j) = outval;
+      output(j,i) = outval;
+    }
+  }
+  return(output);
+}
+
+/*
+ * 12. Local Similarity Preserving Projection
+ */
+//' @keywords internal
+// [[Rcpp::export]]
+arma::mat method_lspp_computeW(arma::mat& S, arma::vec& svec){
+  const int n = S.n_rows;
+  arma::mat W(n,n,fill::zeros);
+  for (int i=0;i<n;i++){
+    for (int j=0;j<n;j++){
+      if (S(i,j)>=svec(i)){
+        W(i,j) = S(i,j);
+      }
+    }
+  }
+  return(W);
+}
+
+
+/*
+ * 13. Kernelized Maximum Margin Criterion
+ */
+//' @keywords internal
+// [[Rcpp::export]]
+arma::vec method_kmmcvec(arma::mat& X, arma::mat& partmat, double param){
+  // 1. get parameter
+  const int n  = X.n_rows;
+  const int ni = partmat.n_rows;
+  double param22 = 2*param*param;
+  // 2. compute
+  arma::rowvec vec1(n,fill::zeros);
+  arma::rowvec vec2(n,fill::zeros);
+  arma::vec output(n,fill::zeros);
+  for (int i=0;i<n;i++){
+    double tmp = 0.0;
+    vec1 = X.row(i);
+    for (int j=0;j<ni;j++){
+      vec2 = partmat.row(j);
+      tmp += exp(-(norm(vec1-vec2,2)*norm(vec1-vec2,2))/param22);
+    }
+    output(i) = tmp/ni;
+  }
+  return(output);
+}
+
+/*
+ * 14. Local Fisher Discriminant Analysis
+ */
+//' @keywords internal
+// [[Rcpp::export]]
+double method_lfda_maximaldistance(arma::rowvec& tvec, arma::mat& tmat){
+  // 1. get parameter
+  const int N = tmat.n_rows;
+  const int p = tvec.n_elem;
+
+  // 2. output : iteratively update
+  double output = 0.0;
+  double tmpout = 0.0;
+  // 3. variable declaration 64
+  arma::rowvec vec1;
+  arma::rowvec vec2;
+  vec1 = tvec;
+  for (int i=0;i<N;i++){
+    vec2 = tmat.row(i);
+    tmpout = norm(vec1-vec2,2);
+    if (tmpout > output){
+      output = tmpout;
+    }
+  }
+  return(output);
 }

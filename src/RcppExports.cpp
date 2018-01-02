@@ -241,6 +241,69 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// method_bpca
+Rcpp::List method_bpca(arma::mat& T, const double reltol, const int maxiter);
+RcppExport SEXP _Rdimtools_method_bpca(SEXP TSEXP, SEXP reltolSEXP, SEXP maxiterSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type T(TSEXP);
+    Rcpp::traits::input_parameter< const double >::type reltol(reltolSEXP);
+    Rcpp::traits::input_parameter< const int >::type maxiter(maxiterSEXP);
+    rcpp_result_gen = Rcpp::wrap(method_bpca(T, reltol, maxiter));
+    return rcpp_result_gen;
+END_RCPP
+}
+// method_trfextlpp
+arma::mat method_trfextlpp(arma::mat& D, double a, double b);
+RcppExport SEXP _Rdimtools_method_trfextlpp(SEXP DSEXP, SEXP aSEXP, SEXP bSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type D(DSEXP);
+    Rcpp::traits::input_parameter< double >::type a(aSEXP);
+    Rcpp::traits::input_parameter< double >::type b(bSEXP);
+    rcpp_result_gen = Rcpp::wrap(method_trfextlpp(D, a, b));
+    return rcpp_result_gen;
+END_RCPP
+}
+// method_lspp_computeW
+arma::mat method_lspp_computeW(arma::mat& S, arma::vec& svec);
+RcppExport SEXP _Rdimtools_method_lspp_computeW(SEXP SSEXP, SEXP svecSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type S(SSEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type svec(svecSEXP);
+    rcpp_result_gen = Rcpp::wrap(method_lspp_computeW(S, svec));
+    return rcpp_result_gen;
+END_RCPP
+}
+// method_kmmcvec
+arma::vec method_kmmcvec(arma::mat& X, arma::mat& partmat, double param);
+RcppExport SEXP _Rdimtools_method_kmmcvec(SEXP XSEXP, SEXP partmatSEXP, SEXP paramSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type partmat(partmatSEXP);
+    Rcpp::traits::input_parameter< double >::type param(paramSEXP);
+    rcpp_result_gen = Rcpp::wrap(method_kmmcvec(X, partmat, param));
+    return rcpp_result_gen;
+END_RCPP
+}
+// method_lfda_maximaldistance
+double method_lfda_maximaldistance(arma::rowvec& tvec, arma::mat& tmat);
+RcppExport SEXP _Rdimtools_method_lfda_maximaldistance(SEXP tvecSEXP, SEXP tmatSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::rowvec& >::type tvec(tvecSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type tmat(tmatSEXP);
+    rcpp_result_gen = Rcpp::wrap(method_lfda_maximaldistance(tvec, tmat));
+    return rcpp_result_gen;
+END_RCPP
+}
 // method_sne
 arma::mat method_sne(arma::mat& P, const int ndim, const double eta, const int maxiter, double jitter, double decay, const double momentum);
 RcppExport SEXP _Rdimtools_method_sne(SEXP PSEXP, SEXP ndimSEXP, SEXP etaSEXP, SEXP maxiterSEXP, SEXP jitterSEXP, SEXP decaySEXP, SEXP momentumSEXP) {
@@ -367,6 +430,58 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// method_spe
+arma::mat method_spe(arma::mat& R, arma::mat& iX, const int C, const int S, double lambda, double drate, arma::mat matselector);
+RcppExport SEXP _Rdimtools_method_spe(SEXP RSEXP, SEXP iXSEXP, SEXP CSEXP, SEXP SSEXP, SEXP lambdaSEXP, SEXP drateSEXP, SEXP matselectorSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type R(RSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type iX(iXSEXP);
+    Rcpp::traits::input_parameter< const int >::type C(CSEXP);
+    Rcpp::traits::input_parameter< const int >::type S(SSEXP);
+    Rcpp::traits::input_parameter< double >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< double >::type drate(drateSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type matselector(matselectorSEXP);
+    rcpp_result_gen = Rcpp::wrap(method_spe(R, iX, C, S, lambda, drate, matselector));
+    return rcpp_result_gen;
+END_RCPP
+}
+// method_ispe
+arma::mat method_ispe(arma::mat& R, arma::mat& iX, const int C, const int S, double lambda, double drate, arma::mat matselector, const double cutoff);
+RcppExport SEXP _Rdimtools_method_ispe(SEXP RSEXP, SEXP iXSEXP, SEXP CSEXP, SEXP SSEXP, SEXP lambdaSEXP, SEXP drateSEXP, SEXP matselectorSEXP, SEXP cutoffSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type R(RSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type iX(iXSEXP);
+    Rcpp::traits::input_parameter< const int >::type C(CSEXP);
+    Rcpp::traits::input_parameter< const int >::type S(SSEXP);
+    Rcpp::traits::input_parameter< double >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< double >::type drate(drateSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type matselector(matselectorSEXP);
+    Rcpp::traits::input_parameter< const double >::type cutoff(cutoffSEXP);
+    rcpp_result_gen = Rcpp::wrap(method_ispe(R, iX, C, S, lambda, drate, matselector, cutoff));
+    return rcpp_result_gen;
+END_RCPP
+}
+// method_crca
+Rcpp::List method_crca(arma::mat& Xij, arma::mat& Yinit, double lambda, double alpha, const int maxiter, const double tolerance, arma::vec& vecselector);
+RcppExport SEXP _Rdimtools_method_crca(SEXP XijSEXP, SEXP YinitSEXP, SEXP lambdaSEXP, SEXP alphaSEXP, SEXP maxiterSEXP, SEXP toleranceSEXP, SEXP vecselectorSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type Xij(XijSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type Yinit(YinitSEXP);
+    Rcpp::traits::input_parameter< double >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< const int >::type maxiter(maxiterSEXP);
+    Rcpp::traits::input_parameter< const double >::type tolerance(toleranceSEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type vecselector(vecselectorSEXP);
+    rcpp_result_gen = Rcpp::wrap(method_crca(Xij, Yinit, lambda, alpha, maxiter, tolerance, vecselector));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_Rdimtools_aux_preprocess", (DL_FUNC) &_Rdimtools_aux_preprocess, 2},
@@ -388,6 +503,11 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Rdimtools_method_lpp", (DL_FUNC) &_Rdimtools_method_lpp, 2},
     {"_Rdimtools_method_npe", (DL_FUNC) &_Rdimtools_method_npe, 2},
     {"_Rdimtools_method_olpp", (DL_FUNC) &_Rdimtools_method_olpp, 3},
+    {"_Rdimtools_method_bpca", (DL_FUNC) &_Rdimtools_method_bpca, 3},
+    {"_Rdimtools_method_trfextlpp", (DL_FUNC) &_Rdimtools_method_trfextlpp, 3},
+    {"_Rdimtools_method_lspp_computeW", (DL_FUNC) &_Rdimtools_method_lspp_computeW, 2},
+    {"_Rdimtools_method_kmmcvec", (DL_FUNC) &_Rdimtools_method_kmmcvec, 3},
+    {"_Rdimtools_method_lfda_maximaldistance", (DL_FUNC) &_Rdimtools_method_lfda_maximaldistance, 2},
     {"_Rdimtools_method_sne", (DL_FUNC) &_Rdimtools_method_sne, 7},
     {"_Rdimtools_method_snesym", (DL_FUNC) &_Rdimtools_method_snesym, 7},
     {"_Rdimtools_method_tsne", (DL_FUNC) &_Rdimtools_method_tsne, 7},
@@ -397,6 +517,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Rdimtools_method_lleWauto", (DL_FUNC) &_Rdimtools_method_lleWauto, 2},
     {"_Rdimtools_method_lleM", (DL_FUNC) &_Rdimtools_method_lleM, 1},
     {"_Rdimtools_method_ree", (DL_FUNC) &_Rdimtools_method_ree, 6},
+    {"_Rdimtools_method_spe", (DL_FUNC) &_Rdimtools_method_spe, 7},
+    {"_Rdimtools_method_ispe", (DL_FUNC) &_Rdimtools_method_ispe, 8},
+    {"_Rdimtools_method_crca", (DL_FUNC) &_Rdimtools_method_crca, 7},
     {NULL, NULL, 0}
 };
 
