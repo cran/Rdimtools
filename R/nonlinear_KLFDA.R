@@ -4,7 +4,6 @@
 #' to extend excavation of hidden patterns in a more flexible manner in tradeoff of computational load. For simplicity,
 #' only the gaussian kernel parametrized by its bandwidth \code{t} is supported.
 #'
-#'
 #' @param X an \eqn{(n\times p)} matrix or data frame whose rows are observations
 #' and columns represent independent variables.
 #' @param label a length-\eqn{n} vector of data class labels.
@@ -71,15 +70,15 @@ do.klfda <- function(X, label, ndim=2, preprocess=c("center","decorrelate","whit
   ulabel = unique(label)
   for (i in 1:length(ulabel)){
     if (sum(label==ulabel[i])==1){
-      stop("* do.lfda : no degerate class of size 1 is allowed.")
+      stop("* do.klfda : no degerate class of size 1 is allowed.")
     }
   }
   if (any(is.na(label))||(any(is.infinite(label)))){
-    warning("* Supervised Learning : any element of 'label' as NA or Inf will simply be considered as a class, not missing entries.")
+    stop("* Supervised Learning : any element of 'label' as NA or Inf will simply be considered as a class, not missing entries.")
   }
   #   3. ndim
   ndim = as.integer(ndim)
-  if (!check_ndim(ndim,p)){stop("* do.lfda : 'ndim' is a positive integer in [1,#(covariates)).")}
+  if (!check_ndim(ndim,p)){stop("* do.klfda : 'ndim' is a positive integer in [1,#(covariates)).")}
   #   4. preprocess
   if (missing(preprocess)){
     algpreprocess = "center"
@@ -108,7 +107,7 @@ do.klfda <- function(X, label, ndim=2, preprocess=c("center","decorrelate","whit
   tmplist = aux.preprocess(X,type=algpreprocess)
   trfinfo = tmplist$info
   pX      = tmplist$pX
-  trfinfo$algtype = "linear"
+  trfinfo$algtype = "nonlinear"
   #   2. neighborhood information
   nbdstruct = aux.graphnbd(pX,method="euclidean",
                            type=nbdtype,symmetric=nbdsymmetric)

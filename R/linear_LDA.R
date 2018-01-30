@@ -17,7 +17,6 @@
 #' \eqn{S_B}, between-group variance, has maximum rank of \code{K-1}. Therefore, the maximal
 #' subspace can only be spanned by at most \code{K-1} orthogonal vectors.
 #'
-#'
 #' @param X an \eqn{(n\times p)} matrix or data frame whose rows are observations
 #' and columns represent independent variables.
 #' @param label a length-\eqn{n} vector of data class labels.
@@ -31,6 +30,7 @@
 #' }
 #'
 #' @examples
+#' \dontrun{
 #' ## generate data of 3 types with clear difference
 #' dt1  = aux.gensamples(n=33)-100
 #' dt2  = aux.gensamples(n=33)
@@ -45,6 +45,7 @@
 #'
 #' ## visualize
 #' plot(output$Y[,1], output$Y[,2], main="3 groups on 2d plane")
+#' }
 #'
 #' @references
 #' \insertRef{fisher_use_1936}{Rdimtools}
@@ -74,7 +75,7 @@ do.lda <- function(X, label, ndim=2){
     warning("* do.lda : given 'label' has all unique elements.")
   }
   if (any(is.na(label))||(any(is.infinite(label)))){
-    warning("* Supervised Learning : any element of 'label' as NA or Inf will simply be considered as a class, not missing entries.")
+    stop("* Supervised Learning : any element of 'label' as NA or Inf will simply be considered as a class, not missing entries.")
   }
 
   #   3. ndim
@@ -100,7 +101,7 @@ do.lda <- function(X, label, ndim=2){
     SW    = lda_outer(pX[idx1,]) + lda_outer(pX[idx2,])
     mdiff = matrix(colMeans(pX[idx2,])-colMeans(pX[idx1,]))
     RLIN  = Rlinsolve::lsolve.bicgstab(SW, mdiff, verbose=FALSE)
-    w     = as.matrix(RLIN$x)
+    w     = aux.adjprojection(as.matrix(RLIN$x))
     Y     = pX%*%w
 
     result$Y = Y
@@ -124,8 +125,7 @@ do.lda <- function(X, label, ndim=2){
     }
     RLIN = Rlinsolve::lsolve.bicgstab(SW, SB, verbose=FALSE)
     W    = RLIN$x
-    eigW = eigen(W)
-    topW = eigW$vectors[,1:ndim]
+    topW = aux.adjprojection(RSpectra::eigs(W, ndim)$vectors)
     Y    = pX%*%topW
 
     result$Y = Y

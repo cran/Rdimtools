@@ -4,8 +4,9 @@
 \alias{do.ltsa}
 \title{Local Tangent Space Alignment}
 \usage{
-do.ltsa(X, ndim = 2, type = c("proportion", 0.1), symmetric = "union",
-  preprocess = "null")
+do.ltsa(X, ndim = 2, type = c("proportion", 0.1), symmetric = c("union",
+  "intersect", "asymmetric"), preprocess = c("center", "decorrelate",
+  "whiten"))
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -21,7 +22,7 @@ among all data points. See also \code{\link{aux.graphnbd}} for more details.}
 \item{symmetric}{one of \code{"intersect"}, \code{"union"} or \code{"asymmetric"} is supported. Default is \code{"union"}. See also \code{\link{aux.graphnbd}} for more details.}
 
 \item{preprocess}{an additional option for preprocessing the data.
-Default is ``null'' and  other methods of ``center'',``decorrelate'', or ``whiten''
+Default is "center" and  other methods "decorrelate" and "whiten"
 are supported. See also \code{\link{aux.preprocess}} for more details.}
 }
 \value{
@@ -40,6 +41,7 @@ a multiple of tangent spaces are gathered to to find an embedding that aligns th
 in target dimensional space.
 }
 \examples{
+\dontrun{
 ## generate data
 X <- aux.gensamples(dname="cswiss",n=100)
 
@@ -57,6 +59,7 @@ par(mfrow=c(1,3))
 plot(output1$Y[,1],output1$Y[,2],main="10\%")
 plot(output2$Y[,1],output2$Y[,2],main="25\%")
 plot(output3$Y[,1],output3$Y[,2],main="50\%")
+}
 
 }
 \references{

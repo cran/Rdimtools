@@ -29,40 +29,86 @@ embedding mappings. In the table below, TYPE represents whether it is \emph{supe
 For \emph{linear} methods, we have
 \tabular{lcl}{
 FUNCTION \tab TYPE \tab ALGORITHM \cr
+\code{\link{do.adr}} \tab U \tab Adaptive Dimension Reduction \cr
+\code{\link{do.ammc}} \tab S \tab Adaptive Maximum Margin Criterion \cr
 \code{\link{do.anmm}}\tab S \tab Average Neighborhood Margin Maximization \cr
+\code{\link{do.asi}} \tab U \tab Adaptive Subspace Iteration \cr
 \code{\link{do.bpca}} \tab U \tab Bayesian Principal Component Analysis \cr
 \code{\link{do.cca}} \tab S \tab Canonical Correlation Analysis \cr
+\code{\link{do.cnpe}} \tab U \tab Complete Neighborhood Preserving Embedding \cr
+\code{\link{do.crp}} \tab U \tab Collaborative Representation-based Projection \cr
+\code{\link{do.dagdne}} \tab S \tab Double-Adjacency Graphs-based Discriminant Neighborhood Embedding \cr
+\code{\link{do.dne}} \tab S \tab Discriminant Neighborhood Embedding \cr
 \code{\link{do.dspp}} \tab S \tab Discriminative Sparsity Preserving Projection \cr
+\code{\link{do.elde}} \tab S \tab Exponential Local Discriminant Embedding \cr
+\code{\link{do.elpp2}} \tab U \tab Enhanced Locality Preserving Projection (2013) \cr
 \code{\link{do.eslpp}} \tab S \tab Extended Supervised Locality Preserving Projection \cr
 \code{\link{do.extlpp}} \tab U \tab Extended Locality Preserving Projection \cr
 \code{\link{do.fa}} \tab U \tab (Exploratory) Factor Analysis  \cr
+\code{\link{do.fscore}} \tab S \tab Fisher Score \cr
 \code{\link{do.ica}} \tab U \tab Independent Component Analysis \cr
 \code{\link{do.isoproj}} \tab U \tab Isometric Projection \cr
 \code{\link{do.kmvp}} \tab S \tab Kernel-Weighted Maximum Variance Projection \cr
 \code{\link{do.kudp}} \tab U \tab Kernel-Weighted Unsupervised Discriminant Projection \cr
+\code{\link{do.lasso}} \tab S \tab Least Absolute Shrinkage and Selection Operator \cr
 \code{\link{do.lda}} \tab S \tab Linear Discriminant Analysis \cr
+\code{\link{do.ldakm}} \tab U \tab Combination of LDA and K-means \cr
 \code{\link{do.lde}} \tab S \tab Local Discriminant Embedding \cr
+\code{\link{do.ldp}} \tab S \tab Locally Discriminating Projection \cr
 \code{\link{do.lea}} \tab U \tab Locally Linear Embedded Eigenspace Analysis \cr
 \code{\link{do.lfda}} \tab S \tab Local Fisher Discriminant Analysis \cr
 \code{\link{do.llp}} \tab U \tab Local Learning Projections \cr
+\code{\link{do.lltsa}} \tab U \tab Linear Local Tangent Space Alignment \cr
 \code{\link{do.lmds}} \tab U \tab Landmark Multidimensional Scaling \cr
+\code{\link{do.lpca}} \tab U \tab Locally Principal Component Analysis \cr
+\code{\link{do.lpe}} \tab U \tab Locality Pursuit Embedding \cr
+\code{\link{do.lpfda}} \tab S \tab Locality Preserving Fisher Discriminant Analysis \cr
+\code{\link{do.lpmip}} \tab U \tab Locality-Preserved Maximum Information Projection \cr
 \code{\link{do.lpp}} \tab U \tab Locality Preserving Projection \cr
+\code{\link{do.lqmi}} \tab S \tab Linear Quadratic Mutual Information \cr
+\code{\link{do.lscore}} \tab U \tab Laplacian Score \cr
+\code{\link{do.lsda}} \tab S \tab Locality Sensitive Discriminant Analysis \cr
+\code{\link{do.lsdf}} \tab SS \tab Locality Sensitive Discriminant Feature \cr
+\code{\link{do.lsir}} \tab S \tab Localized Sliced Inverse Regression \cr
 \code{\link{do.lspp}}\tab S \tab Local Similarity Preserving Projection \cr
+\code{\link{do.mcfs}} \tab U \tab Multi-Cluster Feature Selection \cr
 \code{\link{do.mds}} \tab U \tab (Metric) Multidimensional Scaling \cr
+\code{\link{do.mfa}} \tab S \tab Marginal Fisher Analysis \cr
+\code{\link{do.mlie}} \tab S \tab Maximal Local Interclass Embedding \cr
 \code{\link{do.mmc}} \tab S \tab Maximum Margin Criterion \cr
+\code{\link{do.mmp}} \tab SS \tab Maximum Margin Projection \cr
+\code{\link{do.mmsd}} \tab S \tab Multiple Maximum Scatter Difference \cr
+\code{\link{do.modp}} \tab S \tab Modified Orthogonal Discriminant Projection \cr
+\code{\link{do.msd}} \tab S \tab Maximum Scatter Difference \cr
 \code{\link{do.mvp}} \tab S \tab Maximum Variance Projection \cr
+\code{\link{do.nolpp}} \tab U \tab Nonnegative Orthogonal Locality Preserving Projection \cr
+\code{\link{do.nonpp}} \tab U \tab Nonnegative Orthogonal Neighborhood Preserving Projections \cr
+\code{\link{do.npca}} \tab U \tab Nonnegative Principal Component Analysis \cr
 \code{\link{do.npe}} \tab U \tab Neighborhood Preserving Embedding \cr
+\code{\link{do.odp}} \tab S \tab Orthogonal Discriminant Projection \cr
+\code{\link{do.olda}} \tab S \tab Orthogonal Linear Discriminant Analysis \cr
 \code{\link{do.olpp}} \tab U \tab Orthogonal Locality Preserving Projection \cr
+\code{\link{do.onpp}} \tab U \tab Orthogonal Neighborhood Preserving Projections \cr
 \code{\link{do.opls}} \tab S \tab Orthogonal Partial Least Squares \cr
 \code{\link{do.pca}} \tab U \tab Principal Component Analysis \cr
+\code{\link{do.pflpp}} \tab U \tab Parameter-Free Locality Preserving Projection \cr
 \code{\link{do.pls}} \tab S \tab Partial Least Squares \cr
 \code{\link{do.ppca}} \tab U \tab Probabilistic Principal Component Analysis \cr
+\code{\link{do.rlda}} \tab S \tab Regularized Linear Discriminant Analysis \cr
 \code{\link{do.rndproj}} \tab U \tab Random Projection \cr
+\code{\link{do.rsir}} \tab S \tab Regularized Sliced Inverse Regression \cr
+\code{\link{do.sammc}} \tab SS \tab Semi-Supervised Adaptive Maximum Margin Criterion \cr
+\code{\link{do.save}} \tab S \tab Sliced Average Variance Estimation \cr
+\code{\link{do.sda}} \tab SS \tab Semi-Supervised Discriminant Analysis \cr
 \code{\link{do.sdlpp}} \tab U \tab Sample-Dependent Locality Preserving Projection \cr
+\code{\link{do.sir}} \tab S \tab Sliced Inverse Regression \cr
+\code{\link{do.slpe}} \tab S \tab Supervised Locality Pursuit Embedding \cr
 \code{\link{do.slpp}} \tab S \tab Supervised Locality Preserving Projection \cr
 \code{\link{do.spca}} \tab U \tab Sparse Principal Component Analysis \cr
 \code{\link{do.spp}} \tab U \tab Sparsity Preserving Projection \cr
-\code{\link{do.udp}} \tab U \tab Unsupervised Discriminant Projection
+\code{\link{do.ssldp}} \tab SS \tab Semi-Supervised Locally Discriminant Projection \cr
+\code{\link{do.udp}} \tab U \tab Unsupervised Discriminant Projection \cr
+\code{\link{do.ulda}} \tab S \tab Uncorrelated Linear Discriminant Analysis
 }
 
 Also, we have \emph{nonlinear} methods implemented
@@ -72,13 +118,19 @@ FUNCTION \tab TYPE \tab ALGORITHM \cr
 \code{\link{do.crca}} \tab U \tab Curvilinear Component Analysis \cr
 \code{\link{do.crda}} \tab U \tab Curvilinear Distance Analysis \cr
 \code{\link{do.dm}} \tab U \tab Diffusion Maps \cr
+\code{\link{do.dve}} \tab U \tab Distinguishing Variance Embedding \cr
+\code{\link{do.iltsa}} \tab U \tab Improved Local Tangent Space Alignment \cr
 \code{\link{do.isomap}} \tab U \tab Isometric Feature Mapping \cr
 \code{\link{do.ispe}} \tab U \tab Isometric Stochastic Proximity Embedding \cr
 \code{\link{do.keca}} \tab U \tab Kernel Entropy Component Analysis \cr
 \code{\link{do.klde}} \tab S \tab Kernel Local Discriminant Embedding \cr
 \code{\link{do.klfda}} \tab S \tab Kernel Local Fisher Discriminant Analysis \cr
+\code{\link{do.klsda}} \tab S \tab Kernel Locality Sensitive Discriminant Analysis \cr
+\code{\link{do.kmfa}} \tab S \tab Kernel Marginal Fisher Analysis \cr
 \code{\link{do.kmmc}} \tab S \tab Kernel Maximium Margin Criterion \cr
 \code{\link{do.kpca}} \tab U \tab Kernel Principal Component Analysis \cr
+\code{\link{do.kqmi}} \tab S \tab Kernel Quadratic Mutual Information \cr
+\code{\link{do.ksda}} \tab SS \tab Kernel Semi-Supervised Discriminant Analysis \cr
 \code{\link{do.lapeig}} \tab U \tab Laplacian Eigenmaps \cr
 \code{\link{do.lisomap}} \tab U \tab Landmark Isometric Feature Mapping \cr
 \code{\link{do.lle}} \tab U \tab Locally Linear Embedding \cr
@@ -91,6 +143,7 @@ FUNCTION \tab TYPE \tab ALGORITHM \cr
 \code{\link{do.sammon}} \tab U \tab Sammon Mapping \cr
 \code{\link{do.sne}} \tab U \tab Stochastic Neighbor Embedding \cr
 \code{\link{do.spe}} \tab U \tab Stochastic Proximity Embedding \cr
+\code{\link{do.splapeig}} \tab S \tab Supervised Laplacian Eigenmaps \cr
 \code{\link{do.tsne}} \tab U \tab t-distributed Stochastic Neighbor Embedding
 }
 }

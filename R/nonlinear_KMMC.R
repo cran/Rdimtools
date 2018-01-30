@@ -62,7 +62,7 @@ do.kmmc <- function(X, label, ndim=2, preprocess=c("center","decorrelate","white
   }
   N = length(ulabel)
   if (any(is.na(label))||(any(is.infinite(label)))){
-    warning("* Supervised Learning : any element of 'label' as NA or Inf will simply be considered as a class, not missing entries.")
+    stop("* Supervised Learning : any element of 'label' as NA or Inf will simply be considered as a class, not missing entries.")
   }
   #   3. ndim
   ndim = as.integer(ndim)
@@ -75,7 +75,7 @@ do.kmmc <- function(X, label, ndim=2, preprocess=c("center","decorrelate","white
   }
   #   5. t : kernel bandwidth
   t = as.double(t)
-  if (!check_NumMM(t, 0, 1e+10, compact=FALSE)){stop("* do.kmmc : 't' is a bandwidth parameter for gaussian kernel.")}
+  if (!check_NumMM(t, .Machine$double.eps, Inf, compact=TRUE)){stop("* do.kmmc : 't' is a bandwidth parameter for gaussian kernel.")}
   #------------------------------------------------------------------------
   ## COMPUTATION : PRELIMINARY
   #   1. preprocess of data

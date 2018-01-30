@@ -12,19 +12,26 @@
 # 09. aux.kernelcentering  : centering the kernel/gram matrix
 # 10. aux.kernelprojection : given uncentered gram matrix, find the projected data
 #                            note that it results (ndim-by-N) matrix, columns are projected vectors.
-# 11. aux.adjprojection    : adjust projection matrix
+# 11. aux.adjprojection    : adjust projection matrix by simply normalizing each column
+#     aux.adjqr            : qr decomposition is used for adjusting
+# 12. aux.nbdlogical       : find homogeneous and heterogeneous neighborhood indexing
+# 13. aux.geigen           : geigen in my taste
+# 14. aux.featureindicator : generate (p-by-ndim) indicator matrix for projection
+# 15. aux.traceratio.max   : compute trace ratio problem for maximal basis
 
 #  ------------------------------------------------------------------------
 # 0. AUX.TYPECHECK
 #  ------------------------------------------------------------------------
 #' @noRd
 #' @keywords internal
-aux.typecheck <- function(data){
+aux.typecheck <- function(data, verbose=FALSE){
   # data frame into matrix
   matinput = as.matrix(data)
   if ((dim(matinput)[1]==1)||(dim(matinput)[2]==1)){
-    warning("WARNING : input data should be matrix, not a vector.")
-    return(FALSE)
+    if (verbose==TRUE){
+      message("WARNING : input data should be matrix, not a vector.")
+    }
+    matinput = matrix(matinput)
   }
 
   # check if there exists any NA, Inf, -Inf
@@ -64,6 +71,7 @@ aux.typecheck <- function(data){
 #' \item \code{mean:} a mean vector of length \eqn{p}.
 #' \item \code{multiplier:} a \eqn{(p\times p)} matrix for "decorrelate" or "whiten" or 1 for "center".}}
 #' }
+#'
 #' @examples
 #' \dontrun{
 #' ## Generate data
@@ -1065,18 +1073,147 @@ aux.kernelprojection <- function(KK, ndim){
 }
 
 
-
-
 # 11. aux.adjprojection : adjust projection matrix ------------------------
 #' @keywords internal
 #' @noRd
-aux.adjprojection <- function(P){
+aux.adjqr <- function(P){
   p = ncol(P)
   Pid = (t(P)%*%P)
-  if (max(abs(diag(p)-Pid))>1e-10){
+  if (max(abs(diag(p)-Pid))>1e-18){
     output = qr.Q(qr(P))
   } else {
     output = P
+  }
+  return(output)
+}
+#' @keywords internal
+#' @noRd
+aux.adjprojection <- function(P){
+  n = nrow(P)
+  p = ncol(P)
+  output = array(0,c(n,p))
+  for (i in 1:p){
+    cvec = as.vector(P[,i])
+    output[,i] = cvec/sqrt(sum(cvec*cvec))
+  }
+  return(output)
+}
+# 12. aux.nbdlogical : find homogeneous and heterogeneous neighbor --------
+#' @keywords internal
+#' @noRd
+aux.nbdlogical <- function(X, label, khomo, khet){
+  D = as.matrix(dist(X))
+  n = nrow(D)
+  # 1. homogeneous logical matrix
+  logical_hom = array(FALSE,c(n,n))
+  for (i in 1:n){
+    # 1-1. index of same class
+    idxhom = setdiff(which(label==label[i]), i)
+    # 1-2. which is the smallest numk ?
+    partD = as.vector(D[i,idxhom])
+    # 1-3. partially smallest ones
+    partidx = which(      partD <= max(sort(partD)[1:max(min(khomo, length(idxhom)),1)])    )
+    # 1-4. adjust idxhom
+    idxhomadj = idxhom[partidx]
+    logical_hom[i,idxhomadj] = TRUE
+  }
+  # 2. heterogeneous logical matrix
+  logical_het = array(FALSE,c(n,n))
+  for (i in 1:n){
+    idxhet = which(label!=label[i])
+    partD = as.vector(D[i, idxhet])
+    partidx = which(partD <= max(sort(partD)[1:max(min(khet, length(idxhet)),1)]))
+    idxhetadj = idxhet[partidx]
+    logical_het[i,idxhetadj] = TRUE
+  }
+  output = list()
+  output$hom = logical_hom
+  output$het = logical_het
+  return(output)
+}
+
+# 13. aux.geigen : in my taste --------------------------------------------
+#' @keywords internal
+#' @noRd
+aux.geigen <- function(top, bottom, ndim, maximal=TRUE){
+  geigs = geigen::geigen(top, bottom)
+  maxp  = length(geigs$values)
+  if (ndim>1){
+    if (maximal==TRUE){
+      projection = aux.adjprojection(geigs$vectors[,maxp:(maxp-ndim+1)])
+    } else {
+      projection = aux.adjprojection(geigs$vectors[,1:ndim])
+    }
+  } else {
+    if (maximal==TRUE){
+      vecsol     = geigs$vectors[,maxp]
+      projection = matrix(vecsol/sqrt(sum(vecsol*vecsol)))
+    } else {
+      vecsol     = geigs$vectors[,1]
+      projection = matrix(vecsol/sqrt(sum(vecsol*vecsol)))
+    }
+  }
+  return(projection)
+}
+
+
+# 14. aux.featureindicator : generate indicator matrix --------------------
+#     generate (p-by-ndim) indicator matrix for projection
+#' @keywords internal
+#' @noRd
+aux.featureindicator <- function(p,ndim,idxvec){
+  if (length(idxvec)!=ndim){
+    stop("* aux.featureindicator : selection had some problem.")
+  }
+  output = array(0,c(p,ndim))
+  for (i in 1:ndim){
+    selectedcolumn = as.integer(idxvec[i])
+    output[selectedcolumn,i] = 1
+  }
+  return(output)
+}
+
+# 15. aux.traceratio.max : compute trace ratio problem for maximal --------
+#' @keywords internal
+#' @noRd
+aux.traceratio.max <- function(A,B,ndim,tol=1e-10){
+  # -------------------------------------------------------------
+  # PRELIMINARY SETTING
+  if (nrow(A)!=ncol(A)){
+    stop("* aux.traceratio : A is not square.")
+  } else {
+    d = nrow(A)
+  }
+  if (nrow(B)!=ncol(B)){
+    stop("* aux.traceratio : B is not square")
+  }
+  if (nrow(B)!=d){
+    stop("* aux.traceratio : B is not matching size of A.")
+  }
+  m = as.integer(ndim)
+  r = as.integer(Matrix::rankMatrix(B))
+
+  # -------------------------------------------------------------
+  # MAIN BRANCHING
+  if (m <= (d-r)){
+    Z = RSpectra::eigs(B,(d-r),which="SR")$vectors
+    cost = t(Z)%*%A%*%Z
+    Zright = RSpectra::eigs(cost, m)$vectors
+    output = Z%*%Zright;
+  } else {
+    lambda1 = sum(diag(A))/sum(diag(B))
+    lambda2 = sum(base::eigen(A, only.values=TRUE)$values[1:m])/sum(base::eigen(B, only.values = TRUE)$values[1:m])
+    lambda  = ((lambda1+lambda2)/2)
+    while ((lambda2 -lambda1)>tol){
+      gamma = sum(base::eigen((A-lambda*B), only.values = TRUE)$values[1:m])
+      if (gamma > 0){
+        lambda1 = lambda
+      } else {
+        lambda2 = lambda
+      }
+      lambda = ((lambda1+lambda2)/2)
+    }
+    output = RSpectra::eigs((A-lambda*B),ndim)$vectors
   }
   return(output)
 }

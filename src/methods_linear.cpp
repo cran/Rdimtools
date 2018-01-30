@@ -13,10 +13,13 @@
  * 12. LSPP
  * 13. KMCC
  * 14. LFDA
+ * 15. NNPROJMAX & NNPROJMIN
+ * 16. NNEMBEDMIN
 */
 
 #include <RcppArmadillo.h>
 #include "methods_linear.h"
+#include "methods_handytools.h"
 
 // [[Rcpp::depends(RcppArmadillo)]]
 
@@ -319,46 +322,8 @@ Rcpp::List method_fa(arma::mat& X, const int k, const int maxiter, const double 
 }
 
 /*
- * 7. Locality Preserving Projections (LPP)
+ * 07. Locality Preserving Projections (LPP)
  */
-// [[Rcpp::export]]
-Rcpp::List method_lpp(arma::mat& X, arma::mat& W){
-  // 7-1. basic settings
-  const int n = X.n_rows;
-  const int m = X.n_cols;
-  const int w1 = W.n_rows;
-  const int w2 = W.n_cols;
-
-  if (w1!=w2){
-    Rcpp::stop("ERROR : W is not a square matrix.");
-  }
-  if (m!=w2){
-    Rcpp::stop("ERROR : two inputs are not matching.");
-  }
-
-  // 7-2. main computation
-  // 7-2-1. Degree matrix D and Laplacian L
-  mat D(m,m);
-  for (int i=0;i<m;i++){
-    D(i,i) = as_scalar(sum(W.row(i)));
-  }
-  mat L = D-W;
-
-  // 7-2-2. LHS and RHS
-  mat LHS = X*L*X.t();
-  mat RHS = X*D*X.t();
-  mat SOL = solve(RHS, LHS);
-
-  // 7-2-3. eigendecomposition
-  vec eigval;
-  mat eigvec;
-  eig_sym(eigval, eigvec, SOL);
-
-  // 7-3. return results
-  return Rcpp::List::create(Rcpp::Named("eigval")=eigval,
-                            Rcpp::Named("eigvec")=eigvec);
-}
-
 
 /*
  * 08. Neighborhood Preserving Embedding (NPE)
@@ -645,4 +610,156 @@ double method_lfda_maximaldistance(arma::rowvec& tvec, arma::mat& tmat){
     }
   }
   return(output);
+}
+
+
+/*
+ * 15. NNPROJMAX & NNPROJMIN
+ *            Used in Nonnegative Projection Methods in LINEAR.49.
+ *            Note that this function will be utilized further.
+ */
+//' @keywords internal
+// [[Rcpp::export]]
+arma::mat method_nnprojmax(arma::mat& C, arma::mat& Uinit, const double tol, const int maxiter){
+  // 1. size information
+  const int p = Uinit.n_rows;
+  const int ndim = Uinit.n_cols;
+
+  // 2. initialize variables;
+  arma::mat Uold = Uinit;
+  arma::mat Unew(p,ndim,fill::zeros);
+
+  arma::mat C1(p,p,fill::zeros); // for C+
+  arma::mat C2(p,p,fill::zeros); // for C-
+  C1 = handy_plus(C);
+  C2 = C1-C;
+
+  arma::mat term1(p,ndim,fill::zeros); // for numerator   term
+  arma::mat term2(p,ndim,fill::zeros); // for denominator term
+
+  // 3. iterate
+  double incstop = 100.0;
+  int iter = 0;
+  while (incstop > tol){
+    // 3-1. numerator term
+    term1 = C1*Uold + Uold*Uold.t()*C2*Uold;
+    term2 = C2*Uold + Uold*Uold.t()*C1*Uold;
+
+    // 3-2. update U
+    Unew = handy_hadamartABCsqrt(Uold, term1, term2);
+
+    // 3-3. update incstop
+    incstop = arma::norm(Uold-Unew,"fro")/arma::norm(Uold,"fro");
+
+    // 3-4. update U matrix itself
+    Uold = Unew;
+
+    // 3-5. iteration numbers
+    iter = iter + 1;
+    if (iter >= maxiter){
+      break;
+    }
+  }
+
+  // 4. return output
+  return(Uold);
+}
+//' @keywords internal
+// [[Rcpp::export]]
+arma::mat method_nnprojmin(arma::mat& C, arma::mat& Uinit, const double tol, const int maxiter){
+  // 1. size information
+  const int p = Uinit.n_rows;
+  const int ndim = Uinit.n_cols;
+
+  // 2. initialize variables;
+  arma::mat Uold = Uinit;
+  arma::mat Unew(p,ndim,fill::zeros);
+
+  arma::mat C1(p,p,fill::zeros); // for C+
+  arma::mat C2(p,p,fill::zeros); // for C-
+  C1 = handy_plus(C);
+  C2 = C1-C;
+
+  arma::mat term1(p,ndim,fill::zeros); // for numerator   term
+  arma::mat term2(p,ndim,fill::zeros); // for denominator term
+
+  // 3. iterate
+  double incstop = 100.0;
+  int iter = 0;
+  while (incstop > tol){
+    // 3-1. numerator term
+    term1 = C2*Uold + Uold*Uold.t()*C1*Uold;
+    term2 = C1*Uold + Uold*Uold.t()*C2*Uold;
+
+    // 3-2. update U
+    Unew = handy_hadamartABCsqrt(Uold, term1, term2);
+
+    // 3-3. update incstop
+    incstop = arma::norm(Uold-Unew,"fro")/arma::norm(Uold,"fro");
+
+    // 3-4. update U matrix itself
+    Uold = Unew;
+
+    // 3-5. iteration numbers
+    iter = iter + 1;
+    if (iter >= maxiter){
+      break;
+    }
+  }
+
+  // 4. return output
+  return(Uold);
+}
+
+
+
+/*
+ * 16. NNEMBEDMIN
+ *            Used in solving tr(YMY') s.t YY'=I, Y>=0
+ */
+//' @keywords internal
+// [[Rcpp::export]]
+arma::mat method_nnembedmin(arma::mat& M, arma::mat& Yinit, const double tol, const int maxiter){
+  // 1. size information
+  const int m = Yinit.n_rows;
+  const int n = Yinit.n_cols;
+
+  // 2. initialize variables;
+  arma::mat Yold = Yinit;
+  arma::mat Ynew(m,n,fill::zeros);
+
+  arma::mat M1(n,n,fill::zeros); // for M+
+  arma::mat M2(n,n,fill::zeros); // for M-
+  M1 = handy_plus(M);
+  M2 = M1-M;
+
+  arma::mat term1(m,n,fill::zeros); // for numerator   term
+  arma::mat term2(m,n,fill::zeros); // for denominator term
+
+  // 3. iterate
+  double incstop = 100.0;
+  int iter = 0;
+  while (incstop > tol){
+    // 3-1. numerator term
+    term1 = Yold*M2 + Yold*M1*Yold.t()*Yold;
+    term2 = Yold*M1 + Yold*M2*Yold.t()*Yold;
+
+    // 3-2. update U
+    Ynew = handy_hadamartABCsqrt(Yold, term1, term2);
+
+    // 3-3. update incstop
+    incstop = arma::norm(Yold-Ynew,"fro")/arma::norm(Yold,"fro");
+
+    // 3-4. update U matrix itself
+    Yold = Ynew;
+
+    // 3-5. iteration numbers
+    iter = iter + 1;
+    if (iter >= maxiter){
+      break;
+    }
+  }
+
+  // 4. return output
+  return(Yold);
 }

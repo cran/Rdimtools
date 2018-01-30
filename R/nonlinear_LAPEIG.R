@@ -19,7 +19,6 @@
 #' combinatorial laplacian where connectivity is represented as 1 or 0 only.
 #' @param kernelscale kernel scale parameter. Default value is 1.0.
 #'
-#'
 #' @return a named list containing
 #' \describe{
 #' \item{Y}{an \eqn{(n\times ndim)} matrix whose rows are embedded observations.}
@@ -28,8 +27,8 @@
 #' }
 #'
 #' @examples
-#' ## generate default dataset
-#' X <- aux.gensamples()
+#' ## generate swiss-roll dataset of size 100
+#' X <- aux.gensamples(n=100)
 #'
 #' ## two types of graph laplacians using 20% of neighbors
 #' out1 <- do.lapeig(X,ndim=2,type=c("proportion",0.05),kernelscale=10) # weighted version
@@ -40,19 +39,22 @@
 #' plot(out1$Y[,1],out1$Y[,2],main="weighted")
 #' plot(out2$Y[,1],out2$Y[,2],main="combinatorial")
 #'
-#'@references
-#'\insertRef{belkin_laplacian_2003}{Rdimtools}
+#' @references
+#' \insertRef{belkin_laplacian_2003}{Rdimtools}
 #'
 #' @author Kisung You
 #' @rdname nonlinear_LAPEIG
 #' @export
-do.lapeig <- function(X,ndim=2,type=c("proportion",0.1),symmetric="union",preprocess="null",weighted=TRUE,kernelscale=1.0){
+do.lapeig <- function(X, ndim=2, type=c("proportion",0.1),
+                      symmetric=c("union","intersect","asymmetric"),
+                      preprocess=c("null","center","whiten","decorrelate"),
+                      weighted=TRUE, kernelscale=1.0){
   # 1. typecheck is always first step to perform.
   aux.typecheck(X)
-  if ((!is.numeric(ndim))||(ndim<1)||(ndim>ncol(X))||is.infinite(ndim)||is.na(ndim)){
-    stop("* do.lapeig : 'ndim' is a positive integer in [1,#(covariates)].")
-  }
+  n = nrow(X)
+  p = ncol(X)
   ndim = as.integer(ndim)
+  if (!check_ndim(ndim,p)){stop("* do.lapeig : 'ndim' is a positive integer in [1,#(covariates)).")}
 
   # 2. ... parameters
   # 2-1. aux.graphnbd
@@ -64,13 +66,15 @@ do.lapeig <- function(X,ndim=2,type=c("proportion",0.1),symmetric="union",prepro
   #   3. kernelscale : Kernel Scale Parameter (default; 1.0) / Infty -> binary
 
   nbdtype = type
-  nbdsymmetric = symmetric
-  if (!is.element(nbdsymmetric,c("union","intersect","asymmetric"))){
-    stop("* do.lapeig : 'symmetric' should have one of three types.")
+  if (missing(symmetric)){
+    nbdsymmetric = "union"
+  } else {
+    nbdsymmetric = match.arg(symmetric)
   }
-  algpreprocess = preprocess
-  if (!is.element(algpreprocess,c("null","center","whiten","decorrelate"))){
-    stop("* do.lapeig : 'preprocess' argument is invalid.")
+  if (missing(preprocess)){
+    algpreprocess = "null"
+  } else {
+    algpreprocess = match.arg(preprocess)
   }
   wflag = weighted
   if (!is.logical(wflag)){

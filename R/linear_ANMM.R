@@ -71,14 +71,14 @@ do.anmm <- function(X, label, ndim=2, preprocess=c("null","center","decorrelate"
     }
   }
   if (any(is.na(label))||(any(is.infinite(label)))){
-    warning("* Supervised Learning : any element of 'label' as NA or Inf will simply be considered as a class, not missing entries.")
+    stop("* Supervised Learning : any element of 'label' as NA or Inf will simply be considered as a class, not missing entries.")
   }
 
   #   3. ndim
+  ndim = as.integer(ndim)
   if (!check_ndim(ndim,p)){
     stop("* do.anmm : 'ndim' is a positive integer in [1,#(covariates)].")
   }
-  ndim = as.integer(ndim)
   #   4. preprocess
   algpreprocess = match.arg(preprocess)
   #   5. No : size for Homogeneous   Neighborhood
@@ -109,6 +109,8 @@ do.anmm <- function(X, label, ndim=2, preprocess=c("null","center","decorrelate"
   #   4. extract eigenvector
   eigSC      = RSpectra::eigs_sym(S-C, ndim, which="LA")
   projection = matrix(eigSC$vectors, nrow=p)
+  #   5. adjust eigenvectors
+  projection = aux.adjprojection(projection)
 
   #------------------------------------------------------------------------
   ## RETURN

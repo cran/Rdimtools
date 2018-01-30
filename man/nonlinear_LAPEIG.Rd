@@ -4,8 +4,9 @@
 \alias{do.lapeig}
 \title{Laplacian Eigenmaps}
 \usage{
-do.lapeig(X, ndim = 2, type = c("proportion", 0.1), symmetric = "union",
-  preprocess = "null", weighted = TRUE, kernelscale = 1)
+do.lapeig(X, ndim = 2, type = c("proportion", 0.1), symmetric = c("union",
+  "intersect", "asymmetric"), preprocess = c("null", "center", "whiten",
+  "decorrelate"), weighted = TRUE, kernelscale = 1)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -43,8 +44,8 @@ manifold embedded in high-dimensional data space using graph laplacians. This
 is a classic algorithm employing spectral graph theory.
 }
 \examples{
-## generate default dataset
-X <- aux.gensamples()
+## generate swiss-roll dataset of size 100
+X <- aux.gensamples(n=100)
 
 ## two types of graph laplacians using 20\% of neighbors
 out1 <- do.lapeig(X,ndim=2,type=c("proportion",0.05),kernelscale=10) # weighted version

@@ -1,10 +1,10 @@
 Package: Rdimtools
 Type: Package
 Title: Dimension Reduction and Estimation Methods
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: person("Kisung", "You", role = c("aut", "cre"),
                      email = "kyou@nd.edu",comment=c(ORCID="0000-0002-8584-459X")) 
-Description: We provide a rich collection of linear and nonlinear dimension reduction techniques.
+Description: We provide 111 linear and nonlinear dimension reduction techniques.
 	Intrinsic dimension estimation methods for exploratory analysis are also provided.
     For more details on dimensionality techniques, see the paper by
     Ma and Zhu (2013) <doi:10.1111/j.1751-5823.2012.00182.x> if you are interested in
@@ -15,15 +15,15 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.2.0)
 Imports: Rcpp (>= 0.12.10), graphics, stats, Rtsne, Rcsdp, Rdpack,
-        Rlinsolve, RSpectra, CVXR, Matrix, geigen
+        Rlinsolve, RSpectra, CVXR, Matrix, geigen, pracma, ADMM
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 6.0.1
 RdMacros: Rdpack
 URL: http://github.com/kisungyou/Rdimtools
 BugReports: http://github.com/kisungyou/Rdimtools/issues
 NeedsCompilation: yes
-Packaged: 2018-01-02 17:39:35 UTC; kisung
-Author: Kisung You [aut, cre] (0000-0002-8584-459X)
+Packaged: 2018-01-30 16:53:29 UTC; kisung
+Author: Kisung You [aut, cre] (<https://orcid.org/0000-0002-8584-459X>)
 Maintainer: Kisung You <kyou@nd.edu>
 Repository: CRAN
-Date/Publication: 2018-01-03 00:50:33 UTC
+Date/Publication: 2018-01-30 17:35:47 UTC

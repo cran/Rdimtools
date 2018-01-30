@@ -33,6 +33,14 @@ aux_regout <- function(X, tgt) {
     .Call('_Rdimtools_aux_regout', PACKAGE = 'Rdimtools', X, tgt)
 }
 
+aux_scatter <- function(X, mu) {
+    .Call('_Rdimtools_aux_scatter', PACKAGE = 'Rdimtools', X, mu)
+}
+
+aux_scatter_pairwise <- function(X) {
+    .Call('_Rdimtools_aux_scatter_pairwise', PACKAGE = 'Rdimtools', X)
+}
+
 #' @keywords internal
 methods_boxcount <- function(tX, Imin, currentr) {
     .Call('_Rdimtools_methods_boxcount', PACKAGE = 'Rdimtools', tX, Imin, currentr)
@@ -41,6 +49,18 @@ methods_boxcount <- function(tX, Imin, currentr) {
 #' @keywords internal
 aux_numderiv <- function(x, y) {
     .Call('_Rdimtools_aux_numderiv', PACKAGE = 'Rdimtools', x, y)
+}
+
+handy_plus <- function(X) {
+    .Call('_Rdimtools_handy_plus', PACKAGE = 'Rdimtools', X)
+}
+
+handy_hadamartABC <- function(A, B, C) {
+    .Call('_Rdimtools_handy_hadamartABC', PACKAGE = 'Rdimtools', A, B, C)
+}
+
+handy_hadamartABCsqrt <- function(A, B, C) {
+    .Call('_Rdimtools_handy_hadamartABCsqrt', PACKAGE = 'Rdimtools', A, B, C)
 }
 
 #' @keywords internal
@@ -71,10 +91,6 @@ method_rpgauss <- function(X, k) {
 #' @keywords internal
 method_fa <- function(X, k, maxiter, tolerance) {
     .Call('_Rdimtools_method_fa', PACKAGE = 'Rdimtools', X, k, maxiter, tolerance)
-}
-
-method_lpp <- function(X, W) {
-    .Call('_Rdimtools_method_lpp', PACKAGE = 'Rdimtools', X, W)
 }
 
 #' @keywords internal
@@ -110,6 +126,21 @@ method_kmmcvec <- function(X, partmat, param) {
 #' @keywords internal
 method_lfda_maximaldistance <- function(tvec, tmat) {
     .Call('_Rdimtools_method_lfda_maximaldistance', PACKAGE = 'Rdimtools', tvec, tmat)
+}
+
+#' @keywords internal
+method_nnprojmax <- function(C, Uinit, tol, maxiter) {
+    .Call('_Rdimtools_method_nnprojmax', PACKAGE = 'Rdimtools', C, Uinit, tol, maxiter)
+}
+
+#' @keywords internal
+method_nnprojmin <- function(C, Uinit, tol, maxiter) {
+    .Call('_Rdimtools_method_nnprojmin', PACKAGE = 'Rdimtools', C, Uinit, tol, maxiter)
+}
+
+#' @keywords internal
+method_nnembedmin <- function(M, Yinit, tol, maxiter) {
+    .Call('_Rdimtools_method_nnembedmin', PACKAGE = 'Rdimtools', M, Yinit, tol, maxiter)
 }
 
 #' @keywords internal
