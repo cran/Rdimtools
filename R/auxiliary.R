@@ -18,6 +18,8 @@
 # 13. aux.geigen           : geigen in my taste
 # 14. aux.featureindicator : generate (p-by-ndim) indicator matrix for projection
 # 15. aux.traceratio.max   : compute trace ratio problem for maximal basis
+# 16. aux.pinv             : use SVD and NumPy scheme
+# 17. aux.bicgstab         : due to my stupidity, now Rlinsolve can't be used.
 
 #  ------------------------------------------------------------------------
 # 0. AUX.TYPECHECK
@@ -1033,7 +1035,7 @@ aux.pkgstat <- function(){
   naux = (sum(unlist(lapply(ls("package:Rdimtools"), startsWith, "aux."))))
   noos = (sum(unlist(lapply(ls("package:Rdimtools"), startsWith, "oos."))))
 
-  mdo  = paste("*  cat1{do.}  manifold learning techniques           : ",ndo,sep="")
+  mdo  = paste("*  cat1{do. } manifold learning techniques           : ",ndo,sep="")
   mest = paste("*  cat2{est.} intrinsic dimension estimation methods : ",nest,sep="")
   moos = paste("*  cat3{oos.} out-of-sample projection methods       : ",noos,sep="")
   maux = paste("*  cat4{aux.} auxiliary functions available          : ",naux,sep="")
@@ -1132,24 +1134,44 @@ aux.nbdlogical <- function(X, label, khomo, khet){
   return(output)
 }
 
-# 13. aux.geigen : in my taste --------------------------------------------
+# 13. aux.geigen : now it uses RcppArmadillo ------------------------------
 #' @keywords internal
 #' @noRd
 aux.geigen <- function(top, bottom, ndim, maximal=TRUE){
-  geigs = geigen::geigen(top, bottom)
+  # 1. first, run CPP with RcppArmadillo
+  geigs = aux_geigen(top, bottom)
   maxp  = length(geigs$values)
-  if (ndim>1){
+
+  # 2. separate values and vectors
+  values  = geigs$values
+  vectors = geigs$vectors
+
+  if (maximal==TRUE){
+    partvals = values[1:ndim]
+  } else {
+    partvals = values[maxp:(maxp-ndim+1)]
+  }
+  if (all(base::abs(base::Im(partvals))<(100*(.Machine$double.eps)))){
+    values  = base::Re(values)
+    vectors = aux.adjprojection(base::Re(vectors))
+  } else {
+    stop("* aux.geigen : generalized eigenvalue problem returned imaginary eigenvalues.")
+  }
+
+
+  # 3. branching case
+  if (ndim > 1){
     if (maximal==TRUE){
-      projection = aux.adjprojection(geigs$vectors[,maxp:(maxp-ndim+1)])
+      projection = vectors[,1:ndim]
     } else {
-      projection = aux.adjprojection(geigs$vectors[,1:ndim])
+      projection = vectors[,maxp:(maxp-ndim+1)]
     }
   } else {
     if (maximal==TRUE){
-      vecsol     = geigs$vectors[,maxp]
+      vecsol = vectors[,1]
       projection = matrix(vecsol/sqrt(sum(vecsol*vecsol)))
     } else {
-      vecsol     = geigs$vectors[,1]
+      vecsol = vectors[,maxp]
       projection = matrix(vecsol/sqrt(sum(vecsol*vecsol)))
     }
   }
@@ -1216,4 +1238,153 @@ aux.traceratio.max <- function(A,B,ndim,tol=1e-10){
     output = RSpectra::eigs((A-lambda*B),ndim)$vectors
   }
   return(output)
+}
+
+# 16. aux.pinv : use SVD and NumPy Scheme ---------------------------------
+# https://en.wikipedia.org/wiki/Moore%E2%80%93Penrose_inverse#Singular_value_decomposition_(SVD)
+#' @keywords internal
+#' @noRd
+aux.pinv <- function(A){
+  svdA      = base::svd(A)
+  tolerance = (.Machine$double.eps)*max(c(nrow(A),ncol(A)))*as.double(max(svdA$d))
+
+  idxcut    = which(svdA$d <= tolerance)
+  invDvec   = (1/svdA$d)
+  invDvec[idxcut] = 0
+
+  output = (svdA$v%*%diag(invDvec)%*%t(svdA$u))
+  return(output)
+}
+
+
+
+
+# 17. aux.bicgstab --------------------------------------------------------
+#' @keywords internal
+#' @noRd
+aux.bicgstab <- function(A,B,xinit=NA,reltol=1e-5,maxiter=1000,
+                            preconditioner=diag(ncol(A)),verbose=TRUE){
+  ###########################################################################
+  # Step 0. Initialization
+  if (verbose){
+    message("* aux.bicgstab : Initialiszed.")
+  }
+  if (any(is.na(A))||any(is.infinite(A))||any(is.na(B))||any(is.infinite(B))){
+    stop("* aux.bicgstab : no NA or Inf values allowed.")
+  }
+  sparseformats = c("dgCMatrix","dtCMatrix","dsCMatrix")
+  if ((class(A)%in%sparseformats)||(class(B)%in%sparseformats)||(class(preconditioner)%in%sparseformats)){
+    A = Matrix(A,sparse=TRUE)
+    B = Matrix(B,sparse=TRUE)
+    preconditioner = Matrix(preconditioner,sparse=TRUE)
+    sparseflag = TRUE
+  } else {
+    A = matrix(A,nrow=nrow(A))
+    if (is.vector(B)){
+      B = matrix(B)
+    } else {
+      B = matrix(B,nrow=nrow(B))
+    }
+    preconditioner = matrix(preconditioner,nrow=nrow(preconditioner))
+    sparseflag = FALSE
+  }
+  # xinit
+  if (is.na(xinit)){
+    xinit = matrix(rnorm(ncol(A)))
+  } else {
+    if (length(xinit)!=ncol(A)){
+      stop("* aux.bicgstab : 'xinit' has invalid size.")
+    }
+    xinit = matrix(xinit)
+  }
+  ###########################################################################
+  # Step 1. Preprocessing
+  # 1-1. Neither NA nor Inf allowed.
+  if (any(is.infinite(A))||any(is.na(A))||any(is.infinite(B))||any(is.na(B))){
+    stop("* aux.bicgstab : no NA, Inf, -Inf values are allowed.")
+  }
+  # 1-2. Size Argument
+  m = nrow(A)
+  if (is.vector(B)){
+    mB = length(B)
+    if (m!=mB){
+      stop("* aux.bicgstab : a vector B should have a length of nrow(A).")
+    }
+  } else {
+    mB = nrow(B)
+    if (m!=mB){
+      stop("* aux.bicgstab : an input matrix B should have the same number of rows from A.")
+    }
+  }
+  if (is.vector(B)){
+    B = as.matrix(B)
+  }
+  # 1-3. Adjusting Case
+  if (m > ncol(A)){        ## Case 1. Overdetermined
+    B = t(A)%*%B
+    A = t(A)%*%A
+  } else if (m < ncol(A)){ ## Case 2. Underdetermined
+    stop("* aux.bicgstab : underdetermined case is not supported.")
+  }
+  # 1-4. Preconditioner : only valid for square case
+  if (!all.equal(dim(A),dim(preconditioner))){
+    stop("* aux.bicgstab : Preconditioner is a size-matching.")
+  }
+  if (verbose){message("* aux.bicgstab : preprocessing finished ...")}
+  ###########################################################################
+  # Step 2. Main Computation
+  ncolB = ncol(B)
+  if (ncolB==1){
+    if (!sparseflag){
+      vecB = as.vector(B)
+      res = linsolve.bicgstab.single(A,vecB,xinit,reltol,maxiter,preconditioner)
+    } else {
+      vecB = B
+      res = linsolve.bicgstab.single.sparse(A,vecB,xinit,reltol,maxiter,preconditioner)
+    }
+  } else {
+    x      = array(0,c(ncol(A),ncolB))
+    iter   = array(0,c(1,ncolB))
+    errors = list()
+    for (i in 1:ncolB){
+      if (!sparseflag){
+        vecB = as.vector(B[,i])
+        tmpres = linsolve.bicgstab.single(A,vecB,xinit,reltol,maxiter,preconditioner)
+      } else {
+        vecB = Matrix(B[,i],sparse=TRUE)
+        tmpres = linsolve.bicgstab.single.sparse(A,vecB,xinit,reltol,maxiter,preconditioner)
+      }
+      x[,i]        = tmpres$x
+      iter[i]      = tmpres$iter
+      errors[[i]]  = tmpres$errors
+      if (verbose){
+        message(paste("* aux.bicgstab : B's column.",i,"being processed.."))
+      }
+    }
+    res = list("x"=x,"iter"=iter,"errors"=errors)
+  }
+
+  ###########################################################################
+  # Step 3. Finalize
+  if ("flag" %in% names(res)){
+    flagval = res$flag
+    if (flagval==0){
+      if (verbose){
+        message("* aux.bicgstab : convergence well achieved.")
+      }
+    } else if (flagval==1){
+      if (verbose){
+        message("* aux.bicgstab : convergence not achieved within maxiter.")
+      }
+    } else {
+      if (verbose){
+        message("* aux.bicgstab : breakdown.")
+      }
+    }
+    res$flag = NULL
+  }
+  if (verbose){
+    message("* aux.bicgstab : computations finished.")
+  }
+  return(res)
 }

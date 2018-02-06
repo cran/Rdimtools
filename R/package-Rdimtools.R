@@ -173,12 +173,9 @@
 #' @import Rcsdp
 #' @import Rdpack
 #' @import CVXR
-#' @import geigen
 #' @importFrom RSpectra eigs svds
-#' @importFrom pracma pinv
-#' @importFrom ADMM admm.lasso
-#' @importFrom Matrix rankMatrix expm norm
-#' @importFrom Rlinsolve lsolve.bicgstab
+#' @importFrom ADMM admm.lasso admm.spca admm.rpca
+#' @importFrom Matrix rankMatrix expm norm Matrix
 #' @importFrom Rtsne Rtsne
 #' @importFrom stats dist cov rnorm runif kmeans cor var
 #' @importFrom graphics par image plot

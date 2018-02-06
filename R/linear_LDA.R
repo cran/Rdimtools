@@ -62,10 +62,7 @@ do.lda <- function(X, label, ndim=2){
   n = nrow(X)
   p = ncol(X)
   #   2. label vector
-  if ((!is.vector(label))||(length(label)!=n)){
-    stop("* do.lda : 'label' is required to be a vector of class labels.")
-  }
-  label  = as.numeric(as.factor(label))
+  label  = check_label(label, n)
   ulabel = unique(label)
   K      = length(ulabel)
   if (K==1){
@@ -100,7 +97,7 @@ do.lda <- function(X, label, ndim=2){
     idx2  = which(label==ulabel[2])
     SW    = lda_outer(pX[idx1,]) + lda_outer(pX[idx2,])
     mdiff = matrix(colMeans(pX[idx2,])-colMeans(pX[idx1,]))
-    RLIN  = Rlinsolve::lsolve.bicgstab(SW, mdiff, verbose=FALSE)
+    RLIN  = aux.bicgstab(SW, mdiff, verbose=FALSE)
     w     = aux.adjprojection(as.matrix(RLIN$x))
     Y     = pX%*%w
 
@@ -123,7 +120,7 @@ do.lda <- function(X, label, ndim=2){
       mdiff  = (colMeans(pX[idxnow,])-m)
       SB     = SB + Nk*outer(mdiff,mdiff)
     }
-    RLIN = Rlinsolve::lsolve.bicgstab(SW, SB, verbose=FALSE)
+    RLIN = aux.bicgstab(SW, SB, verbose=FALSE)
     W    = RLIN$x
     topW = aux.adjprojection(RSpectra::eigs(W, ndim)$vectors)
     Y    = pX%*%topW

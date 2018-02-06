@@ -20,8 +20,9 @@
 #' }
 #'
 #' @examples
-#' ## generate swiss roll data
-#' X = aux.gensamples(n=123)
+#' ## load iris data
+#' data(iris)
+#' X = as.matrix(iris[,1:4])
 #'
 #' ## try different tolerance level
 #' out1 = do.adr(X, abstol=1e-2)
@@ -83,8 +84,8 @@ do.adr <- function(X, ndim=2, preprocess=c("center","decorrelate","whiten"), max
     pXkmeans  = kmeans(projected, k)
     # 3-2. LDA-KM(2) : learn again
     # 1. build H
-    H = ldakm_BuildH(pXkmeans$cluster)       # H : (n-times-k)
-    M = t(pX)%*%H%*%pracma::pinv(t(H)%*%H)   # M : (p-times-k)
+    H = ldakm_BuildH(pXkmeans$cluster)   # H : (n-times-k)
+    M = t(pX)%*%H%*%aux.pinv(t(H)%*%H)   # M : (p-times-k)
     # 2. build Sw (p-by-p)
     # Swterm1 = t(pX)-(M%*%t(H))
     # Sw = Swterm1%*%t(Swterm1)

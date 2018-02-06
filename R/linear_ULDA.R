@@ -54,10 +54,7 @@ do.ulda <- function(X, label, ndim=2, preprocess=c("center","whiten","decorrelat
   n = nrow(X)
   p = ncol(X)
   #   2. label vector
-  if ((!is.vector(label))||(length(label)!=n)){
-    stop("* do.ulda : 'label' is required to be a vector of class labels.")
-  }
-  label  = as.numeric(as.factor(label))
+  label  = check_label(label, n)
   ulabel = unique(label)
   K      = length(ulabel)
   if (K==1){
@@ -112,8 +109,8 @@ do.ulda <- function(X, label, ndim=2, preprocess=c("center","whiten","decorrelat
     }
     Sw = Sw + Pi*Si
   }
-  #   2-3. pseudo-inverse for Sw
-  invSw = pracma::pinv(Sw)
+  #   2-3. pseudo-inverse for Sw; using my function
+  invSw = aux.pinv(Sw)
 
   #------------------------------------------------------------------------
   ## COMPUTATION : MAIN PART FOR UNCORRELATED LDA
@@ -130,7 +127,7 @@ do.ulda <- function(X, label, ndim=2, preprocess=c("center","whiten","decorrelat
     tmpB = t(Dmat)%*%invSw
 
     #   2-2. solve intermediate inverse problem
-    tmpsolve = Rlinsolve::lsolve.bicgstab(tmpA, tmpB, verbose=FALSE)$x
+    tmpsolve = aux.bicgstab(tmpA, tmpB, verbose=FALSE)$x
     Pmat = diagIp - (Dmat)%*%tmpsolve
 
     # 2-3. cost function for outer generalized eigenvalue problem and solve

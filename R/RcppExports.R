@@ -41,6 +41,22 @@ aux_scatter_pairwise <- function(X) {
     .Call('_Rdimtools_aux_scatter_pairwise', PACKAGE = 'Rdimtools', X)
 }
 
+aux_geigen <- function(A, B) {
+    .Call('_Rdimtools_aux_geigen', PACKAGE = 'Rdimtools', A, B)
+}
+
+#' @keywords internal
+#' @noRd
+linsolve.bicgstab.single <- function(A, b, xinit, reltol, maxiter, M) {
+    .Call('_Rdimtools_single_bicgstab', PACKAGE = 'Rdimtools', A, b, xinit, reltol, maxiter, M)
+}
+
+#' @keywords internal
+#' @noRd
+linsolve.bicgstab.single.sparse <- function(A, b, xinit, reltol, maxiter, M) {
+    .Call('_Rdimtools_single_bicgstab_sparse', PACKAGE = 'Rdimtools', A, b, xinit, reltol, maxiter, M)
+}
+
 #' @keywords internal
 methods_boxcount <- function(tX, Imin, currentr) {
     .Call('_Rdimtools_methods_boxcount', PACKAGE = 'Rdimtools', tX, Imin, currentr)
@@ -204,5 +220,9 @@ method_ispe <- function(R, iX, C, S, lambda, drate, matselector, cutoff) {
 
 method_crca <- function(Xij, Yinit, lambda, alpha, maxiter, tolerance, vecselector) {
     .Call('_Rdimtools_method_crca', PACKAGE = 'Rdimtools', Xij, Yinit, lambda, alpha, maxiter, tolerance, vecselector)
+}
+
+aux_mimick_geigen <- function(A, B) {
+    .Call('_Rdimtools_aux_mimick_geigen', PACKAGE = 'Rdimtools', A, B)
 }
 
