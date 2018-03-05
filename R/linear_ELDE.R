@@ -11,8 +11,7 @@
 #' @param ndim an integer-valued target dimension.
 #' @param t kernel bandwidth in \eqn{(0,\infty)}.
 #' @param preprocess  an additional option for preprocessing the data.
-#' Default is "center" and other options of "decorrelate" and "whiten"
-#' are supported. See also \code{\link{aux.preprocess}} for more details.
+#' Default is "center". See also \code{\link{aux.preprocess}} for more details.
 #' @param k1 the number of same-class neighboring points (homogeneous neighbors).
 #' @param k2 the number of different-class neighboring points (heterogeneous neighbors).
 #'
@@ -24,6 +23,7 @@
 #' }
 #'
 #' @examples
+#' \dontrun{
 #' ## generate data of 3 types with difference
 #' dt1  = aux.gensamples(n=33)-100
 #' dt2  = aux.gensamples(n=33)
@@ -43,6 +43,7 @@
 #' plot(out1$Y[,1], out1$Y[,2], main="ELDE::bandwidth=1")
 #' plot(out2$Y[,1], out2$Y[,2], main="ELDE::bandwidth=10")
 #' plot(out3$Y[,1], out3$Y[,2], main="ELDE::bandwidth=100")
+#' }
 #'
 #' @references
 #' \insertRef{dornaika_exponential_2013}{Rdimtools}
@@ -51,7 +52,7 @@
 #' @rdname linear_ELDE
 #' @author Kisung You
 #' @export
-do.elde <- function(X, label, ndim=2, t=1.0, preprocess=c("center","decorrelate","whiten"),
+do.elde <- function(X, label, ndim=2, t=1.0, preprocess=c("center","scale","cscale","decorrelate","whiten"),
                     k1=max(ceiling(nrow(X)/10),2), k2=max(ceiling(nrow(X)/10),2)){
   #------------------------------------------------------------------------
   ## PREPROCESSING
@@ -83,10 +84,9 @@ do.elde <- function(X, label, ndim=2, t=1.0, preprocess=c("center","decorrelate"
   #------------------------------------------------------------------------
   ## COMPUTATION : PRELIMINARY
   #   1. preprocessing
-  tmplist = aux.preprocess(X,type=algpreprocess)
+  tmplist = aux.preprocess.hidden(X,type=algpreprocess,algtype="linear")
   trfinfo = tmplist$info
   pX      = tmplist$pX
-  trfinfo$algtype = "linear"
   #   2. neighborhood information
   logicalmat = aux.nbdlogical(pX, label, k1, k2)
   Gw = logicalmat$hom

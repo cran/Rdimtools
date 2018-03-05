@@ -4,9 +4,9 @@
 \alias{do.elde}
 \title{Exponential Local Discriminant Embedding}
 \usage{
-do.elde(X, label, ndim = 2, t = 1, preprocess = c("center", "decorrelate",
-  "whiten"), k1 = max(ceiling(nrow(X)/10), 2), k2 = max(ceiling(nrow(X)/10),
-  2))
+do.elde(X, label, ndim = 2, t = 1, preprocess = c("center", "scale",
+  "cscale", "decorrelate", "whiten"), k1 = max(ceiling(nrow(X)/10), 2),
+  k2 = max(ceiling(nrow(X)/10), 2))
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations.}
@@ -18,8 +18,7 @@ do.elde(X, label, ndim = 2, t = 1, preprocess = c("center", "decorrelate",
 \item{t}{kernel bandwidth in \eqn{(0,\infty)}.}
 
 \item{preprocess}{an additional option for preprocessing the data.
-Default is "center" and other options of "decorrelate" and "whiten"
-are supported. See also \code{\link{aux.preprocess}} for more details.}
+Default is "center". See also \code{\link{aux.preprocess}} for more details.}
 
 \item{k1}{the number of same-class neighboring points (homogeneous neighbors).}
 
@@ -41,6 +40,7 @@ framework to transform original data into a new space via distance diffusion map
 similar to kernel-based nonlinear mapping.
 }
 \examples{
+\dontrun{
 ## generate data of 3 types with difference
 dt1  = aux.gensamples(n=33)-100
 dt2  = aux.gensamples(n=33)
@@ -60,6 +60,7 @@ par(mfrow=c(1,3))
 plot(out1$Y[,1], out1$Y[,2], main="ELDE::bandwidth=1")
 plot(out2$Y[,1], out2$Y[,2], main="ELDE::bandwidth=10")
 plot(out3$Y[,1], out3$Y[,2], main="ELDE::bandwidth=100")
+}
 
 }
 \references{

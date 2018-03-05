@@ -32,6 +32,7 @@
 #' \code{\link{do.dspp}} \tab S \tab Discriminative Sparsity Preserving Projection \cr
 #' \code{\link{do.elde}} \tab S \tab Exponential Local Discriminant Embedding \cr
 #' \code{\link{do.elpp2}} \tab U \tab Enhanced Locality Preserving Projection (2013) \cr
+#' \code{\link{do.enet}} \tab S \tab Elastic Net Regularization \cr
 #' \code{\link{do.eslpp}} \tab S \tab Extended Supervised Locality Preserving Projection \cr
 #' \code{\link{do.extlpp}} \tab U \tab Extended Locality Preserving Projection \cr
 #' \code{\link{do.fa}} \tab U \tab (Exploratory) Factor Analysis  \cr
@@ -146,11 +147,15 @@
 #' }
 #'
 #' @section (3) \code{oos.} family for out-of-sample predictions:
-#' Only except for \code{oos.linear} where we have explicit mappings from linear dimension reduction methods, all methods
-#' listed in this section are for out-of-sample prediction on nonlinear mappings.
-#' \tabular{lcl}{
-#' FUNCTION \tab LINEARITY \tab ALGORITHM \cr
-#' \code{\link{oos.linear}} \tab Linear \tab Projection using pre-computed mappings.
+#' If the original dimension reduction method was \emph{linear}-type, then you could use \code{oos.linear} function.
+#' \tabular{ll}{
+#' FUNCTION \tab ALGORITHM \cr
+#' \code{\link{oos.linear}} \tab Projection using pre-computed mappings.
+#' }
+#' Regardless of the types of previous manifold learning methods, belows are general out-of-sample methods.
+#' \tabular{ll}{
+#' FUNCTION \tab ALGORITHM \cr
+#' \code{\link{oos.linproj}} \tab Linear Projection.
 #' }
 #'
 #'
@@ -177,7 +182,7 @@
 #' @importFrom ADMM admm.lasso admm.spca admm.rpca
 #' @importFrom Matrix rankMatrix expm norm Matrix
 #' @importFrom Rtsne Rtsne
-#' @importFrom stats dist cov rnorm runif kmeans cor var
+#' @importFrom stats dist cov rnorm runif kmeans cor var sd
 #' @importFrom graphics par image plot
 #' @importFrom Rcpp evalCpp
 #' @useDynLib Rdimtools

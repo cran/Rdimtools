@@ -5,7 +5,7 @@
 \title{Least Absolute Shrinkage and Selection Operator}
 \usage{
 do.lasso(X, response, ndim = 2, preprocess = c("null", "center",
-  "decorrelate", "whiten"), lambda = 1)
+  "decorrelate", "whiten"), ycenter = FALSE, lambda = 1)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -16,8 +16,9 @@ and columns represent independent variables.}
 \item{ndim}{an integer-valued target dimension.}
 
 \item{preprocess}{an additional option for preprocessing the data.
-Default is "null" and other options of "center", "decorrelate" and "whiten"
-are supported. See also \code{\link{aux.preprocess}} for more details.}
+Default is "null". See also \code{\link{aux.preprocess}} for more details.}
+
+\item{ycenter}{a logical; \code{TRUE} to center the response variable, \code{FALSE} otherwise.}
 
 \item{lambda}{sparsity regularization parameter in \eqn{(0,\infty)}.}
 }
@@ -34,7 +35,9 @@ a named list containing
 LASSO is a popular regularization scheme in linear regression in pursuit of sparsity in coefficient vector
 that has been widely used. The method can be used in feature selection in that given the regularization parameter,
 it first solves the problem and takes indices of estimated coefficients with the largest magnitude as
-meaningful features.
+meaningful features by solving
+\deqn{\textrm{min}_{\beta} ~ \frac{1}{2}\|X\beta-y\|_2^2 + \lambda \|\beta\|_1}
+where \eqn{y} is \code{response} in our method.
 }
 \examples{
 ## generate swiss roll with auxiliary dimensions
