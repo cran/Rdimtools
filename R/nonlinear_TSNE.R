@@ -1,6 +1,6 @@
 #' t-distributed Stochastic Neighbor Embedding
 #'
-#' t-distributed Stochastic Neighbor Embedding (t-SNE) is a variant of Stochastic Neighbor Embedding (SNE)
+#' \eqn{t}-distributed Stochastic Neighbor Embedding (t-SNE) is a variant of Stochastic Neighbor Embedding (SNE)
 #' that mimicks patterns of probability distributinos over pairs of high-dimensional objects on low-dimesional
 #' target embedding space by minimizing Kullback-Leibler divergence. While conventional SNE uses gaussian
 #' distributions to measure similarity, t-SNE, as its name suggests, exploits a heavy-tailed Student t-distribution.
@@ -99,9 +99,6 @@ do.tsne <- function(X,ndim=2,perplexity=30,eta=0.05,maxiter=2000,
     stop("* do.tsne : 'momentum' should be a positive real number.")
   }
   #   2-6. (char) preprocess = 'center'
-  if (!is.element(preprocess,c("null","center","decorrelate","whiten"))){
-    stop("* do.tsne : 'preprocess' should have one of 4 options.")
-  }
   algpreprocess = match.arg(preprocess)
   tmplist = aux.preprocess.hidden(X,type=algpreprocess,algtype="nonlinear")
   trfinfo = tmplist$info

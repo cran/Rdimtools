@@ -206,29 +206,29 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// handy_hadamartABC
-arma::mat handy_hadamartABC(arma::mat& A, arma::mat& B, arma::mat& C);
-RcppExport SEXP _Rdimtools_handy_hadamartABC(SEXP ASEXP, SEXP BSEXP, SEXP CSEXP) {
+// handy_hadamardABC
+arma::mat handy_hadamardABC(arma::mat& A, arma::mat& B, arma::mat& C);
+RcppExport SEXP _Rdimtools_handy_hadamardABC(SEXP ASEXP, SEXP BSEXP, SEXP CSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat& >::type A(ASEXP);
     Rcpp::traits::input_parameter< arma::mat& >::type B(BSEXP);
     Rcpp::traits::input_parameter< arma::mat& >::type C(CSEXP);
-    rcpp_result_gen = Rcpp::wrap(handy_hadamartABC(A, B, C));
+    rcpp_result_gen = Rcpp::wrap(handy_hadamardABC(A, B, C));
     return rcpp_result_gen;
 END_RCPP
 }
-// handy_hadamartABCsqrt
-arma::mat handy_hadamartABCsqrt(arma::mat& A, arma::mat& B, arma::mat& C);
-RcppExport SEXP _Rdimtools_handy_hadamartABCsqrt(SEXP ASEXP, SEXP BSEXP, SEXP CSEXP) {
+// handy_hadamardABCsqrt
+arma::mat handy_hadamardABCsqrt(arma::mat& A, arma::mat& B, arma::mat& C);
+RcppExport SEXP _Rdimtools_handy_hadamardABCsqrt(SEXP ASEXP, SEXP BSEXP, SEXP CSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat& >::type A(ASEXP);
     Rcpp::traits::input_parameter< arma::mat& >::type B(BSEXP);
     Rcpp::traits::input_parameter< arma::mat& >::type C(CSEXP);
-    rcpp_result_gen = Rcpp::wrap(handy_hadamartABCsqrt(A, B, C));
+    rcpp_result_gen = Rcpp::wrap(handy_hadamardABCsqrt(A, B, C));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -646,8 +646,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Rdimtools_methods_boxcount", (DL_FUNC) &_Rdimtools_methods_boxcount, 3},
     {"_Rdimtools_aux_numderiv", (DL_FUNC) &_Rdimtools_aux_numderiv, 2},
     {"_Rdimtools_handy_plus", (DL_FUNC) &_Rdimtools_handy_plus, 1},
-    {"_Rdimtools_handy_hadamartABC", (DL_FUNC) &_Rdimtools_handy_hadamartABC, 3},
-    {"_Rdimtools_handy_hadamartABCsqrt", (DL_FUNC) &_Rdimtools_handy_hadamartABCsqrt, 3},
+    {"_Rdimtools_handy_hadamardABC", (DL_FUNC) &_Rdimtools_handy_hadamardABC, 3},
+    {"_Rdimtools_handy_hadamardABCsqrt", (DL_FUNC) &_Rdimtools_handy_hadamardABCsqrt, 3},
     {"_Rdimtools_method_pca", (DL_FUNC) &_Rdimtools_method_pca, 1},
     {"_Rdimtools_method_mds", (DL_FUNC) &_Rdimtools_method_mds, 1},
     {"_Rdimtools_method_mdsD", (DL_FUNC) &_Rdimtools_method_mdsD, 1},

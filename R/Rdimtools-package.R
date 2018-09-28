@@ -110,6 +110,8 @@
 #' \code{\link{do.crda}} \tab U \tab Curvilinear Distance Analysis \cr
 #' \code{\link{do.dm}} \tab U \tab Diffusion Maps \cr
 #' \code{\link{do.dve}} \tab U \tab Distinguishing Variance Embedding \cr
+#' \code{\link{do.fastmap}} \tab U \tab FastMap \cr
+#' \code{\link{do.idmap}} \tab U \tab Interactive Document Map \cr
 #' \code{\link{do.iltsa}} \tab U \tab Improved Local Tangent Space Alignment \cr
 #' \code{\link{do.isomap}} \tab U \tab Isometric Feature Mapping \cr
 #' \code{\link{do.ispe}} \tab U \tab Isometric Stochastic Proximity Embedding \cr
@@ -122,12 +124,15 @@
 #' \code{\link{do.kpca}} \tab U \tab Kernel Principal Component Analysis \cr
 #' \code{\link{do.kqmi}} \tab S \tab Kernel Quadratic Mutual Information \cr
 #' \code{\link{do.ksda}} \tab SS \tab Kernel Semi-Supervised Discriminant Analysis \cr
+#' \code{\link{do.lamp}} \tab U \tab Local Affine Multidimensional Scaling \cr
 #' \code{\link{do.lapeig}} \tab U \tab Laplacian Eigenmaps \cr
 #' \code{\link{do.lisomap}} \tab U \tab Landmark Isometric Feature Mapping \cr
 #' \code{\link{do.lle}} \tab U \tab Locally Linear Embedding \cr
+#' \code{\link{do.llle}} \tab U \tab Local Linear Laplacian Eigenmaps \cr
 #' \code{\link{do.ltsa}} \tab U \tab Local Tangent Space Alignment \cr
 #' \code{\link{do.mve}} \tab U \tab Minimum Volume Embedding \cr
 #' \code{\link{do.mvu}} \tab U \tab Maximum Variance Unfolding / Semidefinite Embedding \cr
+#' \code{\link{do.nnp}} \tab U \tab Nearest Neighbor Projection \cr
 #' \code{\link{do.plp}} \tab U \tab Piecewise Laplacian Projection \cr
 #' \code{\link{do.ree}} \tab U \tab Robust Euclidean Embedding \cr
 #' \code{\link{do.rpca}}\tab U \tab Robust Principal Component Analysis \cr
@@ -135,16 +140,30 @@
 #' \code{\link{do.sne}} \tab U \tab Stochastic Neighbor Embedding \cr
 #' \code{\link{do.spe}} \tab U \tab Stochastic Proximity Embedding \cr
 #' \code{\link{do.splapeig}} \tab S \tab Supervised Laplacian Eigenmaps \cr
+#' \code{\link{do.spmds}} \tab U \tab Spectral Multidimensional Scaling \cr
 #' \code{\link{do.tsne}} \tab U \tab t-distributed Stochastic Neighbor Embedding
 #' }
 #'
 #' @section (2) \code{est.} family for intrinsic dimension estimation algorithms:
 #' \bold{\code{est.}} family of functions include,
-#' \tabular{ll}{
-#' FUNCTION \tab ALGORITHM \cr
-#' \code{\link{est.boxcount}} \tab Box-Counting Dimension \cr
-#' \code{\link{est.correlation}} \tab Correlation Dimension
+#' \tabular{lcl}{
+#' FUNCTION \tab TYPE \tab ALGORITHM \cr
+#' \code{\link{est.boxcount}}      \tab G \tab Box-Counting Dimension \cr
+#' \code{\link{est.clustering}}    \tab G \tab Clustering-based Estimation \cr
+#' \code{\link{est.correlation}}   \tab G \tab Correlation Dimension \cr
+#' \code{\link{est.made}}          \tab G/P \tab Manifold-Adaptive Dimension Estimation \cr
+#' \code{\link{est.mle1}}          \tab G \tab MLE using Poisson Process \cr
+#' \code{\link{est.mle2}}          \tab G \tab MLE using Poisson Process with Bias Correction \cr
+#' \code{\link{est.nearneighbor1}} \tab G \tab Near-Neighbor Information \cr
+#' \code{\link{est.nearneighbor2}} \tab G \tab Near-Neighbor Information with Bias Correction \cr
+#' \code{\link{est.incisingball}}  \tab G \tab Estimation using Incising Ball \cr
+#' \code{\link{est.packing}}       \tab G \tab Estimation using Packing Numbers  \cr
+#' \code{\link{est.pcathr}}        \tab G \tab PCA Thresholding with Accumulated Variance \cr
+#' \code{\link{est.twonn}}         \tab G \tab Minimal Neighborhood Information \cr
+#' \code{\link{est.Ustat}}         \tab G \tab Convergence Rate of U-statistic
 #' }
+#' where the taxonomy is of \emph{global}(G) or \emph{pointwise}(P). \emph{Global} methods return a single estimated dimension
+#' of the data manifold, whereas \emph{Pointwise} methods return locally estimated intrinsic dimension at each point.
 #'
 #' @section (3) \code{oos.} family for out-of-sample predictions:
 #' If the original dimension reduction method was \emph{linear}-type, then you could use \code{oos.linear} function.
@@ -178,12 +197,14 @@
 #' @import Rcsdp
 #' @import Rdpack
 #' @import CVXR
+#' @import RcppDE
+#' @importFrom utils packageVersion combn
 #' @importFrom RSpectra eigs svds
 #' @importFrom ADMM admm.lasso admm.spca admm.rpca
 #' @importFrom Matrix rankMatrix expm norm Matrix
 #' @importFrom Rtsne Rtsne
-#' @importFrom stats dist cov rnorm runif kmeans cor var sd
-#' @importFrom graphics par image plot
+#' @importFrom stats dist cov rnorm runif kmeans cor var sd approx lm coef coefficients as.dist hclust cutree quantile median
+#' @importFrom graphics par image plot hist
 #' @importFrom Rcpp evalCpp
 #' @useDynLib Rdimtools
 NULL

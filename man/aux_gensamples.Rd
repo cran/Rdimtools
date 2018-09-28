@@ -4,7 +4,9 @@
 \alias{aux.gensamples}
 \title{Generate model-based samples}
 \usage{
-aux.gensamples(n = 496, noise = 0.1, dname = "swiss")
+aux.gensamples(n = 496, noise = 0.01, dname = c("swiss", "crown",
+  "helix", "saddle", "ribbon", "bswiss", "cswiss", "twinpeaks", "sinusoid",
+  "mobius", "R12in72"), ...)
 }
 \arguments{
 \item{n}{the number of points to be generated.}
@@ -20,6 +22,14 @@ aux.gensamples(n = 496, noise = 0.1, dname = "swiss")
 \item{\code{"bswiss"}}{broken swiss}
 \item{\code{"cswiss"}}{cut swiss}
 \item{\code{"twinpeaks"}}{two peaks}
+\item{\code{"sinusoid"}}{sinusoid on the circle}
+\item{\code{"mobius"}}{mobius strip embedded in \eqn{\mathbf{R}^3}}
+\item{\code{"R12in72"}}{12-dimensional manifold in \eqn{\mathbf{R}^{12}}}
+}}
+
+\item{...}{extra parameters for the followings #' \tabular{lll}{
+parameter \tab dname \tab description \cr
+\code{ntwist} \tab \code{"mobius"} \tab number of twists
 }}
 }
 \value{
@@ -29,20 +39,9 @@ an \eqn{(n\times 3)} matrix of generated data by row.
 It generates samples from predefined 3-d shapes, set by \code{dname} parameter.
 Also incorporated a functionality to add white noise with degree \code{noise}.
 }
-\examples{
-## Generate samples for three different shapes
-d1 = aux.gensamples(dname="twinpeaks",noise=0.01)
-d2 = aux.gensamples(dname="ribbon",noise=0.01)
-d3 = aux.gensamples(dname="crown", noise=0.01)
-
-\dontrun{
-casenames = c("swiss","crown","helix","saddle","ribbon","bswiss","cswiss","twinpeaks")
-for (i in 1:length(casenames)){
-  data = aux.gensamples(n=sample(1000:2000,1),noise=runif(1)[1],dname=casenames[i])
-}
-}
-}
 \references{
+\insertRef{hein_intrinsic_2005}{Rdimtools}
+
 \insertRef{van_der_maaten_dimensionality_2009}{Rdimtools}
 }
 \author{

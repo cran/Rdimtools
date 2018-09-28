@@ -71,12 +71,12 @@ handy_plus <- function(X) {
     .Call('_Rdimtools_handy_plus', PACKAGE = 'Rdimtools', X)
 }
 
-handy_hadamartABC <- function(A, B, C) {
-    .Call('_Rdimtools_handy_hadamartABC', PACKAGE = 'Rdimtools', A, B, C)
+handy_hadamardABC <- function(A, B, C) {
+    .Call('_Rdimtools_handy_hadamardABC', PACKAGE = 'Rdimtools', A, B, C)
 }
 
-handy_hadamartABCsqrt <- function(A, B, C) {
-    .Call('_Rdimtools_handy_hadamartABCsqrt', PACKAGE = 'Rdimtools', A, B, C)
+handy_hadamardABCsqrt <- function(A, B, C) {
+    .Call('_Rdimtools_handy_hadamardABCsqrt', PACKAGE = 'Rdimtools', A, B, C)
 }
 
 #' @keywords internal
