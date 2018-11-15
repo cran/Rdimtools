@@ -18,9 +18,9 @@
 #'
 #' For \emph{linear} methods, we have
 #' \tabular{lcl}{
-#' FUNCTION \tab TYPE \tab ALGORITHM \cr
+#' FUNCTION \tab TYPE \tab  ALGORITHM \cr
 #' \code{\link{do.adr}} \tab U \tab Adaptive Dimension Reduction \cr
-#' \code{\link{do.ammc}} \tab S \tab Adaptive Maximum Margin Criterion \cr
+#' \code{\link{do.ammc}} \tab S  \tab Adaptive Maximum Margin Criterion \cr
 #' \code{\link{do.anmm}}\tab S \tab Average Neighborhood Margin Maximization \cr
 #' \code{\link{do.asi}} \tab U \tab Adaptive Subspace Iteration \cr
 #' \code{\link{do.bpca}} \tab U \tab Bayesian Principal Component Analysis \cr
@@ -29,6 +29,7 @@
 #' \code{\link{do.crp}} \tab U \tab Collaborative Representation-based Projection \cr
 #' \code{\link{do.dagdne}} \tab S \tab Double-Adjacency Graphs-based Discriminant Neighborhood Embedding \cr
 #' \code{\link{do.dne}} \tab S \tab Discriminant Neighborhood Embedding \cr
+#' \code{\link{do.disr}} \tab U \tab Diversity-Induced Self-Representation \cr
 #' \code{\link{do.dspp}} \tab S \tab Discriminative Sparsity Preserving Projection \cr
 #' \code{\link{do.elde}} \tab S \tab Exponential Local Discriminant Embedding \cr
 #' \code{\link{do.elpp2}} \tab U \tab Enhanced Locality Preserving Projection (2013) \cr
@@ -61,6 +62,7 @@
 #' \code{\link{do.lsda}} \tab S \tab Locality Sensitive Discriminant Analysis \cr
 #' \code{\link{do.lsdf}} \tab SS \tab Locality Sensitive Discriminant Feature \cr
 #' \code{\link{do.lsir}} \tab S \tab Localized Sliced Inverse Regression \cr
+#' \code{\link{do.lspe}} \tab U \tab Locality and Similarity Preserving Embedding \cr
 #' \code{\link{do.lspp}}\tab S \tab Local Similarity Preserving Projection \cr
 #' \code{\link{do.mcfs}} \tab U \tab Multi-Cluster Feature Selection \cr
 #' \code{\link{do.mds}} \tab U \tab (Metric) Multidimensional Scaling \cr
@@ -76,6 +78,7 @@
 #' \code{\link{do.nonpp}} \tab U \tab Nonnegative Orthogonal Neighborhood Preserving Projections \cr
 #' \code{\link{do.npca}} \tab U \tab Nonnegative Principal Component Analysis \cr
 #' \code{\link{do.npe}} \tab U \tab Neighborhood Preserving Embedding \cr
+#' \code{\link{do.nrsr}} \tab U \tab Non-convex Regularized Self-Representation \cr
 #' \code{\link{do.odp}} \tab S \tab Orthogonal Discriminant Projection \cr
 #' \code{\link{do.olda}} \tab S \tab Orthogonal Linear Discriminant Analysis \cr
 #' \code{\link{do.olpp}} \tab U \tab Orthogonal Locality Preserving Projection \cr
@@ -88,6 +91,7 @@
 #' \code{\link{do.rlda}} \tab S \tab Regularized Linear Discriminant Analysis \cr
 #' \code{\link{do.rndproj}} \tab U \tab Random Projection \cr
 #' \code{\link{do.rsir}} \tab S \tab Regularized Sliced Inverse Regression \cr
+#' \code{\link{do.rsr}} \tab U \tab Regularized Self-Representation \cr
 #' \code{\link{do.sammc}} \tab SS \tab Semi-Supervised Adaptive Maximum Margin Criterion \cr
 #' \code{\link{do.save}} \tab S \tab Sliced Average Variance Estimation \cr
 #' \code{\link{do.sda}} \tab SS \tab Semi-Supervised Discriminant Analysis \cr
@@ -95,9 +99,12 @@
 #' \code{\link{do.sir}} \tab S \tab Sliced Inverse Regression \cr
 #' \code{\link{do.slpe}} \tab S \tab Supervised Locality Pursuit Embedding \cr
 #' \code{\link{do.slpp}} \tab S \tab Supervised Locality Preserving Projection \cr
+#' \code{\link{do.spc}}  \tab S \tab Supervised Principal Component Analysis \cr
 #' \code{\link{do.spca}} \tab U \tab Sparse Principal Component Analysis \cr
 #' \code{\link{do.spp}} \tab U \tab Sparsity Preserving Projection \cr
+#' \code{\link{do.spufs}} \tab U \tab Structure Preserving Unsupervised Feature Selection \cr
 #' \code{\link{do.ssldp}} \tab SS \tab Semi-Supervised Locally Discriminant Projection \cr
+#' \code{\link{do.udfs}} \tab U \tab Unsupervised Discriminative Features Selection \cr
 #' \code{\link{do.udp}} \tab U \tab Unsupervised Discriminant Projection \cr
 #' \code{\link{do.ulda}} \tab S \tab Uncorrelated Linear Discriminant Analysis
 #' }
