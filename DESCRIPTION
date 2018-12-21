@@ -1,7 +1,7 @@
 Package: Rdimtools
 Type: Package
 Title: Dimension Reduction and Estimation Methods
-Version: 0.4.1
+Version: 0.4.2
 Authors@R: c(person("Changhee","Suh",role="aut",email="suh0730@yonsei.ac.kr"),person("Kisung", "You", role = c("aut", "cre"),email = "kyou@nd.edu",comment=c(ORCID="0000-0002-8584-459X")))
 Description: We provide linear and nonlinear dimension reduction techniques.
 	Intrinsic dimension estimation methods for exploratory analysis are also provided.
@@ -21,9 +21,9 @@ RdMacros: Rdpack
 URL: http://github.com/kisungyou/Rdimtools
 BugReports: http://github.com/kisungyou/Rdimtools/issues
 NeedsCompilation: yes
-Packaged: 2018-11-15 12:59:50 UTC; kisung
+Packaged: 2018-12-20 06:28:04 UTC; kisung
 Author: Changhee Suh [aut],
   Kisung You [aut, cre] (<https://orcid.org/0000-0002-8584-459X>)
 Maintainer: Kisung You <kyou@nd.edu>
 Repository: CRAN
-Date/Publication: 2018-11-15 13:50:03 UTC
+Date/Publication: 2018-12-21 14:00:06 UTC
