@@ -4,9 +4,12 @@
 \alias{do.dve}
 \title{Distinguishing Variance Embedding}
 \usage{
-do.dve(X, ndim = 2, type = c("proportion", 0.1),
-  preprocess = c("null", "center", "scale", "cscale", "decorrelate",
-  "whiten"))
+do.dve(
+  X,
+  ndim = 2,
+  type = c("proportion", 0.1),
+  preprocess = c("null", "center", "scale", "cscale", "decorrelate", "whiten")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -37,7 +40,7 @@ locality-preserving constraint. Instead of defining certain kernel, it applies l
 in that it automatically computes adaptive neighborhood-based kernel bandwidth.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate swiss-roll dataset of size 200
 X <- aux.gensamples(dname="crown",n=200)
 
@@ -47,10 +50,12 @@ out2 <- do.dve(X, type=c("proportion",0.6))
 out3 <- do.dve(X, type=c("proportion",0.8))
 
 ## Visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1],out1$Y[,2],main="DVE::20\% connected")
-plot(out2$Y[,1],out2$Y[,2],main="DVE::50\% connected")
-plot(out3$Y[,1],out3$Y[,2],main="DVE::80\% connected")
+plot(out1$Y, main="DVE::20\% connected")
+plot(out2$Y, main="DVE::50\% connected")
+plot(out3$Y, main="DVE::80\% connected")
+par(opar)
 }
 
 }

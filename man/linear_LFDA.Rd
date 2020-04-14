@@ -4,10 +4,15 @@
 \alias{do.lfda}
 \title{Local Fisher Discriminant Analysis}
 \usage{
-do.lfda(X, label, ndim = 2, preprocess = c("center", "scale", "cscale",
-  "decorrelate", "whiten"), type = c("proportion", 0.1),
+do.lfda(
+  X,
+  label,
+  ndim = 2,
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"),
+  type = c("proportion", 0.1),
   symmetric = c("union", "intersect", "asymmetric"),
-  localscaling = TRUE)
+  localscaling = TRUE
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -56,15 +61,17 @@ out1 = do.lfda(X, label)
 out2 = do.lfda(X, label, localscaling=FALSE)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,2))
-plot(out1$Y[,1], out1$Y[,2], main="binary affinity matrix")
-plot(out2$Y[,1], out2$Y[,2], main="local scaling affinity")
+plot(out1$Y, col=label, main="binary affinity matrix")
+plot(out2$Y, col=label, main="local scaling affinity")
+par(opar)
 
 }
 \references{
 \insertRef{sugiyama_local_2006}{Rdimtools}
 
-\insertRef{zelnik-manor_self-tuning_2005}{Rdimtools}
+\insertRef{zelnik-manor_selftuning_2005}{Rdimtools}
 }
 \author{
 Kisung You

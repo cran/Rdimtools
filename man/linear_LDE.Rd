@@ -4,8 +4,14 @@
 \alias{do.lde}
 \title{Local Discriminant Embedding}
 \usage{
-do.lde(X, label, ndim = 2, t = 1, numk = max(ceiling(nrow(X)/10), 2),
-  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"))
+do.lde(
+  X,
+  label,
+  ndim = 2,
+  t = 1,
+  numk = max(ceiling(nrow(X)/10), 2),
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations.}
@@ -36,7 +42,7 @@ data points maintain their original neighborhood information while
 segregating different-class data distinct from each other.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate data of 2 types with clear difference
 diff = 15
 dt1  = aux.gensamples(n=123)-diff;
@@ -52,15 +58,17 @@ out2 <- do.lde(X, label, numk=10)
 out3 <- do.lde(X, label, numk=25)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="LDE::k=5")
-plot(out2$Y[,1], out2$Y[,2], main="LDE::k=10")
-plot(out3$Y[,1], out3$Y[,2], main="LDE::k=25")
+plot(out1$Y, col=label, main="LDE::k=5")
+plot(out2$Y, col=label, main="LDE::k=10")
+plot(out3$Y, col=label, main="LDE::k=25")
+par(opar)
 }
 
 }
 \references{
-\insertRef{hwann-tzong_chen_local_2005}{Rdimtools}
+\insertRef{hwann-tzongchen_local_2005}{Rdimtools}
 }
 \author{
 Kisung You

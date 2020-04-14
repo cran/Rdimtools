@@ -4,8 +4,12 @@
 \alias{do.spp}
 \title{Sparsity Preserving Projection}
 \usage{
-do.spp(X, ndim = 2, preprocess = c("center", "scale", "cscale",
-  "decorrelate", "whiten"), reltol = 1e-04)
+do.spp(
+  X,
+  ndim = 2,
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"),
+  reltol = 1e-04
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations}
@@ -33,9 +37,11 @@ we used \pkg{CVXR} for convenient computation, which may lead to slower executio
 once used for large dataset.
 }
 \examples{
-\dontrun{
-## generate samples
-X <- aux.gensamples(n=200, dname="crown")
+\donttest{
+## use iris data
+data(iris)
+X     = as.matrix(iris[,1:4])
+label = as.integer(iris$Species)
 
 ## test different tolerance levels
 out1 <- do.spp(X,ndim=2,reltol=0.001)
@@ -43,10 +49,12 @@ out2 <- do.spp(X,ndim=2,reltol=0.01)
 out3 <- do.spp(X,ndim=2,reltol=0.1)
 
 # visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="reltol = 0.001")
-plot(out2$Y[,1], out2$Y[,2], main="reltol = 0.01")
-plot(out3$Y[,1], out3$Y[,2], main="reltol = 0.1")
+plot(out1$Y, col=label, main="SPP::reltol=.001")
+plot(out2$Y, col=label, main="SPP::reltol=.01")
+plot(out3$Y, col=label, main="SPP::reltol=.1")
+par(opar)
 }
 }
 \references{

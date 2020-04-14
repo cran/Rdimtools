@@ -57,6 +57,14 @@ linsolve.bicgstab.single.sparse <- function(A, b, xinit, reltol, maxiter, M) {
     .Call('_Rdimtools_single_bicgstab_sparse', PACKAGE = 'Rdimtools', A, b, xinit, reltol, maxiter, M)
 }
 
+aux_expm <- function(A) {
+    .Call('_Rdimtools_aux_expm', PACKAGE = 'Rdimtools', A)
+}
+
+aux_rank <- function(A) {
+    .Call('_Rdimtools_aux_rank', PACKAGE = 'Rdimtools', A)
+}
+
 #' @keywords internal
 methods_boxcount <- function(tX, Imin, currentr) {
     .Call('_Rdimtools_methods_boxcount', PACKAGE = 'Rdimtools', tX, Imin, currentr)
@@ -186,6 +194,10 @@ method_nrsr <- function(X, lbd, verysmall, p) {
     .Call('_Rdimtools_method_nrsr', PACKAGE = 'Rdimtools', X, lbd, verysmall, p)
 }
 
+method_scoresum <- function(X, S) {
+    .Call('_Rdimtools_method_scoresum', PACKAGE = 'Rdimtools', X, S)
+}
+
 #' @keywords internal
 NULL
 
@@ -249,7 +261,11 @@ method_crca <- function(Xij, Yinit, lambda, alpha, maxiter, tolerance, vecselect
     .Call('_Rdimtools_method_crca', PACKAGE = 'Rdimtools', Xij, Yinit, lambda, alpha, maxiter, tolerance, vecselector)
 }
 
-aux_mimick_geigen <- function(A, B) {
-    .Call('_Rdimtools_aux_mimick_geigen', PACKAGE = 'Rdimtools', A, B)
+bmds_compute_SSR <- function(D, Delta) {
+    .Call('_Rdimtools_bmds_compute_SSR', PACKAGE = 'Rdimtools', D, Delta)
+}
+
+main_bmds <- function(D, X0, sigg0, a, alpha, maxiter, constant, verbose, betas) {
+    .Call('_Rdimtools_main_bmds', PACKAGE = 'Rdimtools', D, X0, sigg0, a, alpha, maxiter, constant, verbose, betas)
 }
 

@@ -4,9 +4,16 @@
 \alias{do.klde}
 \title{Kernel Local Discriminant Embedding}
 \usage{
-do.klde(X, label, ndim = 2, t = 1, numk = max(ceiling(nrow(X)/10),
-  2), preprocess = c("center", "scale", "cscale", "decorrelate",
-  "whiten"), ktype = c("gaussian", 1), kcentering = TRUE)
+do.klde(
+  X,
+  label,
+  ndim = 2,
+  t = 1,
+  numk = max(ceiling(nrow(X)/10), 2),
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"),
+  ktype = c("gaussian", 1),
+  kcentering = TRUE
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations.}
@@ -41,7 +48,7 @@ often suffers from lacking numerical rank. For such case, our algorithm returns 
 algorithm stops working any further due to its innate limitations of constructing weight matrix.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate data of 2 types with clear difference
 diff = 5
 dt1  = aux.gensamples(n=123)-diff;
@@ -57,15 +64,17 @@ out2 <- do.klde(Y, label, numk=10)
 out3 <- do.klde(Y, label, numk=25)
 
 ## visualize
+opar = par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="k=5")
-plot(out2$Y[,1], out2$Y[,2], main="k=10")
-plot(out3$Y[,1], out3$Y[,2], main="k=25")
+plot(out1$Y, main="k=5")
+plot(out2$Y, main="k=10")
+plot(out3$Y, main="k=25")
+par(opar)
 }
 
 }
 \references{
-\insertRef{hwann-tzong_chen_local_2005}{Rdimtools}
+\insertRef{hwann-tzongchen_local_2005}{Rdimtools}
 }
 \author{
 Kisung You

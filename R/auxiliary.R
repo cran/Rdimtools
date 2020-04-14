@@ -25,6 +25,9 @@
 # 20. aux.randpartition    : given 1:n, divide it into K random partitions without replacement
 # 21. aux.which.mink       : returns index of smallest
 #     aux.which.maxk
+# 22. aux.traceratio       : solve trace ratio problem with 2012 Ngo's algorithm
+# 23. aux.2scatter         : compute LDA type within- and between- scatter matrices
+# 24. aux.subsetid         : generate 'k' subset id
 
 #  ------------------------------------------------------------------------
 # 0. AUX.TYPECHECK
@@ -62,8 +65,8 @@ aux.typecheck <- function(data, verbose=FALSE){
 #' \code{aux.preprocess} can perform one of following operations; \code{"center"}, \code{"scale"},
 #' \code{"cscale"}, \code{"decorrelate"} and \code{"whiten"}. See below for more details.
 #'
-#'  @section Operations:
-#'  We have following operations,
+#' @section
+#' Operations: we have following operations,
 #'  \describe{
 #'  \item{\code{"center"}}{subtracts mean of each column so that every variable has mean \eqn{0}.}
 #'  \item{\code{"scale"}}{turns each column corresponding to variable have variance \eqn{1}.}
@@ -264,7 +267,7 @@ aux.preprocess.hidden <- function(data,type=c("null","center","scale","cscale","
 #' @references
 #' \insertRef{hein_intrinsic_2005}{Rdimtools}
 #'
-#' \insertRef{van_der_maaten_dimensionality_2009}{Rdimtools}
+#' \insertRef{vandermaaten_learning_2009}{Rdimtools}
 #'
 #' @author Kisung You
 #' @rdname aux_gensamples
@@ -1207,16 +1210,17 @@ aux.kernelprojection <- function(KK, ndim){
 aux.adjqr <- function(P){
   p = ncol(P)
   Pid = (t(P)%*%P)
-  if (max(abs(diag(p)-Pid))>1e-18){
-    output = qr.Q(qr(P))
+  dnormval = base::norm(diag(p)-Pid, type = "F")
+  if (dnormval > 1e-10){
+    return(qr.Q(qr(P)))
   } else {
-    output = P
+    return(P)
   }
-  return(output)
 }
 #' @keywords internal
 #' @noRd
 aux.adjprojection <- function(P){
+  PP = aux.adjqr(P)
   n = nrow(P)
   p = ncol(P)
   output = array(0,c(n,p))
@@ -1264,44 +1268,65 @@ aux.nbdlogical <- function(X, label, khomo, khet){
 #' @keywords internal
 #' @noRd
 aux.geigen <- function(top, bottom, ndim, maximal=TRUE){
-  # 1. first, run CPP with RcppArmadillo
-  geigs = aux_geigen(top, bottom)
-  maxp  = length(geigs$values)
+  # new 1. use 'maotai's mimic function : increasing order as well
+  gfun  = getFromNamespace("hidden_geigen","maotai")
+  geigs = gfun(top, bottom, normalize=TRUE)
+  nobj  = length(geigs$values)
+  ndim  = round(ndim)
 
-  # 2. separate values and vectors
-  values  = geigs$values
-  vectors = geigs$vectors
-
-  if (maximal==TRUE){
-    partvals = values[1:ndim]
+  # new 2. separate eigenvectors accordingly to the orders
+  if (maximal){
+    vectors = geigs$vectors[,nobj:(nobj-ndim+1)]
   } else {
-    partvals = values[maxp:(maxp-ndim+1)]
-  }
-  if (all(base::abs(base::Im(partvals))<(100*(.Machine$double.eps)))){
-    values  = base::Re(values)
-    vectors = aux.adjprojection(base::Re(vectors))
-  } else {
-    stop("* aux.geigen : generalized eigenvalue problem returned imaginary eigenvalues.")
+    vectors = geigs$vectors[,1:ndim]
   }
 
-
-  # 3. branching case
-  if (ndim > 1){
-    if (maximal==TRUE){
-      projection = vectors[,1:ndim]
-    } else {
-      projection = vectors[,maxp:(maxp-ndim+1)]
-    }
+  # new 3. return
+  if (ndim==1){
+    return(matrix(vectors, ncol=1))
   } else {
-    if (maximal==TRUE){
-      vecsol = vectors[,1]
-      projection = matrix(vecsol/sqrt(sum(vecsol*vecsol)))
-    } else {
-      vecsol = vectors[,maxp]
-      projection = matrix(vecsol/sqrt(sum(vecsol*vecsol)))
-    }
+    return(vectors)
   }
-  return(projection)
+
+  # # 1. first, run CPP with RcppArmadillo -> change to 'geigen' package
+  # # geigs = aux_geigen(top, bottom) # Armadillo goes Decreasing order
+  # geigs = geigen::geigen(top, bottom) # geigen goes Increasing order
+  # maxp  = length(geigs$values)
+  #
+  # # 2. separate values and vectors; change correspondingly for Decreasing order
+  # values  = geigs$values[maxp:1]
+  # vectors = geigs$vectors[,maxp:1]
+  #
+  # if (maximal==TRUE){
+  #   partvals = values[1:ndim]
+  # } else {
+  #   partvals = values[maxp:(maxp-ndim+1)]
+  # }
+  # if (all(base::abs(base::Im(partvals))<(100*(.Machine$double.eps)))){
+  #   values  = base::Re(values)
+  #   vectors = aux.adjprojection(base::Re(vectors))
+  # } else {
+  #   stop("* aux.geigen : generalized eigenvalue problem returned imaginary eigenvalues.")
+  # }
+  #
+  #
+  # # 3. branching case
+  # if (ndim > 1){
+  #   if (maximal==TRUE){
+  #     projection = vectors[,1:ndim]
+  #   } else {
+  #     projection = vectors[,maxp:(maxp-ndim+1)]
+  #   }
+  # } else {
+  #   if (maximal==TRUE){
+  #     vecsol = vectors[,1]
+  #     projection = matrix(vecsol/sqrt(sum(vecsol*vecsol)))
+  #   } else {
+  #     vecsol = vectors[,maxp]
+  #     projection = matrix(vecsol/sqrt(sum(vecsol*vecsol)))
+  #   }
+  # }
+  # return(projection)
 }
 
 
@@ -1338,8 +1363,8 @@ aux.traceratio.max <- function(A,B,ndim,tol=1e-10){
   if (nrow(B)!=d){
     stop("* aux.traceratio : B is not matching size of A.")
   }
-  m = as.integer(ndim)
-  r = as.integer(Matrix::rankMatrix(B))
+  m = round(ndim)
+  r = round(aux_rank(B)) # as.integer(Matrix::rankMatrix (B))
 
   # -------------------------------------------------------------
   # MAIN BRANCHING
@@ -1398,22 +1423,32 @@ aux.bicgstab <- function(A,B,xinit=NA,reltol=1e-5,maxiter=1000,
   if (any(is.na(A))||any(is.infinite(A))||any(is.na(B))||any(is.infinite(B))){
     stop("* aux.bicgstab : no NA or Inf values allowed.")
   }
-  sparseformats = c("dgCMatrix","dtCMatrix","dsCMatrix")
-  if ((class(A)%in%sparseformats)||(class(B)%in%sparseformats)||(class(preconditioner)%in%sparseformats)){
-    A = Matrix(A,sparse=TRUE)
-    B = Matrix(B,sparse=TRUE)
-    preconditioner = Matrix(preconditioner,sparse=TRUE)
-    sparseflag = TRUE
+
+  A = matrix(A,nrow=nrow(A))
+  if (is.vector(B)){
+    B = matrix(B,ncol=1)
   } else {
-    A = matrix(A,nrow=nrow(A))
-    if (is.vector(B)){
-      B = matrix(B)
-    } else {
-      B = matrix(B,nrow=nrow(B))
-    }
-    preconditioner = matrix(preconditioner,nrow=nrow(preconditioner))
-    sparseflag = FALSE
+    B = matrix(B,nrow=nrow(B))
   }
+  preconditioner = matrix(preconditioner,nrow=nrow(preconditioner))
+  sparseflag = FALSE
+
+  # sparseformats = c("dgCMatrix","dtCMatrix","dsCMatrix")
+  # if ((class(A)%in%sparseformats)||(class(B)%in%sparseformats)||(class(preconditioner)%in%sparseformats)){
+  #   A = Matrix(A,sparse=TRUE)
+  #   B = Matrix(B,sparse=TRUE)
+  #   preconditioner = Matrix(preconditioner,sparse=TRUE)
+  #   sparseflag = TRUE
+  # } else {
+  #   A = matrix(A,nrow=nrow(A))
+  #   if (is.vector(B)){
+  #     B = matrix(B)
+  #   } else {
+  #     B = matrix(B,nrow=nrow(B))
+  #   }
+  #   preconditioner = matrix(preconditioner,nrow=nrow(preconditioner))
+  #   sparseflag = FALSE
+  # }
   # xinit
   if (is.na(xinit)){
     xinit = matrix(rnorm(ncol(A)))
@@ -1473,13 +1508,14 @@ aux.bicgstab <- function(A,B,xinit=NA,reltol=1e-5,maxiter=1000,
     iter   = array(0,c(1,ncolB))
     errors = list()
     for (i in 1:ncolB){
-      if (!sparseflag){
-        vecB = as.vector(B[,i])
-        tmpres = linsolve.bicgstab.single(A,vecB,xinit,reltol,maxiter,preconditioner)
-      } else {
-        vecB = Matrix(B[,i],sparse=TRUE)
-        tmpres = linsolve.bicgstab.single.sparse(A,vecB,xinit,reltol,maxiter,preconditioner)
-      }
+      vecB = as.vector(B[,i])
+      tmpres = linsolve.bicgstab.single(A,vecB,xinit,reltol,maxiter,preconditioner)
+      # if (!sparseflag){
+      #
+      # } else {
+      #   vecB = Matrix (B[,i],sparse=TRUE)
+      #   tmpres = linsolve.bicgstab.single.sparse(A,vecB,xinit,reltol,maxiter,preconditioner)
+      # }
       x[,i]        = tmpres$x
       iter[i]      = tmpres$iter
       errors[[i]]  = tmpres$errors
@@ -1586,4 +1622,114 @@ aux.which.mink <- function(x, k=1){
 #' @noRd
 aux.which.maxk <- function(x, k=1){
   return(order(x,decreasing = TRUE)[1:k])
+}
+
+
+# 22. aux.traceratio  : solve trace ratio problem with 2012 Ngo's  --------
+#' @keywords internal
+#' @noRd
+aux.traceratio <- function(A, B, dim, eps, maxiter){
+  ## in the the language
+  n = nrow(A)
+  p = dim
+
+  ## prepare the initializer
+  Vold = qr.Q(qr(matrix(rnorm(n*p),ncol=p)))
+  rhoold = 0
+  for (i in 1:maxiter){
+    Vnew   = RSpectra::eigs(A-rhoold*B,p,which="LR")$vectors
+    rhonew = sum(diag(t(Vnew)%*%A%*%Vnew))/sum(diag(t(Vnew)%*%B%*%Vnew))
+
+    rhoinc = abs(rhonew-rhoold)
+    Vold   = Vnew
+    rhoold = rhonew
+
+    if (rhoinc < eps){
+      break
+    }
+  }
+
+  ## let's try to return !
+  return(Vold)
+}
+
+
+# 23. aux.2scatter --------------------------------------------------------
+#     data should be provided as a matrix (columns are variables)
+#' @keywords internal
+#' @noRd
+aux.2scatter <- function(pX, label){
+  # 0. extra information
+  if (is.vector(pX)){
+    n = length(pX)
+    p = 1
+  } else {
+    n = nrow(pX)
+    p = ncol(pX)
+  }
+
+
+  # 1. extract label information
+  label   = round(label)
+  ulabel  = unique(label)
+  datlist = list()
+  for (i in 1:length(ulabel)){
+    if (is.vector(pX)){
+      datlist[[i]] = pX[(label==ulabel[i])]
+    } else {
+      datlist[[i]] = pX[(label==ulabel[i]),]
+    }
+  }
+  # 2. compute two types of scatter matrices
+  #   2-1. error matrix/E/error variance
+  scattermat <- function(x){
+    return(cov(x)*(nrow(x)-1))
+  }
+  matE = array(0,c(p,p))
+  for (i in 1:length(ulabel)){
+    if (is.vector(datlist[[i]])){
+      tgt = as.matrix(datlist[[i]])
+    } else {
+      tgt = datlist[[i]]
+    }
+    matE = matE + cov(tgt)*(nrow(tgt)-1)
+  }
+  matH = array(0,c(p,p))
+  if (is.vector(datlist[[1]])){
+    meanlist = lapply(datlist, base::mean)
+  } else {
+    meanlist = lapply(datlist, colMeans)
+  }
+  if (is.vector(pX)){
+    meantott = base::mean(pX)
+  } else {
+    meantott = colMeans(pX)
+  }
+  for (i in 1:length(ulabel)){
+    meandiff = as.vector(meanlist[[i]]-meantott)
+    if (is.vector(datlist[[i]])){
+      matH = matH + length(datlist[[i]])*outer(meandiff,meandiff)
+    } else {
+      matH = matH + nrow(datlist[[i]])*outer(meandiff,meandiff)
+    }
+  }
+
+  output = list()
+  if (is.vector(pX)){
+    output$within = as.double(matE)
+    output$between = as.double(matH)
+  } else {
+    output$within = matE
+    output$between = matH
+  }
+
+  return(output)
+}
+
+
+# 24. aux.subsetid --------------------------------------------------------
+#' @keywords internal
+aux.subsetid <- function(n, k){
+  x = sample(1:n)
+  return(split(x, sort(x%%k)))
 }

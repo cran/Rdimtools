@@ -4,8 +4,13 @@
 \alias{do.bpca}
 \title{Bayesian Principal Component Analysis}
 \usage{
-do.bpca(X, ndim = 2, preprocess = c("center", "scale", "cscale",
-  "decorrelate", "whiten"), reltol = 1e-04, maxiter = 123)
+do.bpca(
+  X,
+  ndim = 2,
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"),
+  reltol = 1e-04,
+  maxiter = 123
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -42,18 +47,20 @@ relative weight for each base in that the smaller \eqn{\alpha} value is, the mor
 corresponding column vector of \code{mp.W} to be selected as potential basis.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate swiss roll data
-X = aux.gensamples()
+X = aux.gensamples(n=200)
 
 ## Compare PCA and BPCA
 out1  <- do.pca(X, ndim=2, preprocess="center")
 out2  <- do.bpca(X, ndim=2, preprocess="center")
 
 ## Visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,2))
-plot(out1$Y[,1], out1$Y[,2], main="PCA")
-plot(out2$Y[,1], out2$Y[,2], main="BPCA")
+plot(out1$Y, main="PCA")
+plot(out2$Y, main="BPCA")
+par(opar)
 }
 
 }

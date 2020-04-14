@@ -4,8 +4,7 @@
 \alias{do.sda}
 \title{Semi-Supervised Discriminant Analysis}
 \usage{
-do.sda(X, label, ndim = 2, type = c("proportion", 0.1), alpha = 1,
-  beta = 1)
+do.sda(X, label, ndim = 2, type = c("proportion", 0.1), alpha = 1, beta = 1)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -41,14 +40,10 @@ Regularization in case of rank-deficient case is also supported via an \eqn{\ell
 scheme via \code{beta}.
 }
 \examples{
-## generate data of 3 types with clear difference
-dt1  = aux.gensamples(n=33)-100
-dt2  = aux.gensamples(n=33)
-dt3  = aux.gensamples(n=33)+100
-
-## merge the data and create a label correspondingly
-X      = rbind(dt1,dt2,dt3)
-label  = c(rep(1,33), rep(2,33), rep(3,33))
+## use iris data
+data(iris)
+X     = as.matrix(iris[,1:4])
+label = as.integer(iris$Species)
 
 ## copy a label and let 20\% of elements be missing
 nlabel = length(label)
@@ -61,13 +56,15 @@ out1 = do.sda(X, label)
 out2 = do.sda(X, label_missing)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,2))
-plot(out1$Y[,1], out1$Y[,2], main="true projection")
-plot(out2$Y[,1], out2$Y[,2], main="20\% missing labels")
+plot(out1$Y, col=label, main="true projection")
+plot(out2$Y, col=label, main="20\% missing labels")
+par(opar)
 
 }
 \references{
-\insertRef{cai_semi-supervised_2007}{Rdimtools}
+\insertRef{cai_semisupervised_2007}{Rdimtools}
 }
 \author{
 Kisung You

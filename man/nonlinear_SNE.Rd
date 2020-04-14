@@ -4,11 +4,21 @@
 \alias{do.sne}
 \title{Stochastic Neighbor Embedding}
 \usage{
-do.sne(X, ndim = 2, perplexity = 30, eta = 0.05, maxiter = 2000,
-  jitter = 0.3, jitterdecay = 0.99, momentum = 0.5,
-  preprocess = c("null", "center", "scale", "scale", "decorrelate",
-  "whiten"), pca = TRUE, pcaratio = 0.9, pcascale = FALSE,
-  symmetric = FALSE)
+do.sne(
+  X,
+  ndim = 2,
+  perplexity = 30,
+  eta = 0.05,
+  maxiter = 2000,
+  jitter = 0.3,
+  jitterdecay = 0.99,
+  momentum = 0.5,
+  preprocess = c("null", "center", "scale", "scale", "decorrelate", "whiten"),
+  pca = TRUE,
+  pcaratio = 0.9,
+  pcascale = FALSE,
+  symmetric = FALSE
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations and columns represent independent variables.}
@@ -52,7 +62,7 @@ description in high-dimensional - possible, nonlinear - subspace on low-dimensio
 \code{do.sne} fully adopts algorithm details in an original paper by Hinton and Roweis (2002).
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate ribbon-shaped data
 ## in order to pass CRAN pretest, n is set to be small.
 X = aux.gensamples(dname="ribbon",n=99)
@@ -67,10 +77,12 @@ output2 <- do.sne(X,ndim=2,pca=TRUE,pcaratio=0.50)
 output3 <- do.sne(X,ndim=2,pca=TRUE,pcaratio=0.50,perplexity=10)
 
 ## Visualize three different projections
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
 if ((length(output1)!=1)&&(!is.na(output1))){plot(output1$Y[,1],output1$Y[,2],main="Setting 1")}
 if ((length(output1)!=1)&&(!is.na(output2))){plot(output2$Y[,1],output2$Y[,2],main="Setting 2")}
 if ((length(output1)!=1)&&(!is.na(output3))){plot(output3$Y[,1],output3$Y[,2],main="Setting 3")}
+par(opar)
 }
 
 }

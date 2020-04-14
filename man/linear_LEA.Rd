@@ -4,9 +4,13 @@
 \alias{do.lea}
 \title{Locally Linear Embedded Eigenspace Analysis}
 \usage{
-do.lea(X, ndim = 2, type = c("proportion", 0.1),
+do.lea(
+  X,
+  ndim = 2,
+  type = c("proportion", 0.1),
   symmetric = c("union", "intersect", "asymmetric"),
-  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"))
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -40,7 +44,7 @@ is removed in order to respect original work. For 1-dimensional projection, whic
 authors provided a detour for rank correcting mechanism but it is omitted for practical reason.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate samples
 X <- aux.gensamples(n=123)
 
@@ -50,10 +54,12 @@ out2 <- do.npe(X, ndim=2)
 out3 <- do.lea(X, ndim=2)
 
 ## visual comparison
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="LLE")
-plot(out2$Y[,1], out2$Y[,2], main="NPE")
-plot(out3$Y[,1], out3$Y[,2], main="LEA")
+plot(out1$Y, main="LLE")
+plot(out2$Y, main="NPE")
+plot(out3$Y, main="LEA")
+par(opar)
 }
 
 }

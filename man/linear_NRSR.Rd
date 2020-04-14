@@ -4,8 +4,13 @@
 \alias{do.nrsr}
 \title{Non-convex Regularized Self-Representation}
 \usage{
-do.nrsr(X, ndim = 2, expl = 0.5, preprocess = c("null", "center",
-  "scale", "cscale", "whiten", "decorrelate"), lbd = 1)
+do.nrsr(
+  X,
+  ndim = 2,
+  expl = 0.5,
+  preprocess = c("null", "center", "scale", "cscale", "whiten", "decorrelate"),
+  lbd = 1
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -36,9 +41,11 @@ extension aims at achieving higher-level of sparsity using arbitrarily chosen \e
 \eqn{l\in (0,1)} and this exploits Iteratively Reweighted Least Squares (IRLS) algorithm for computation.
 }
 \examples{
-\dontrun{
-#### generate R12in72 dataset
-X = aux.gensamples(n=100, dname="R12in72")
+\donttest{
+## use iris data
+data(iris)
+X     = as.matrix(iris[,1:4])
+label = as.integer(iris$Species)
 
 #### try different exponents for regularization
 out1 = do.nrsr(X, expl=0.01)
@@ -46,15 +53,17 @@ out2 = do.nrsr(X, expl=0.1)
 out3 = do.nrsr(X, expl=0.5)
 
 #### visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="NRSR::expl=0.01")
-plot(out2$Y[,1], out2$Y[,2], main="NRSR::expl=0.1")
-plot(out3$Y[,1], out3$Y[,2], main="NRSR::expl=0.5")
+plot(out1$Y, main="NRSR::expl=0.01")
+plot(out2$Y, main="NRSR::expl=0.1")
+plot(out3$Y, main="NRSR::expl=0.5")
+par(opar)
 }
 
 }
 \references{
-\insertRef{zhu_non-convex_2017}{Rdimtools}
+\insertRef{zhu_nonconvex_2017}{Rdimtools}
 }
 \seealso{
 \code{\link{do.rsr}}

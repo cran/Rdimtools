@@ -31,9 +31,11 @@
 #' output = do.pls(mat1, mat2, ndim=2)
 #'
 #' ## visualize
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,2))
-#' plot(output$Y1[,1], output$Y1[,2], main="proj(mat1)")
-#' plot(output$Y2[,1], output$Y2[,2], main="proj(mat2)")
+#' plot(output$Y1, main="proj(mat1)")
+#' plot(output$Y2, main="proj(mat2)")
+#' par(opar)
 #'
 #' @references
 #' \insertRef{wold_path_1975}{Rdimtools}

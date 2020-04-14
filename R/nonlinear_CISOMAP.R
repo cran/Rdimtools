@@ -24,7 +24,7 @@
 #'
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## generate data
 #' X <- aux.gensamples(dname="cswiss",n=500)
 #'
@@ -38,10 +38,12 @@
 #' output3 <- do.cisomap(X,ndim=2,weight=FALSE)
 #'
 #' ## Visualize three different projections
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(output1$Y[,1],output1$Y[,2],main="Isomap")
-#' plot(output2$Y[,1],output2$Y[,2],main="C-Isomap")
-#' plot(output3$Y[,1],output3$Y[,2],main="Binarized C-Isomap")
+#' plot(output1$Y, main="Isomap")
+#' plot(output2$Y, main="C-Isomap")
+#' plot(output3$Y, main="Binarized C-Isomap")
+#' par(opar)
 #' }
 #'
 #' @references

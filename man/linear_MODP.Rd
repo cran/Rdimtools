@@ -4,10 +4,16 @@
 \alias{do.modp}
 \title{Modified Orthogonal Discriminant Projection}
 \usage{
-do.modp(X, label, ndim = 2, preprocess = c("center", "scale", "cscale",
-  "decorrelate", "whiten"), type = c("proportion", 0.1),
-  symmetric = c("union", "intersect", "asymmetric"), alpha = 0.5,
-  beta = 10)
+do.modp(
+  X,
+  label,
+  ndim = 2,
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"),
+  type = c("proportion", 0.1),
+  symmetric = c("union", "intersect", "asymmetric"),
+  alpha = 0.5,
+  beta = 10
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -59,10 +65,12 @@ out2 = do.modp(X, label, beta=10)
 out3 = do.modp(X, label, beta=100)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="modp::beta=1")
-plot(out2$Y[,1], out2$Y[,2], main="modp::beta=10")
-plot(out3$Y[,1], out3$Y[,2], main="modp::beta=100")
+plot(out1$Y, main="MODP::beta=1")
+plot(out2$Y, main="MODP::beta=10")
+plot(out3$Y, main="MODP::beta=100")
+par(opar)
 
 }
 \references{

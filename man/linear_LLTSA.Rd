@@ -4,9 +4,13 @@
 \alias{do.lltsa}
 \title{Linear Local Tangent Space Alignment}
 \usage{
-do.lltsa(X, ndim = 2, type = c("proportion", 0.1),
+do.lltsa(
+  X,
+  ndim = 2,
+  type = c("proportion", 0.1),
   symmetric = c("union", "intersect", "asymmetric"),
-  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"))
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -39,7 +43,7 @@ to represent the local geometry. Alignment of those local tangent spaces in the 
 returns an explicit mapping from the high-dimensional space.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate data
 X <- aux.gensamples()
 
@@ -49,10 +53,12 @@ out2 <- do.lltsa(X, type=c("proportion",0.05))
 out3 <- do.lltsa(X, type=c("proportion",0.10))
 
 ## Visualize three different projections
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1],out1$Y[,2],main="LLTSA::1\% connected")
-plot(out2$Y[,1],out2$Y[,2],main="LLTSA::5\% connected")
-plot(out3$Y[,1],out3$Y[,2],main="LLTSA::10\% connected")
+plot(out1$Y, main="LLTSA::1\% connected")
+plot(out2$Y, main="LLTSA::5\% connected")
+plot(out3$Y, main="LLTSA::10\% connected")
+par(opar)
 }
 
 }

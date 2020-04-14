@@ -4,8 +4,12 @@
 \alias{do.rsr}
 \title{Regularized Self-Representation}
 \usage{
-do.rsr(X, ndim = 2, preprocess = c("null", "center", "scale", "cscale",
-  "whiten", "decorrelate"), lbd = 1)
+do.rsr(
+  X,
+  ndim = 2,
+  preprocess = c("null", "center", "scale", "cscale", "whiten", "decorrelate"),
+  lbd = 1
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -35,9 +39,11 @@ where \eqn{\|W\|_{2,1} = \sum_{i=1}^{m} \|W_{i:} \|_2} is an \eqn{\ell_{2,1}} no
 row-wise sparsity constraint.
 }
 \examples{
-\dontrun{
-#### generate R12in72 dataset
-X = aux.gensamples(n=100, dname="R12in72")
+\donttest{
+## use iris data
+data(iris)
+X     = as.matrix(iris[,1:4])
+label = as.integer(iris$Species)
 
 #### try different lbd combinations
 out1 = do.rsr(X, lbd=0.1)
@@ -45,10 +51,12 @@ out2 = do.rsr(X, lbd=1)
 out3 = do.rsr(X, lbd=10)
 
 #### visualize
-par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="RSR::lbd=0.1")
-plot(out2$Y[,1], out2$Y[,2], main="RSR::lbd=1")
-plot(out3$Y[,1], out3$Y[,2], main="RSR::lbd=10")
+opar <- par(no.readonly=TRUE)
+par(mfrow=c(3,1))
+plot(out1$Y, col=label, main="RSR::lbd=0.1")
+plot(out2$Y, col=label, main="RSR::lbd=1")
+plot(out3$Y, col=label, main="RSR::lbd=10")
+par(opar)
 }
 
 }

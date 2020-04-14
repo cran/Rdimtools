@@ -4,8 +4,12 @@
 \alias{do.mvp}
 \title{Maximum Variance Projection}
 \usage{
-do.mvp(X, label, ndim = 2, preprocess = c("center", "scale", "cscale",
-  "decorrelate", "whiten"))
+do.mvp(
+  X,
+  label,
+  ndim = 2,
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -34,12 +38,11 @@ the local geometry of the manifold via the following proximity coding,
 where \eqn{C_i} is the label of an \eqn{i}-th data point.
 }
 \examples{
-## generate 3 different groups of data X and label vector
-x1 = matrix(rnorm(4*10), nrow=10)-20
-x2 = matrix(rnorm(4*10), nrow=10)
-x3 = matrix(rnorm(4*10), nrow=10)+20
-X  = rbind(x1, x2, x3)
-label = c(rep(1,10), rep(2,10), rep(3,10))
+\donttest{
+## use iris data
+data(iris)
+X     = as.matrix(iris[,1:4])
+label = as.integer(iris$Species)
 
 ## perform MVP with different preprocessings
 out1 = do.mvp(X, label)
@@ -47,10 +50,13 @@ out2 = do.mvp(X, label, preprocess="decorrelate")
 out3 = do.mvp(X, label, preprocess="whiten")
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="centering")
-plot(out2$Y[,1], out2$Y[,2], main="decorrelating")
-plot(out3$Y[,1], out3$Y[,2], main="whitening")
+plot(out1$Y, col=label, main="centering")
+plot(out2$Y, col=label, main="decorrelating")
+plot(out3$Y, col=label, main="whitening")
+par(opar)
+}
 
 }
 \references{

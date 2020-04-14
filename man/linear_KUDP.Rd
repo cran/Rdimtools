@@ -4,9 +4,13 @@
 \alias{do.kudp}
 \title{Kernel-Weighted Unsupervised Discriminant Projection}
 \usage{
-do.kudp(X, ndim = 2, type = c("proportion", 0.1),
+do.kudp(
+  X,
+  ndim = 2,
+  type = c("proportion", 0.1),
   preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"),
-  bandwidth = 1)
+  bandwidth = 1
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -41,7 +45,7 @@ whence UDP uses binary connectivity. If \code{bandwidth} is \eqn{+\infty}, it be
 a standard UDP problem. Like UDP, it also performs PCA preprocessing for rank-deficient case.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate sample data
 X = aux.gensamples(n=200)
 
@@ -51,10 +55,12 @@ out2 <- do.kudp(X, bandwidth=10)
 out3 <- do.kudp(X, bandwidth=1000)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1],out1$Y[,2],main="bandwidth=0.1")
-plot(out2$Y[,1],out2$Y[,2],main="bandwidth=10")
-plot(out3$Y[,1],out3$Y[,2],main="bandwidth=1000")
+plot(out1$Y, main="bandwidth=0.1")
+plot(out2$Y, main="bandwidth=10")
+plot(out3$Y, main="bandwidth=1000")
+par(opar)
 }
 
 }

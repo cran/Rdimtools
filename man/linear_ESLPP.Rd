@@ -4,8 +4,13 @@
 \alias{do.eslpp}
 \title{Extended Supervised Locality Preserving Projection}
 \usage{
-do.eslpp(X, label, ndim = 2, numk = max(ceiling(nrow(X)/10), 2),
-  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"))
+do.eslpp(
+  X,
+  label,
+  ndim = 2,
+  numk = max(ceiling(nrow(X)/10), 2),
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations.}
@@ -33,7 +38,7 @@ reduction. Their combination, Extended Supervised LPP, is a combination of two a
 it reflects discriminant information with realistic distance measure via Z-score function.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate data of 2 types with clear difference
 diff = 15
 dt1  = aux.gensamples(n=123)-diff;
@@ -49,10 +54,12 @@ outSLPP <- do.slpp(Y, label)
 outESLPP <- do.eslpp(Y, label)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(outLPP$Y[,1], outLPP$Y[,2], main="LPP")
-plot(outSLPP$Y[,1], outSLPP$Y[,2], main="SLPP")
-plot(outESLPP$Y[,1], outESLPP$Y[,2], main="ESLPP")
+plot(outLPP$Y,   main="LPP")
+plot(outSLPP$Y,  main="SLPP")
+plot(outESLPP$Y, main="ESLPP")
+par(opar)
 }
 
 }

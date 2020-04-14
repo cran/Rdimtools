@@ -18,7 +18,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## generate sample data and separate them
 #' X = aux.gensamples(n=500)
 #' set.seed(46556)
@@ -41,9 +41,11 @@
 #' yy = c(-2,2) # range of axis 2 for compact visualization
 #' mm = "black=train / red=test data" # figure title
 #'
-#' plot(Yold[,1], Yold[,2], type="p", xlim=xx, ylim=yy, main=mm, xlab="axis 1", ylab="axis 2")
-#' par(new=TRUE)
-#' plot(Ynew[,1], Ynew[,2], type="p", lwd=3, col="red", xlim=xx, ylim=yy, xlab="", ylab="")
+#' ## visualize
+#' opar <- par(no.readonly=TRUE)
+#' plot(Yold, type="p", xlim=xx, ylim=yy, main=mm, xlab="axis 1", ylab="axis 2")
+#' points(Ynew[,1], Ynew[,2], lwd=3, col="red")
+#' par(opar)
 #' }
 #'
 #' @author Kisung You

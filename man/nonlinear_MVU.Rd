@@ -5,9 +5,13 @@
 \alias{do.sde}
 \title{Maximum Variance Unfolding / Semidefinite Embedding}
 \usage{
-do.mvu(X, ndim = 2, type = c("proportion", 0.1),
-  preprocess = c("null", "center", "scale", "cscale", "decorrelate",
-  "whiten"), projtype = c("spectral", "kpca"))
+do.mvu(
+  X,
+  ndim = 2,
+  type = c("proportion", 0.1),
+  preprocess = c("null", "center", "scale", "cscale", "decorrelate", "whiten"),
+  projtype = c("spectral", "kpca")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations and columns represent independent variables.}
@@ -41,7 +45,7 @@ since \code{do.mvu} depends on \href{https://CRAN.R-project.org/package=Rcsdp}{R
 efficiency when given a large dataset.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate ribbon-shaped data with the small number of data
 X = aux.gensamples(dname="ribbon", n=50)
 
@@ -55,10 +59,12 @@ output2 <- do.mvu(X,ndim=2,projtype="kpca")
 output3 <- do.mvu(X,ndim=2,type=c("proportion",0.5))
 
 ## Visualize three different projections
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(output1$Y[,1],output1$Y[,2],main="standard")
-plot(output2$Y[,1],output2$Y[,2],main="kpca projection")
-plot(output3$Y[,1],output3$Y[,2],main="densely connected graph")
+plot(output1$Y, main="standard")
+plot(output2$Y, main="kpca projection")
+plot(output3$Y, main="densely connected graph")
+par(opar)
 }
 
 }

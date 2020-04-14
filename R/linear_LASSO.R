@@ -25,7 +25,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## generate swiss roll with auxiliary dimensions
 #' ## it follows reference example from LSIR paper.
 #' n = 123
@@ -47,10 +47,12 @@
 #' out3 = do.lasso(X, y, lambda=10)
 #'
 #' ## visualize
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(out1$Y[,1], out1$Y[,2], main="LASSO::lambda=0.1")
-#' plot(out2$Y[,1], out2$Y[,2], main="LASSO::lambda=1")
-#' plot(out3$Y[,1], out3$Y[,2], main="LASSO::lambda=10")
+#' plot(out1$Y, main="LASSO::lambda=0.1")
+#' plot(out2$Y, main="LASSO::lambda=1")
+#' plot(out3$Y, main="LASSO::lambda=10")
+#' par(opar)
 #' }
 #'
 #' @references

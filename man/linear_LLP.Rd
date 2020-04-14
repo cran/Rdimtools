@@ -4,10 +4,15 @@
 \alias{do.llp}
 \title{Local Learning Projections}
 \usage{
-do.llp(X, ndim = 2, type = c("proportion", 0.1),
+do.llp(
+  X,
+  ndim = 2,
+  type = c("proportion", 0.1),
   symmetric = c("union", "intersect", "asymmetric"),
   preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"),
-  t = 1, lambda = 1)
+  t = 1,
+  lambda = 1
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations}
@@ -46,7 +51,7 @@ a gaussian kernel as suggested from the original paper. The parameter \code{lamb
 controls possible rank-deficiency of kernel matrix.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate data
 X <- aux.gensamples(dname="crown")
 
@@ -56,10 +61,12 @@ out2 <- do.llp(X,ndim=2,lambda=1)
 out3 <- do.llp(X,ndim=2,lambda=10)
 
 # visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="lambda = 0.1")
-plot(out2$Y[,1], out2$Y[,2], main="lambda = 1")
-plot(out3$Y[,1], out3$Y[,2], main="lambda = 10")
+plot(out1$Y, main="lambda = 0.1")
+plot(out2$Y, main="lambda = 1")
+plot(out3$Y, main="lambda = 10")
+par(opar)
 }
 
 }

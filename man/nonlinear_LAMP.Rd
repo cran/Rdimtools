@@ -4,8 +4,11 @@
 \alias{do.lamp}
 \title{Local Affine Multidimensional Projection}
 \usage{
-do.lamp(X, ndim = 2, preprocess = c("null", "center", "scale",
-  "cscale", "whiten", "decorrelate"))
+do.lamp(
+  X,
+  ndim = 2,
+  preprocess = c("null", "center", "scale", "cscale", "whiten", "decorrelate")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -33,7 +36,7 @@ initial projection of control set. Note that this belongs to the method for
 visualization so projection onto \eqn{\mathbf{R}^2} is suggested for use.
 }
 \examples{
-\dontrun{
+\donttest{
 ## load iris data
 data(iris)
 X <- as.matrix(iris[,1:4])
@@ -43,9 +46,11 @@ out1 <- do.pca(X, ndim=2)      # PCA
 out2 <- do.lamp(X, ndim=2)     # LAMP
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,2))
-plot(out1$Y[,1], out1$Y[,2], main="PCA")
-plot(out2$Y[,1], out2$Y[,2], main="LAMP")
+plot(out1$Y, main="PCA")
+plot(out2$Y, main="LAMP")
+par(opar)
 }
 
 }

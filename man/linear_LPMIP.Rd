@@ -4,9 +4,14 @@
 \alias{do.lpmip}
 \title{Locality-Preserved Maximum Information Projection}
 \usage{
-do.lpmip(X, ndim = 2, type = c("proportion", 0.1),
-  preprocess = c("null", "center", "scale", "cscale", "whiten",
-  "decorrelate"), sigma = 10, alpha = 0.5)
+do.lpmip(
+  X,
+  ndim = 2,
+  type = c("proportion", 0.1),
+  preprocess = c("null", "center", "scale", "cscale", "whiten", "decorrelate"),
+  sigma = 10,
+  alpha = 0.5
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -41,6 +46,7 @@ parameter \code{alpha} is balancing the tradeoff between two and the flexibility
 of it as a generalized extension of LPP.
 }
 \examples{
+\donttest{
 ## generate default dataset
 X <- aux.gensamples(n=123)
 
@@ -50,14 +56,17 @@ out2 <- do.lpmip(X, ndim=2, type=c("proportion",0.1))
 out3 <- do.lpmip(X, ndim=2, type=c("proportion",0.25))
 
 ## Visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1],out1$Y[,2],main="1\% connected")
-plot(out2$Y[,1],out2$Y[,2],main="10\% connected")
-plot(out3$Y[,1],out3$Y[,2],main="25\% connected")
+plot(out1$Y, main="1\% connected")
+plot(out2$Y, main="10\% connected")
+plot(out3$Y, main="25\% connected")
+par(opar)
+}
 
 }
 \references{
-\insertRef{haixian_wang_locality-preserved_2008}{Rdimtools}
+\insertRef{haixianwang_localitypreserved_2008}{Rdimtools}
 }
 \author{
 Kisung You

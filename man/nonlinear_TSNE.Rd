@@ -4,11 +4,23 @@
 \alias{do.tsne}
 \title{t-distributed Stochastic Neighbor Embedding}
 \usage{
-do.tsne(X, ndim = 2, perplexity = 30, eta = 0.05, maxiter = 2000,
-  jitter = 0.3, jitterdecay = 0.99, momentum = 0.5,
-  preprocess = c("null", "center", "scale", "cscale", "decorrelate",
-  "whiten"), pca = TRUE, pcaratio = 0.9, pcascale = FALSE,
-  symmetric = FALSE, BarnesHut = FALSE, BHtheta = 0.5)
+do.tsne(
+  X,
+  ndim = 2,
+  perplexity = 30,
+  eta = 0.05,
+  maxiter = 2000,
+  jitter = 0.3,
+  jitterdecay = 0.99,
+  momentum = 0.5,
+  preprocess = c("null", "center", "scale", "cscale", "decorrelate", "whiten"),
+  pca = TRUE,
+  pcaratio = 0.9,
+  pcascale = FALSE,
+  symmetric = FALSE,
+  BHuse = TRUE,
+  BHtheta = 0.25
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations and columns represent independent variables.}
@@ -38,9 +50,9 @@ Default is "null". See also \code{\link{aux.preprocess}} for more details.}
 
 \item{symmetric}{a logical; \code{FALSE} to solve it naively, and \code{TRUE} to adopt symmetrization scheme.}
 
-\item{BarnesHut}{a logical; \code{FALSE} not to use Barnes-Hut heuristic for faster computation, \code{TRUE} otherwise.}
+\item{BHuse}{a logical; \code{TRUE} to use Barnes-Hut approximation. See \code{\link[Rtsne]{Rtsne}} for more details.}
 
-\item{BHtheta}{a positive real number for speed/accuracy trade-off in Barnes-Hut computation. See also \code{theta} parameter from \code{\link[Rtsne]{Rtsne}}.}
+\item{BHtheta}{speed-accuracy tradeoff. If set as 0.0, it reduces to exact t-SNE.}
 }
 \value{
 a named list containing
@@ -54,32 +66,34 @@ a named list containing
 that mimicks patterns of probability distributinos over pairs of high-dimensional objects on low-dimesional
 target embedding space by minimizing Kullback-Leibler divergence. While conventional SNE uses gaussian
 distributions to measure similarity, t-SNE, as its name suggests, exploits a heavy-tailed Student t-distribution.
-For \code{do.tsne}, we implemented a naive version of t-SNE as well as an interface with Barnes-Hut algorithm,
-which takes advantage of speed in sacrifice of accuracy.
 }
 \examples{
-\dontrun{
-## generate swiss roll data
-X = aux.gensamples(n=100)
+\donttest{
+## load iris data
+data(iris)
+X     = as.matrix(iris[,1:4])
+label = as.factor(iris$Species)
 
 ## compare different perplexity
 out1 <- do.tsne(X, ndim=2, perplexity=5)
 out2 <- do.tsne(X, ndim=2, perplexity=10)
-out3 <- do.tsne(X, ndim=2, perplexity=50)
+out3 <- do.tsne(X, ndim=2, perplexity=25)
 
 ## Visualize three different projections
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="tSNE::perplexity=5")
-plot(out1$Y[,1], out1$Y[,2], main="tSNE::perplexity=10")
-plot(out1$Y[,1], out1$Y[,2], main="tSNE::perplexity=50")
+plot(out1$Y, col=label, main="tSNE::perplexity=5")
+plot(out2$Y, col=label, main="tSNE::perplexity=10")
+plot(out3$Y, col=label, main="tSNE::perplexity=25")
+par(opar)
 }
 
 }
 \references{
-\insertRef{van_der_maaten_visualizing_2008}{Rdimtools}
+\insertRef{vandermaaten_visualizing_2008}{Rdimtools}
 }
 \seealso{
-\code{\link{do.sne}}, \code{\link[Rtsne]{Rtsne}}.
+\code{\link{do.sne}}
 }
 \author{
 Kisung You

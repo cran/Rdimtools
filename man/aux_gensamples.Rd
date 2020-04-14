@@ -4,9 +4,13 @@
 \alias{aux.gensamples}
 \title{Generate model-based samples}
 \usage{
-aux.gensamples(n = 496, noise = 0.01, dname = c("swiss", "crown",
-  "helix", "saddle", "ribbon", "bswiss", "cswiss", "twinpeaks", "sinusoid",
-  "mobius", "R12in72"), ...)
+aux.gensamples(
+  n = 496,
+  noise = 0.01,
+  dname = c("swiss", "crown", "helix", "saddle", "ribbon", "bswiss", "cswiss",
+    "twinpeaks", "sinusoid", "mobius", "R12in72"),
+  ...
+)
 }
 \arguments{
 \item{n}{the number of points to be generated.}
@@ -42,7 +46,7 @@ Also incorporated a functionality to add white noise with degree \code{noise}.
 \references{
 \insertRef{hein_intrinsic_2005}{Rdimtools}
 
-\insertRef{van_der_maaten_dimensionality_2009}{Rdimtools}
+\insertRef{vandermaaten_learning_2009}{Rdimtools}
 }
 \author{
 Kisung You

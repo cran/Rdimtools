@@ -4,8 +4,12 @@
 \alias{do.extlpp}
 \title{Extended Locality Preserving Projection}
 \usage{
-do.extlpp(X, ndim = 2, numk = max(ceiling(nrow(X)/10), 2),
-  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"))
+do.extlpp(
+  X,
+  ndim = 2,
+  numk = max(ceiling(nrow(X)/10), 2),
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations.}
@@ -33,7 +37,7 @@ at \emph{moderate} distance in that a Z-shaped function is introduced in
 defining similarity derived from Euclidean distance.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate data
 X <- aux.gensamples(n=123)
 
@@ -43,10 +47,12 @@ out2 <- do.extlpp(X, numk=10)
 out3 <- do.extlpp(X, numk=25)
 
 ## Visualize three different projections
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="k=5")
-plot(out2$Y[,1], out2$Y[,2], main="k=10")
-plot(out3$Y[,1], out3$Y[,2], main="k=25")
+plot(out1$Y, main="EXTLPP::k=5")
+plot(out2$Y, main="EXTLPP::k=10")
+plot(out3$Y, main="EXTLPP::k=25")
+par(opar)
 }
 
 }

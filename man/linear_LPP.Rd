@@ -4,10 +4,14 @@
 \alias{do.lpp}
 \title{Locality Preserving Projection}
 \usage{
-do.lpp(X, ndim = 2, type = c("proportion", 0.1),
+do.lpp(
+  X,
+  ndim = 2,
+  type = c("proportion", 0.1),
   symmetric = c("union", "intersect", "asymmetric"),
   preprocess = c("center", "scale", "cscale", "whiten", "decorrelate"),
-  t = 1)
+  t = 1
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations}
@@ -23,7 +27,7 @@ among all data points. See also \code{\link{aux.graphnbd}} for more details.}
 See also \code{\link{aux.graphnbd}} for more details.}
 
 \item{preprocess}{an additional option for preprocessing the data.
-Default is "center". See also \code{\link{aux.preprocess}} for more details.}
+Default is \code{"center"}. See also \code{\link{aux.preprocess}} for more details.}
 
 \item{t}{bandwidth for heat kernel in \eqn{(0,\infty)}.}
 }
@@ -41,7 +45,6 @@ it aims at finding a linear approximation to the eigenfunctions of the Laplace-B
 operator on the graph-approximated data manifold.
 }
 \examples{
-\dontrun{
 ## generate twinpeaks data
 X <- aux.gensamples(dname="twinpeaks",n=100)
 
@@ -51,12 +54,12 @@ out2 <- do.lpp(X, t=1)
 out3 <- do.lpp(X, t=10)
 
 ## Visualize three different projections
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1],out1$Y[,2],main="LPP::bandwidth=0.1")
-plot(out2$Y[,1],out2$Y[,2],main="LPP::bandwidth=1")
-plot(out3$Y[,1],out3$Y[,2],main="LPP::bandwidth=10")
-}
-
+plot(out1$Y, main="LPP::bandwidth=0.1")
+plot(out2$Y, main="LPP::bandwidth=1")
+plot(out3$Y, main="LPP::bandwidth=10")
+par(opar)
 
 }
 \references{

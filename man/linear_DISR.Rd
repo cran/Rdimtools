@@ -4,8 +4,13 @@
 \alias{do.disr}
 \title{Diversity-Induced Self-Representation}
 \usage{
-do.disr(X, ndim = 2, preprocess = c("null", "center", "scale",
-  "cscale", "whiten", "decorrelate"), lbd1 = 1, lbd2 = 1)
+do.disr(
+  X,
+  ndim = 2,
+  preprocess = c("null", "center", "scale", "cscale", "whiten", "decorrelate"),
+  lbd1 = 1,
+  lbd2 = 1
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -36,9 +41,11 @@ ranking features by both representativeness and diversity. Self-representation c
 the degree of inter-feature similarity to enhance diversity from the chosen features.
 }
 \examples{
-\dontrun{
-#### generate R12in72 dataset
-X = aux.gensamples(dname="R12in72")
+\donttest{
+## load iris data
+data(iris)
+X     = as.matrix(iris[,1:4])
+label = as.factor(iris$Species)
 
 #### try different lbd combinations
 out1 = do.disr(X, lbd1=1, lbd2=1)
@@ -46,12 +53,14 @@ out2 = do.disr(X, lbd1=1, lbd2=5)
 out3 = do.disr(X, lbd1=5, lbd2=1)
 out4 = do.disr(X, lbd1=5, lbd2=5)
 
-#### visualize
+## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(2,2))
-plot(out1$Y[,1], out1$Y[,2], main="(lbd1,lbd2)=(1,1)")
-plot(out2$Y[,1], out2$Y[,2], main="(lbd1,lbd2)=(1,5)")
-plot(out3$Y[,1], out3$Y[,2], main="(lbd1,lbd2)=(5,1)")
-plot(out4$Y[,1], out4$Y[,2], main="(lbd1,lbd2)=(5,5)")
+plot(out1$Y, main="(lbd1,lbd2)=(1,1)", col=label, pch=19, cex=0.5)
+plot(out2$Y, main="(lbd1,lbd2)=(1,5)", col=label,pch=19, cex=0.5)
+plot(out3$Y, main="(lbd1,lbd2)=(5,1)", col=label,pch=19, cex=0.5)
+plot(out4$Y, main="(lbd1,lbd2)=(5,5)", col=label,pch=19, cex=0.5)
+par(opar)
 }
 
 }

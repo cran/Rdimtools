@@ -25,7 +25,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## generate ribbon-shaped data
 #' ## in order to pass CRAN pretest, n is set to be small.
 #' X = aux.gensamples(dname="ribbon",n=50)
@@ -37,9 +37,11 @@
 #' outMVE5  <- do.mve(X, ndim=2, knn=5, maxiter=7)
 #'
 #' ## Visualize two comparisons
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,2))
-#' plot(outMVU5$Y[,1], outMVU5$Y[,2],  main="MVU (k=5)")
-#' plot(outMVE5$Y[,1], outMVE5$Y[,2],  main="MVE (k=5)")
+#' plot(outMVU5$Y,  main="MVU (k=5)")
+#' plot(outMVE5$Y,  main="MVE (k=5)")
+#' par(opar)
 #' }
 #'
 #' @references
@@ -149,7 +151,7 @@ do.mve <- function(X, ndim=2, knn=ceiling(nrow(X)/10), kwidth=1.0,
 #' @noRd
 mve_single_cvxr <- function(A, B, C){
   N = nrow(B)
-  Ktmp = Semidef(N)
+  Ktmp = CVXR::Variable(N,N,PSD=TRUE)
   obj  = Maximize(matrix_trace(Ktmp%*%B))
   constr1 = list(CVXR::sum_entries(Ktmp)==0)
   constr2 = list()

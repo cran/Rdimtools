@@ -12,11 +12,11 @@
 #'
 #' @return a named list containing containing \describe{
 #' \item{estdim}{estimated global intrinsic dimension.}
-#' \item{locdim}{a length-\eqn{n} vector estimated dimension at each point.}
+#' \item{estloc}{a length-\eqn{n} vector estimated dimension at each point.}
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## create a data set of intrinsic dimension 2.
 #' X = aux.gensamples(dname="swiss")
 #'
@@ -32,8 +32,9 @@
 #' }
 #'
 #' @references
-#' \insertRef{farahmand_manifold-adaptive_2007}{Rdimtools}
+#' \insertRef{farahmand_manifoldadaptive_2007}{Rdimtools}
 #'
+#' @rdname estimate_made
 #' @author Kisung You
 #' @export
 est.made <- function(X, k=round(sqrt(ncol(X))), maxdim=min(ncol(X),15), combine=c("mean","median","vote")){
@@ -65,6 +66,6 @@ est.made <- function(X, k=round(sqrt(ncol(X))), maxdim=min(ncol(X),15), combine=
   ## Report
   result = list()
   result$estdim = estdim
-  result$locdim = dhat
+  result$estloc = dhat
   return(result)
 }

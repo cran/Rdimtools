@@ -4,10 +4,16 @@
 \alias{do.klfda}
 \title{Kernel Local Fisher Discriminant Analysis}
 \usage{
-do.klfda(X, label, ndim = 2, preprocess = c("center", "scale",
-  "cscale", "decorrelate", "whiten"), type = c("proportion", 0.1),
+do.klfda(
+  X,
+  label,
+  ndim = 2,
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"),
+  type = c("proportion", 0.1),
   symmetric = c("union", "intersect", "asymmetric"),
-  localscaling = TRUE, t = 1)
+  localscaling = TRUE,
+  t = 1
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -44,7 +50,7 @@ to extend excavation of hidden patterns in a more flexible manner in tradeoff of
 only the gaussian kernel parametrized by its bandwidth \code{t} is supported.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate 3 different groups of data X and label vector
 x1 = matrix(rnorm(4*10), nrow=10)-20
 x2 = matrix(rnorm(4*10), nrow=10)
@@ -58,17 +64,19 @@ out2 = do.klfda(X, label, t=1)
 out3 = do.klfda(X, label, t=10)
 
 ## visualize
+opar = par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="bandwidth=0.1")
-plot(out2$Y[,1], out2$Y[,2], main="bandwidth=1")
-plot(out3$Y[,1], out3$Y[,2], main="bandwidth=10")
+plot(out1$Y, col=label, main="bandwidth=0.1")
+plot(out2$Y, col=label, main="bandwidth=1")
+plot(out3$Y, col=label, main="bandwidth=10")
+par(opar)
 }
 
 }
 \references{
 \insertRef{sugiyama_local_2006}{Rdimtools}
 
-\insertRef{zelnik-manor_self-tuning_2005}{Rdimtools}
+\insertRef{zelnik-manor_selftuning_2005}{Rdimtools}
 }
 \seealso{
 \code{\link{do.lfda}}

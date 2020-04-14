@@ -4,8 +4,12 @@
 \alias{est.made}
 \title{Manifold-Adaptive Dimension Estimation}
 \usage{
-est.made(X, k = round(sqrt(ncol(X))), maxdim = min(ncol(X), 15),
-  combine = c("mean", "median", "vote"))
+est.made(
+  X,
+  k = round(sqrt(ncol(X))),
+  maxdim = min(ncol(X), 15),
+  combine = c("mean", "median", "vote")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations.}
@@ -19,7 +23,7 @@ est.made(X, k = round(sqrt(ncol(X))), maxdim = min(ncol(X), 15),
 \value{
 a named list containing containing \describe{
 \item{estdim}{estimated global intrinsic dimension.}
-\item{locdim}{a length-\eqn{n} vector estimated dimension at each point.}
+\item{estloc}{a length-\eqn{n} vector estimated dimension at each point.}
 }
 }
 \description{
@@ -29,7 +33,7 @@ estimate to be independent of assumed dimensionality, authors claim this method 
 \emph{manifold-adaptive}.
 }
 \examples{
-\dontrun{
+\donttest{
 ## create a data set of intrinsic dimension 2.
 X = aux.gensamples(dname="swiss")
 
@@ -46,7 +50,7 @@ sprintf("* est.made : estimated dimension with 'vote'   method is \%d.",out3$est
 
 }
 \references{
-\insertRef{farahmand_manifold-adaptive_2007}{Rdimtools}
+\insertRef{farahmand_manifoldadaptive_2007}{Rdimtools}
 }
 \author{
 Kisung You

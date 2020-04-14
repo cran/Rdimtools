@@ -23,7 +23,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## generate data of 3 types with clear difference
 #' dt1  = aux.gensamples(n=33)-50
 #' dt2  = aux.gensamples(n=33)
@@ -38,10 +38,12 @@
 #' out3 = do.cnpe(X, type=c("proportion",0.25))
 #'
 #' ## visualize
-#' par(mfrow=c(1,3))
-#' plot(out1$Y[,1], out1$Y[,2], main="CNPE::5% connectivity")
-#' plot(out2$Y[,1], out2$Y[,2], main="CNPE::10% connectivity")
-#' plot(out3$Y[,1], out3$Y[,2], main="CNPE::25% connectivity")
+#' opar <- par(no.readonly=TRUE)
+#' par(mfrow=c(3,1))
+#' plot(out1$Y, main="CNPE::5% connected")
+#' plot(out2$Y, main="CNPE::10% connected")
+#' plot(out3$Y, main="CNPE::25% connected")
+#' par(opar)
 #' }
 #'
 #' @references
@@ -102,7 +104,7 @@ do.cnpe <- function(X, ndim=2, type=c("proportion",0.1), preprocess=c("center","
   diagN = diag(n)
   M     = t(diagN-W)%*%(diagN-W)
   St    = (t(pX)%*%M%*%pX) + (t(pX)%*%pX)
-  r     = as.integer(Matrix::rankMatrix(St))
+  r     = round(aux_rank(St)) # as.integer(Matrix::rankMatrix (St))
   if (r < ndim){
     message("* do.cnpe : intrinsic rank of matrix St is smaller than 'ndim'.")
     ndim = r

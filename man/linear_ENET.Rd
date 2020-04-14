@@ -4,9 +4,15 @@
 \alias{do.enet}
 \title{Elastic Net Regularization}
 \usage{
-do.enet(X, response, ndim = 2, preprocess = c("null", "center",
-  "scale", "cscale", "decorrelate", "whiten"), ycenter = FALSE,
-  lambda1 = 1, lambda2 = 1)
+do.enet(
+  X,
+  response,
+  ndim = 2,
+  preprocess = c("null", "center", "scale", "cscale", "decorrelate", "whiten"),
+  ycenter = FALSE,
+  lambda1 = 1,
+  lambda2 = 1
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -40,7 +46,7 @@ Elastic Net is a regularized regression method by solving
 where \eqn{y} iis \code{response} variable in our method. The method can be used in feature selection like LASSO.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate swiss roll with auxiliary dimensions
 ## it follows reference example from LSIR paper.
 n = 123
@@ -69,16 +75,18 @@ out9 = do.enet(X, y, lambda1=10,  lambda2=10)
 
 ## visualize
 ## ( , ) denotes two regularization parameters
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(3,3))
-plot(out1$Y[,1], out1$Y[,2], main="ENET::(0.1,0.1)")
-plot(out2$Y[,1], out2$Y[,2], main="ENET::(1,  0.1)")
-plot(out3$Y[,1], out3$Y[,2], main="ENET::(10, 0.1)")
-plot(out4$Y[,1], out4$Y[,2], main="ENET::(0.1,1)")
-plot(out5$Y[,1], out5$Y[,2], main="ENET::(1,  1)")
-plot(out6$Y[,1], out6$Y[,2], main="ENET::(10, 1)")
-plot(out7$Y[,1], out7$Y[,2], main="ENET::(0.1,10)")
-plot(out8$Y[,1], out8$Y[,2], main="ENET::(1,  10)")
-plot(out9$Y[,1], out9$Y[,2], main="ENET::(10, 10)")
+plot(out1$Y, main="ENET::(0.1,0.1)")
+plot(out2$Y, main="ENET::(1,  0.1)")
+plot(out3$Y, main="ENET::(10, 0.1)")
+plot(out4$Y, main="ENET::(0.1,1)")
+plot(out5$Y, main="ENET::(1,  1)")
+plot(out6$Y, main="ENET::(10, 1)")
+plot(out7$Y, main="ENET::(0.1,10)")
+plot(out8$Y, main="ENET::(1,  10)")
+plot(out9$Y, main="ENET::(10, 10)")
+par(opar)
 }
 
 }

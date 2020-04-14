@@ -21,7 +21,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # generate data
 #' X <- aux.gensamples(dname="crown")
 #'
@@ -35,10 +35,12 @@
 #' output3 <- do.mds(X,ndim=2)
 #'
 #' ## Visualization
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(output1$Y[,1],output2$Y[,2],main="10% random points")
-#' plot(output2$Y[,1],output2$Y[,2],main="10% MaxMin points")
-#' plot(output3$Y[,1],output3$Y[,2],main="original MDS")
+#' plot(output1$Y, main="10% random points")
+#' plot(output2$Y, main="10% MaxMin points")
+#' plot(output3$Y, main="original MDS")
+#' par(opar)
 #' }
 #'
 #' @seealso \code{\link{do.mds}}

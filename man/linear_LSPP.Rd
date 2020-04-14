@@ -4,8 +4,13 @@
 \alias{do.lspp}
 \title{Local Similarity Preserving Projection}
 \usage{
-do.lspp(X, label, ndim = 2, t = 1, preprocess = c("center", "scale",
-  "cscale", "decorrelate", "whiten"))
+do.lspp(
+  X,
+  label,
+  ndim = 2,
+  t = 1,
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations.}
@@ -49,9 +54,11 @@ out1 <- do.pca(Y, ndim=2)
 out2 <- do.slpp(Y, label, ndim=2)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,2))
-plot(out1$Y[,1], out1$Y[,2], main="PCA")
-plot(out2$Y[,1], out2$Y[,2], main="LSPP")
+plot(out1$Y, main="PCA")
+plot(out2$Y, main="LSPP")
+par(opar)
 
 }
 \references{

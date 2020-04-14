@@ -33,9 +33,9 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## generate data
-#' X <- aux.gensamples(n=333)
+#' X <- aux.gensamples(n=333) + 50
 #'
 #' ## 1. connecting 5% of data for graph construction.
 #' output1 <- do.npe(X,ndim=2,type=c("proportion",0.05))
@@ -47,10 +47,12 @@
 #' output3 <- do.npe(X,ndim=2,type=c("proportion",0.5),regparam=10.0)
 #'
 #' ## Visualize three different projections
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(output1$Y[,1],output1$Y[,2],main="5%")
-#' plot(output2$Y[,1],output2$Y[,2],main="25%")
-#' plot(output3$Y[,1],output3$Y[,2],main="50%")
+#' plot(output1$Y, main="NPE::5% connected")
+#' plot(output2$Y, main="NPE::25% connected")
+#' plot(output3$Y, main="NPE::50% connected")
+#' par(opar)
 #'}
 #'
 #' @references

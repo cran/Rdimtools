@@ -4,15 +4,20 @@
 \alias{do.lsdf}
 \title{Locality Sensitive Discriminant Feature}
 \usage{
-do.lsdf(X, label, ndim = 2, type = c("proportion", 0.1),
-  preprocess = c("null", "center", "scale", "cscale", "whiten",
-  "decorrelate"), gamma = 100)
+do.lsdf(
+  X,
+  label,
+  ndim = 2,
+  type = c("proportion", 0.1),
+  preprocess = c("null", "center", "scale", "cscale", "whiten", "decorrelate"),
+  gamma = 100
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
 and columns represent independent variables.}
 
-\item{label}{a length-\eqn{n} vector of data class labels.}
+\item{label}{a length-\eqn{n} vector of data class labels. It should contain \code{NA} elements for missing label.}
 
 \item{ndim}{an integer-valued target dimension.}
 
@@ -42,7 +47,7 @@ the margin between data opints from different classes, while labeled ones are us
 the geometrical structure of the data space.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate data of 3 types with clear difference
 dt1  = aux.gensamples(n=33)-100
 dt2  = aux.gensamples(n=33)
@@ -64,10 +69,12 @@ out2 = do.lsdf(X, label_missing, type=c("proportion",0.1))
 out3 = do.lsdf(X, label_missing, type=c("proportion",0.25))
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="1\% connectivity")
-plot(out2$Y[,1], out2$Y[,2], main="10\% connectivity")
-plot(out3$Y[,1], out3$Y[,2], main="25\% connectivity")
+plot(out1$Y, main="1\% connectivity")
+plot(out2$Y, main="10\% connectivity")
+plot(out3$Y, main="25\% connectivity")
+par(opar)
 }
 
 }

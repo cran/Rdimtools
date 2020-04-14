@@ -36,10 +36,12 @@
 #' out3 = do.lsda(X, label, k1=10, k2=10)
 #'
 #' ## visualize
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(out1$Y[,1], out1$Y[,2], main="nbd size 2")
-#' plot(out2$Y[,1], out2$Y[,2], main="nbd size 5")
-#' plot(out3$Y[,1], out3$Y[,2], main="nbd size 10")
+#' plot(out1$Y, col=label, main="nbd size 2")
+#' plot(out2$Y, col=label, main="nbd size 5")
+#' plot(out3$Y, col=label, main="nbd size 10")
+#' par(opar)
 #'
 #' @references
 #' \insertRef{cai_locality_2007}{Rdimtools}

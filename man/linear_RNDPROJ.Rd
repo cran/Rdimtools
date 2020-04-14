@@ -4,9 +4,13 @@
 \alias{do.rndproj}
 \title{Random Projection}
 \usage{
-do.rndproj(X, ndim = 2, preprocess = c("null", "center", "scale",
-  "cscale", "whiten", "decorrelate"), type = c("gaussian", "achlioptas",
-  "sparse"), s = max(sqrt(ncol(X)), 3))
+do.rndproj(
+  X,
+  ndim = 2,
+  preprocess = c("null", "center", "scale", "cscale", "whiten", "decorrelate"),
+  type = c("gaussian", "achlioptas", "sparse"),
+  s = max(sqrt(ncol(X)), 3)
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -54,9 +58,10 @@ for \eqn{s}, any user-supported \eqn{s \ge 3} is allowed.
 }
 }
 \examples{
-\dontrun{
-## generate Swiss Roll data of 2,000 data points.
-X <- aux.gensamples(n=2000)
+## use iris data
+data(iris)
+X     = as.matrix(iris[,1:4])
+label = as.integer(iris$Species)
 
 ## 1. Gaussian projection
 output1 <- do.rndproj(X,ndim=2)
@@ -65,20 +70,21 @@ output1 <- do.rndproj(X,ndim=2)
 output2 <- do.rndproj(X,ndim=2,type="achlioptas")
 
 ## 3. Sparse projection
-output3 <- do.rndproj(X,type="sparse",s=5)        ## fulfill condition on s
+output3 <- do.rndproj(X,type="sparse")
 
 ## Visualize three different projections
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(output1$Y[,1],output1$Y[,2],main="Gaussian")
-plot(output2$Y[,1],output2$Y[,2],main="Arclioptas")
-plot(output3$Y[,1],output3$Y[,2],main="Sparse")
-}
+plot(output1$Y, col=label, main="RNDPROJ::Gaussian")
+plot(output2$Y, col=label, main="RNDPROJ::Arclioptas")
+plot(output3$Y, col=label, main="RNDPROJ::Sparse")
+par(opar)
 
 }
 \references{
-\insertRef{beals_extensions_1984}{Rdimtools}
+\insertRef{johnson_extensions_1984}{Rdimtools}
 
-\insertRef{achlioptas_database-friendly_2003}{Rdimtools}
+\insertRef{achlioptas_databasefriendly_2003}{Rdimtools}
 
 \insertRef{li_very_2006}{Rdimtools}
 }

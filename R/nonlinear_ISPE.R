@@ -22,7 +22,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## generate sample data
 #' X = aux.gensamples(n=100)
 #'
@@ -33,15 +33,17 @@
 #' out3 <- do.ispe(X, ndim=2, cutoff=50)
 #'
 #' ## Visualize
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(2,2))
-#' plot(outSPE$Y[,1], outSPE$Y[,2], main="SPE")
-#' plot(out1$Y[,1], out1$Y[,2], main="ISPE::cutoff=0.5")
-#' plot(out2$Y[,1], out2$Y[,2], main="ISPE::cutoff=5")
-#' plot(out3$Y[,1], out3$Y[,2], main="ISPE::cutoff=50")
+#' plot(outSPE$Y, main="SPE")
+#' plot(out1$Y,   main="ISPE::cutoff=0.5")
+#' plot(out2$Y,   main="ISPE::cutoff=5")
+#' plot(out3$Y,   main="ISPE::cutoff=50")
+#' par(opar)
 #' }
 #'
 #' @references
-#' \insertRef{agrafiotis_self-organizing_2002}{Rdimtools}
+#' \insertRef{agrafiotis_selforganizing_2002}{Rdimtools}
 #'
 #' @author Kisung You
 #' @rdname nonlinear_ISPE

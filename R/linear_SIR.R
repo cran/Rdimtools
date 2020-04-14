@@ -21,7 +21,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## generate swiss roll with auxiliary dimensions
 #' ## it follows reference example from LSIR paper.
 #' n = 123
@@ -43,16 +43,18 @@
 #' out3 = do.sir(X, y, h=10)
 #'
 #' ## visualize
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(out1$Y[,1], out1$Y[,2], main="SIR::2 slices")
-#' plot(out2$Y[,1], out2$Y[,2], main="SIR::5 slices")
-#' plot(out3$Y[,1], out3$Y[,2], main="SIR::10 slices")
+#' plot(out1$Y, main="SIR::2 slices")
+#' plot(out2$Y, main="SIR::5 slices")
+#' plot(out3$Y, main="SIR::10 slices")
+#' par(opar)
 #' }
 #'
 #' @references
 #' \insertRef{li_sliced_1991}{Rdimtools}
 #'
-#' @author Changhee Suh
+#' @author Kisung You
 #' @rdname linear_SIR
 #' @export
 do.sir <- function(X, response, ndim=2, h=max(2, round(nrow(X)/5)),
@@ -121,6 +123,7 @@ do.sir <- function(X, response, ndim=2, h=max(2, round(nrow(X)/5)),
   costInv = aux.bicgstab(mat_Sigma, mat_Gamma, verbose=FALSE)$x
   #   2. find top eigenvectors
   projection = aux.adjprojection(RSpectra::eigs(costInv, ndim)$vectors)
+  projection = matrix(as.double(projection), nrow=p)
 
 
   #------------------------------------------------------------------------

@@ -17,7 +17,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## load iris data
 #' data(iris)
 #' X <- as.matrix(iris[,1:4])
@@ -28,14 +28,16 @@
 #' out3 <- do.fastmap(X, ndim=2)  # FastMap
 #'
 #' ## visualize
+#' opar = par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(out1$Y[,1], out1$Y[,2], main="PCA")
-#' plot(out2$Y[,1], out2$Y[,2], main="MDS")
-#' plot(out3$Y[,1], out3$Y[,2], main="FastMap")
+#' plot(out1$Y, main="PCA")
+#' plot(out2$Y, main="MDS")
+#' plot(out3$Y, main="FastMap")
+#' par(opar)
 #' }
 #'
 #' @references
-#' \insertRef{faloutsos_fastmap:_1995}{Rdimtools}
+#' \insertRef{faloutsos_fastmap_1995}{Rdimtools}
 #'
 #' @author Kisung You
 #' @rdname nonlinear_FastMap

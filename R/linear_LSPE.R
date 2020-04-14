@@ -23,7 +23,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' #### generate R12in72 dataset
 #' X = aux.gensamples(dname="R12in72")
 #'
@@ -33,10 +33,12 @@
 #' out3 = do.lspe(X, bandwidth=10)
 #'
 #' #### visualize
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(out1$Y[,1], out1$Y[,2], main="LSPE::bandwidth=0.1")
-#' plot(out2$Y[,1], out2$Y[,2], main="LSPE::bandwidth=1")
-#' plot(out3$Y[,1], out3$Y[,2], main="LSPE::bandwidth=10")
+#' plot(out1$Y, main="LSPE::bandwidth=0.1")
+#' plot(out2$Y, main="LSPE::bandwidth=1")
+#' plot(out3$Y, main="LSPE::bandwidth=10")
+#' par(opar)
 #' }
 #'
 #' @references

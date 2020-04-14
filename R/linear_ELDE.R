@@ -23,7 +23,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## generate data of 3 types with difference
 #' dt1  = aux.gensamples(n=33)-100
 #' dt2  = aux.gensamples(n=33)
@@ -39,10 +39,12 @@
 #' out3 = do.elde(X, label, t=100)
 #'
 #' ## visualize
-#' par(mfrow=c(1,3))
-#' plot(out1$Y[,1], out1$Y[,2], main="ELDE::bandwidth=1")
-#' plot(out2$Y[,1], out2$Y[,2], main="ELDE::bandwidth=10")
-#' plot(out3$Y[,1], out3$Y[,2], main="ELDE::bandwidth=100")
+#' opar <- par(no.readonly=TRUE)
+#' par(mfrow=c(3,1))
+#' plot(out1$Y, col=label, main="ELDE::bandwidth=1")
+#' plot(out2$Y, col=label, main="ELDE::bandwidth=10")
+#' plot(out3$Y, col=label, main="ELDE::bandwidth=100")
+#' par(opar)
 #' }
 #'
 #' @references
@@ -108,12 +110,12 @@ do.elde <- function(X, label, ndim=2, t=1.0, preprocess=c("center","scale","csca
   Sb = t(pX)%*%Lb%*%pX
 
   #   3. scaling of the matrix
-  Sw = Sw/Matrix::norm(Sw,"f")
-  Sb = Sb/Matrix::norm(Sb,"f")
+  Sw = Sw/base::norm(Sw,"F")
+  Sb = Sb/base::norm(Sb,"F")
 
   #   3. matrix exponential
-  expSw = as.matrix(Matrix::expm(Sw))
-  expSb = as.matrix(Matrix::expm(Sb))
+  expSw = aux_expm(Sw) # as.matrix(Matrix::expm(Sw))
+  expSb = aux_expm(Sb) # as.matrix(Matrix::expm(Sb))
 
 
   #   4. compute projection matrix

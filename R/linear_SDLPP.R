@@ -23,27 +23,31 @@
 #' @seealso \code{\link{do.lpp}}
 #'
 #' @examples
-#' \dontrun{
-#' ## generate data
-#' X <- aux.gensamples(n=200,dname="crown")
+#' \donttest{
+#' ## use iris data
+#' data(iris)
+#' X     = as.matrix(iris[,1:4])
+#' label = as.integer(iris$Species)
 #'
 #' ## compare with PCA
 #' out1 <- do.pca(X,ndim=2)
 #' out2 <- do.sdlpp(X, t=0.1)
 #' out3 <- do.sdlpp(X, t=1)
-#' out4 <- do.sdlpp(X, t=10.0)
+#' out4 <- do.sdlpp(X, t=10)
 #'
 #' ## visualize
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(2,2))
-#' plot(out1$Y[,1], out1$Y[,2], main="PCA")
-#' plot(out2$Y[,1], out2$Y[,2], main="SDLPP; t=0.1")
-#' plot(out3$Y[,1], out3$Y[,2], main="SDLPP; t=1")
-#' plot(out4$Y[,1], out4$Y[,2], main="SDLPP; t=10")
+#' plot(out1$Y, col=label, main="PCA")
+#' plot(out2$Y, col=label, main="SDLPP::t=0.1")
+#' plot(out3$Y, col=label, main="SDLPP::t=1")
+#' plot(out4$Y, col=label, main="SDLPP::t=10")
+#' par(opar)
 #' }
 #'
 #'
 #' @references
-#' \insertRef{yang_sample-dependent_2010}{Rdimtools}
+#' \insertRef{yang_sampledependent_2010}{Rdimtools}
 #'
 #' @author Kisung You
 #' @rdname linear_SDLPP

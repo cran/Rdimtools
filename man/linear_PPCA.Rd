@@ -4,8 +4,11 @@
 \alias{do.ppca}
 \title{Probabilistic Principal Component Analysis}
 \usage{
-do.ppca(X, ndim = 2, preprocess = c("center", "scale", "cscale",
-  "decorrelate", "whiten"))
+do.ppca(
+  X,
+  ndim = 2,
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -34,18 +37,22 @@ as it is relevant to the error model. Also, for high-dimensional problem, it is 
 negative values if sample covariance given the data is rank-deficient.
 }
 \examples{
-\dontrun{
-## generate data
-X <- aux.gensamples(n=496)
+\donttest{
+## use iris data
+data(iris)
+X     = as.matrix(iris[,1:4])
+label = as.integer(iris$Species)
 
 ## Compare PCA and PPCA
 PCA  <- do.pca(X, ndim=2, preprocess="center")
 PPCA <- do.ppca(X, ndim=2, preprocess="center")
 
 ## Visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,2))
-plot(PCA$Y[,1], PCA$Y[,2], main="PCA")
-plot(PPCA$Y[,1], PPCA$Y[,2], main="PPCA")
+plot(PCA$Y,  col=label, main="PCA")
+plot(PPCA$Y, col=label, main="PPCA")
+par(opar)
 }
 
 }

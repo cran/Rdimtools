@@ -4,8 +4,12 @@
 \alias{do.kpca}
 \title{Kernel Principal Component Analysis}
 \usage{
-do.kpca(X, ndim = 2, preprocess = c("null", "center", "scale",
-  "cscale", "whiten", "decorrelate"), kernel = c("gaussian", 1))
+do.kpca(
+  X,
+  ndim = 2,
+  preprocess = c("null", "center", "scale", "cscale", "whiten", "decorrelate"),
+  kernel = c("gaussian", 1)
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations and columns represent independent variables.}
@@ -32,7 +36,7 @@ a common method of introducing nonlinearity by transforming, usually, covariance
 other gram-type estimate to make it flexible in Reproducing Kernel Hilbert Space.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate ribbon-shaped data
 X = aux.gensamples(dname="ribbon",n=123)
 
@@ -46,15 +50,17 @@ output2 <- do.kpca(X,ndim=2,kernel=c("gaussian",5))
 output3 <- do.kpca(X,ndim=2,kernel=c("laplacian",1))
 
 ## Visualize three different projections
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(output1$Y[,1],output1$Y[,2],main="Gaussian kernel")
-plot(output2$Y[,1],output2$Y[,2],main="Gaussian kernel with sigma=5")
-plot(output3$Y[,1],output3$Y[,2],main="Laplacian kernel")
+plot(output1$Y, main="Gaussian kernel")
+plot(output2$Y, main="Gaussian kernel with sigma=5")
+plot(output3$Y, main="Laplacian kernel")
+par(opar)
 }
 
 }
 \references{
-\insertRef{goos_kernel_1997}{Rdimtools}
+\insertRef{scholkopf_kernel_1997}{Rdimtools}
 }
 \seealso{
 \code{\link{aux.kernelcov}}

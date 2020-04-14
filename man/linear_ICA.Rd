@@ -4,8 +4,16 @@
 \alias{do.ica}
 \title{Independent Component Analysis}
 \usage{
-do.ica(X, ndim = 2, type = "logcosh", tpar = 1, sym = FALSE,
-  tol = 1e-06, redundancy = TRUE, maxiter = 100)
+do.ica(
+  X,
+  ndim = 2,
+  type = "logcosh",
+  tpar = 1,
+  sym = FALSE,
+  tol = 1e-06,
+  redundancy = TRUE,
+  maxiter = 100
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -44,7 +52,7 @@ the given data \eqn{X}. In order to preserve consistency throughout our package,
 the notation; \eqn{Y} a projected matrix for \eqn{S}, and \code{projection} for unmixing matrix \eqn{W}.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate data of 100 observations
 X <- aux.gensamples(n=100)
 
@@ -58,10 +66,12 @@ output2 <- do.ica(X,ndim=2,type="exp")
 output3 <- do.ica(X,ndim=2,type="poly")
 
 ## Visualize three different projections
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(output1$Y[,1],output1$Y[,2],main="logcosh")
-plot(output2$Y[,1],output2$Y[,2],main="exp")
-plot(output3$Y[,1],output3$Y[,2],main="poly")
+plot(output1$Y, main="ICA::logcosh")
+plot(output2$Y, main="ICA::exp")
+plot(output3$Y, main="ICA::poly")
+par(opar)
 }
 
 }
@@ -69,5 +79,5 @@ plot(output3$Y[,1],output3$Y[,2],main="poly")
 \insertRef{hyvarinen_independent_2001}{Rdimtools}
 }
 \author{
-Changhee Suh
+Kisung You
 }

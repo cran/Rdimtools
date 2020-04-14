@@ -25,7 +25,7 @@
 #'
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## generate default dataset and make its dimension three-folds.
 #' Xp <- aux.gensamples()
 #' X  <- cbind(Xp,Xp,Xp)
@@ -36,10 +36,12 @@
 #' out3 <- do.spca(X,ndim=2,rho=100)
 #'
 #' ## Visualize principal components as columns in an image
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
 #' image(t(out1$projection), main="SPCA::rho=0.01")
 #' image(t(out2$projection), main="SPCA::rho=1")
 #' image(t(out3$projection), main="SPCA::rho=100")
+#' par(opar)
 #' }
 #'
 #' @references
@@ -47,10 +49,10 @@
 #'
 #' \insertRef{daspremont_direct_2007}{Rdimtools}
 #'
-#' \insertRef{ma_alternating_2013}{ADMM}
+#' \insertRef{ma_alternating_2013}{Rdimtools}
 #'
 #' @seealso \code{\link{do.pca}}
-#' @author Changhee Suh
+#' @author Kisung You
 #' @rdname linear_SPCA
 #' @export
 do.spca <- function(X, ndim=2, preprocess=c("center","scale","cscale","decorrelate","whiten"),

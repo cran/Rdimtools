@@ -4,8 +4,13 @@
 \alias{do.msd}
 \title{Maximum Scatter Difference}
 \usage{
-do.msd(X, label, ndim = 2, preprocess = c("center", "scale", "cscale",
-  "whiten", "decorrelate"), C = 1)
+do.msd(
+  X,
+  label,
+  ndim = 2,
+  preprocess = c("center", "scale", "cscale", "whiten", "decorrelate"),
+  C = 1
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -35,7 +40,7 @@ trace ratio criterion that was adopted by LDA. Due to such formulation, it can n
 problem from rank-deficiency of between-class variance matrix.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate data of 3 types with clear difference
 dt1  = aux.gensamples(n=33)-100
 dt2  = aux.gensamples(n=33)
@@ -51,10 +56,12 @@ out2 = do.msd(X, label, C=1)
 out3 = do.msd(X, label, C=100)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="MSD::C=0.01")
-plot(out2$Y[,1], out2$Y[,2], main="MSD::C=1")
-plot(out3$Y[,1], out3$Y[,2], main="MSD::C=100")
+plot(out1$Y, main="MSD::C=0.01")
+plot(out2$Y, main="MSD::C=1")
+plot(out3$Y, main="MSD::C=100")
+par(opar)
 }
 
 }

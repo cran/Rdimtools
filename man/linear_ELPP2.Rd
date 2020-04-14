@@ -4,8 +4,11 @@
 \alias{do.elpp2}
 \title{Enhanced Locality Preserving Projection (2013)}
 \usage{
-do.elpp2(X, ndim = 2, preprocess = c("center", "scale", "cscale",
-  "decorrelate", "whiten"))
+do.elpp2(
+  X,
+  ndim = 2,
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations}
@@ -29,9 +32,11 @@ a parameter-free philosophy from PFLPP. It further aims to exclude its projectio
 to be uncorrelated in the sense that the scatter matrix is placed in a generalized eigenvalue problem.
 }
 \examples{
-\dontrun{
-## generate swiss roll data
-X = aux.gensamples(n=200)
+\donttest{
+## use iris data
+data(iris)
+X   = as.matrix(iris[,1:4])
+lab = as.factor(iris[,5])
 
 ## compare with PCA and PFLPP
 out1 = do.pca(X, ndim=2)
@@ -39,10 +44,12 @@ out2 = do.pflpp(X, ndim=2)
 out3 = do.elpp2(X, ndim=2)
 
 ## visualize
-par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="PCA")
-plot(out2$Y[,1], out2$Y[,2], main="Parameter-Free LPP")
-plot(out3$Y[,1], out3$Y[,2], main="Enhanced LPP (2013)")
+opar <- par(no.readonly=TRUE)
+par(mfrow=c(3,1))
+plot(out1$Y, col=lab, main="PCA")
+plot(out2$Y, col=lab, main="Parameter-Free LPP")
+plot(out3$Y, col=lab, main="Enhanced LPP (2013)")
+par(opar)
 }
 
 }

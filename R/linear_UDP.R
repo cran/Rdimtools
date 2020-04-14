@@ -25,9 +25,11 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
-#' ## generate sample data
-#' X = aux.gensamples(n=200)
+#' \donttest{
+#' ## use iris data
+#' data(iris)
+#' X     = as.matrix(iris[,1:4])
+#' label = as.integer(iris$Species)
 #'
 #' ## use different connectivity level
 #' out1 <- do.udp(X, type=c("proportion",0.05))
@@ -35,10 +37,12 @@
 #' out3 <- do.udp(X, type=c("proportion",0.25))
 #'
 #' ## visualize
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(out1$Y[,1],out1$Y[,2],main="connectivity 5%")
-#' plot(out2$Y[,1],out2$Y[,2],main="connectivity 10%")
-#' plot(out3$Y[,1],out3$Y[,2],main="connectivity 25%")
+#' plot(out1$Y, col=label, main="connectivity 5%")
+#' plot(out2$Y, col=label, main="connectivity 10%")
+#' plot(out3$Y, col=label, main="connectivity 25%")
+#' par(opar)
 #' }
 #'
 #' @author Kisung You
@@ -81,7 +85,7 @@ do.udp <- function(X, ndim=2, type=c("proportion",0.1), preprocess=c("center","s
   # 1. compute St
   tmpSt = udp_ST(pX)
   # 2. target rank
-  tmpndim = min((max(as.integer(Matrix::rankMatrix(tmpSt)), (ndim+1))), p)
+  tmpndim = min((max(round(aux_rank(tmpSt)), (ndim+1))), p)
   # 3. perform PCA
   if (tmpndim==p){
     proj_first = diag(rep(1,p))

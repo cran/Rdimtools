@@ -4,9 +4,17 @@
 \alias{do.crda}
 \title{Curvilinear Distance Analysis}
 \usage{
-do.crda(X, ndim = 2, type = c("proportion", 0.1),
-  symmetric = "union", weight = TRUE, lambda = 1, alpha = 1,
-  maxiter = 1000, tolerance = 1e-06)
+do.crda(
+  X,
+  ndim = 2,
+  type = c("proportion", 0.1),
+  symmetric = "union",
+  weight = TRUE,
+  lambda = 1,
+  alpha = 1,
+  maxiter = 1000,
+  tolerance = 1e-06
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -47,7 +55,7 @@ a constructed graph so that the shortest-path length plays as an approximate geo
 nonlinear manifolds.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate sample data
 X <- aux.gensamples(n=200)
 
@@ -56,9 +64,11 @@ out1 <- do.crda(X,weight=TRUE)
 out2 <- do.crda(X,weight=FALSE)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,2))
-plot(out1$Y[,1],out1$Y[,2],main="weighted graph")
-plot(out2$Y[,1],out2$Y[,2],main="binarized graph")
+plot(out1$Y, main="weighted graph")
+plot(out2$Y, main="binarized graph")
+par(opar)
 }
 
 }

@@ -4,8 +4,14 @@
 \alias{do.dspp}
 \title{Discriminative Sparsity Preserving Projection}
 \usage{
-do.dspp(X, label, ndim = 2, preprocess = c("center", "scale", "cscale",
-  "decorrelate", "whiten"), lambda = 1, rho = 1)
+do.dspp(
+  X,
+  label,
+  ndim = 2,
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"),
+  lambda = 1,
+  rho = 1
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations.}
@@ -36,26 +42,24 @@ penalty graph. It follows an integration of global within-class structure into m
 under exploiting discriminative nature provided from label information.
 }
 \examples{
-\dontrun{
-## generate data of 2 types with clear difference
-diff = 15
-dt1  = aux.gensamples(n=123)-diff;
-dt2  = aux.gensamples(n=123)+diff;
-
-## merge the data and create a label correspondingly
-Y      = rbind(dt1,dt2)
-label  = c(rep(1,123), rep(2,123))
+\donttest{
+## load iris data
+data(iris)
+X     = as.matrix(iris[,1:4])
+label = as.factor(iris$Species)
 
 ## try different rho values
-out1 <- do.dspp(Y, label, ndim=2, rho=0.01)
-out2 <- do.dspp(Y, label, ndim=2, rho=0.1)
-out3 <- do.dspp(Y, label, ndim=2, rho=1)
+out1 <- do.dspp(X, label, ndim=2, rho=0.01)
+out2 <- do.dspp(X, label, ndim=2, rho=0.1)
+out3 <- do.dspp(X, label, ndim=2, rho=1)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="rho=0.01")
-plot(out2$Y[,1], out2$Y[,2], main="rho=0.1")
-plot(out3$Y[,1], out3$Y[,2], main="rho=1")
+plot(out1$Y, main="rho=0.01", col=label, pch=19, cex=0.5)
+plot(out2$Y, main="rho=0.1",  col=label, pch=19, cex=0.5)
+plot(out3$Y, main="rho=1",    col=label, pch=19, cex=0.5)
+par(opar)
 }
 
 }

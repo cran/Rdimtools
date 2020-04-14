@@ -23,7 +23,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## generate swiss-roll dataset of size 200
 #' X <- aux.gensamples(dname="crown",n=200)
 #'
@@ -33,10 +33,12 @@
 #' out3 <- do.dve(X, type=c("proportion",0.8))
 #'
 #' ## Visualize
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(out1$Y[,1],out1$Y[,2],main="DVE::20% connected")
-#' plot(out2$Y[,1],out2$Y[,2],main="DVE::50% connected")
-#' plot(out3$Y[,1],out3$Y[,2],main="DVE::80% connected")
+#' plot(out1$Y, main="DVE::20% connected")
+#' plot(out2$Y, main="DVE::50% connected")
+#' plot(out3$Y, main="DVE::80% connected")
+#' par(opar)
 #' }
 #'
 #' @references

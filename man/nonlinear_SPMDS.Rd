@@ -4,10 +4,15 @@
 \alias{do.spmds}
 \title{Spectral Multidimensional Scaling}
 \usage{
-do.spmds(X, ndim = 2, neigs = max(2, nrow(X)/10), ratio = 0.1,
-  preprocess = c("null", "center", "scale", "cscale", "decorrelate",
-  "whiten"), type = c("proportion", 0.1), symmetric = c("union",
-  "intersect", "asymmetric"))
+do.spmds(
+  X,
+  ndim = 2,
+  neigs = max(2, nrow(X)/10),
+  ratio = 0.1,
+  preprocess = c("null", "center", "scale", "cscale", "decorrelate", "whiten"),
+  type = c("proportion", 0.1),
+  symmetric = c("union", "intersect", "asymmetric")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -43,7 +48,7 @@ to use subsamples and spectral interpolation of non-reference data enables relat
 efficient computation for large-scale data.
 }
 \examples{
-\dontrun{
+\donttest{
 ## Replicate the numerical example from the paper
 #  Data Preparation
 dim.true  = 3     # true dimension
@@ -60,10 +65,12 @@ out2  = do.spmds(X, neigs=100, type=c("proportion",0.25))
 out3  = do.spmds(X, neigs=100, type=c("proportion",0.50))
 
 # visualize the results
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1],out1$Y[,2],main="10\% neighborhood")
-plot(out2$Y[,1],out2$Y[,2],main="25\% neighborhood")
-plot(out3$Y[,1],out3$Y[,2],main="50\% neighborhood")
+plot(out1$Y, main="10\% neighborhood")
+plot(out2$Y, main="25\% neighborhood")
+plot(out3$Y, main="50\% neighborhood")
+par(opar)
 }
 
 }

@@ -4,10 +4,16 @@
 \alias{do.rsir}
 \title{Regularized Sliced Inverse Regression}
 \usage{
-do.rsir(X, response, ndim = 2, h = max(2, round(nrow(X)/5)),
+do.rsir(
+  X,
+  response,
+  ndim = 2,
+  h = max(2, round(nrow(X)/5)),
   preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"),
   regmethod = c("Ridge", "Tikhonov", "PCA", "PCARidge", "PCATikhonov"),
-  tau = 1, numpc = ndim)
+  tau = 1,
+  numpc = ndim
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -42,7 +48,7 @@ rank deficiency of scatter/covariance matrix. Instead of naive matrix inversion,
 proposed regularization schemes that reflect several ideas from various incumbent methods.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate swiss roll with auxiliary dimensions
 ## it follows reference example from LSIR paper.
 n = 123
@@ -68,20 +74,22 @@ out5 = do.rsir(X, y, regmethod="PCATikhonov")
 outsir = do.sir(X, y)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(2,3))
-plot(out1$Y[,1], out1$Y[,2], main="RSIR::Ridge")
-plot(out2$Y[,1], out2$Y[,2], main="RSIR::Tikhonov")
-plot(out3$Y[,1], out3$Y[,2], main="RSIR::PCA")
-plot(out4$Y[,1], out4$Y[,2], main="RSIR::PCA+Ridge")
-plot(out5$Y[,1], out5$Y[,2], main="RSIR::PCA+Tikhonov")
-plot(outsir$Y[,1], outsir$Y[,2], main="standard SIR")
+plot(out1$Y,   main="RSIR::Ridge")
+plot(out2$Y,   main="RSIR::Tikhonov")
+plot(out3$Y,   main="RSIR::PCA")
+plot(out4$Y,   main="RSIR::PCA+Ridge")
+plot(out5$Y,   main="RSIR::PCA+Tikhonov")
+plot(outsir$Y, main="standard SIR")
+par(opar)
 }
 
 }
 \references{
 \insertRef{chiaromonte_dimension_2002}{Rdimtools}
 
-\insertRef{zhong_rsir:_2005}{Rdimtools}
+\insertRef{zhong_rsir_2005}{Rdimtools}
 
 \insertRef{bernard-michel_gaussian_2009}{Rdimtools}
 
@@ -91,5 +99,5 @@ plot(outsir$Y[,1], outsir$Y[,2], main="standard SIR")
 \code{\link{do.sir}}
 }
 \author{
-Changhee Suh
+Kisung You
 }

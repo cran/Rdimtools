@@ -22,14 +22,11 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
-#' ## generate data of 3 types with clear difference
-#' dt1  = aux.gensamples(n=33)-50
-#' dt2  = aux.gensamples(n=33)
-#' dt3  = aux.gensamples(n=33)+50
-#'
-#' ## merge the data
-#' X      = rbind(dt1,dt2,dt3)
+#' \donttest{
+#' ## use iris data
+#' data(iris)
+#' X     = as.matrix(iris[,1:4])
+#' label = as.integer(iris$Species)
 #'
 #' ## try different numbers for neighborhood size
 #' out1 = do.onpp(X, type=c("proportion",0.05))
@@ -37,10 +34,12 @@
 #' out3 = do.onpp(X, type=c("proportion",0.25))
 #'
 #' ## visualize
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(out1$Y[,1], out1$Y[,2], main="ONPP::5% connectivity")
-#' plot(out2$Y[,1], out2$Y[,2], main="ONPP::10% connectivity")
-#' plot(out3$Y[,1], out3$Y[,2], main="ONPP::25% connectivity")
+#' plot(out1$Y, col=label, main="ONPP::5% connectivity")
+#' plot(out2$Y, col=label, main="ONPP::10% connectivity")
+#' plot(out3$Y, col=label, main="ONPP::25% connectivity")
+#' par(opar)
 #' }
 #'
 #' @references

@@ -22,7 +22,7 @@
 #'
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## generate swiss roll data
 #' X <- aux.gensamples(n=200)
 #'
@@ -32,10 +32,12 @@
 #' out3 <- do.dm(X,bandwidth=1000)
 #'
 #' ## visualize
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(out1$Y[,1],out1$Y[,2],main="DM::bandwidth=10")
-#' plot(out2$Y[,1],out2$Y[,2],main="DM::bandwidth=100")
-#' plot(out3$Y[,1],out3$Y[,2],main="DM::bandwidth=1000")
+#' plot(out1$Y, main="DM::bandwidth=10")
+#' plot(out2$Y, main="DM::bandwidth=100")
+#' plot(out3$Y, main="DM::bandwidth=1000")
+#' par(opar)
 #' }
 #'
 #'@references

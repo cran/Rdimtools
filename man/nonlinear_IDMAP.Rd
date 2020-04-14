@@ -4,8 +4,12 @@
 \alias{do.idmap}
 \title{Interactive Document Map}
 \usage{
-do.idmap(X, ndim = 2, preprocess = c("null", "center", "scale",
-  "cscale", "whiten", "decorrelate"), engine = c("NNP", "FastMap"))
+do.idmap(
+  X,
+  ndim = 2,
+  preprocess = c("null", "center", "scale", "cscale", "whiten", "decorrelate"),
+  engine = c("NNP", "FastMap")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -31,10 +35,11 @@ similar documents in the same neighborhood. After defining pairwise distance wit
 authors asserted to use either \code{NNP} or \code{FastMap} as an engine behind.
 }
 \examples{
-\dontrun{
+\donttest{
 ## load iris data
 data(iris)
-X <- as.matrix(iris[,1:4])
+X     <- as.matrix(iris[,1:4])
+label <- as.integer(iris$Species)
 
 ## let's compare with other methods
 out1 <- do.pca(X, ndim=2)
@@ -42,15 +47,17 @@ out2 <- do.sne(X, ndim=2)
 out3 <- do.idmap(X, ndim=2, engine="NNP")
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="PCA")
-plot(out2$Y[,1], out2$Y[,2], main="SNE")
-plot(out3$Y[,1], out3$Y[,2], main="IDMAP")
+plot(out1$Y, col=label, main="PCA")
+plot(out2$Y, col=label, main="SNE")
+plot(out3$Y, col=label, main="IDMAP")
+par(opar)
 }
 
 }
 \references{
-\insertRef{erbacher_content-based_2006}{Rdimtools}
+\insertRef{minghim_contentbased_2006}{Rdimtools}
 }
 \seealso{
 \code{\link{do.nnp}}, \code{\link{do.fastmap}}

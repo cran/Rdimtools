@@ -4,8 +4,11 @@
 \alias{do.pflpp}
 \title{Parameter-Free Locality Preserving Projection}
 \usage{
-do.pflpp(X, ndim = 2, preprocess = c("center", "scale", "cscale",
-  "whiten", "decorrelate"))
+do.pflpp(
+  X,
+  ndim = 2,
+  preprocess = c("center", "scale", "cscale", "whiten", "decorrelate")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations}
@@ -38,9 +41,11 @@ out1 = do.pca(X, ndim=2)
 out2 = do.pflpp(X, ndim=2)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,2))
-plot(out1$Y[,1], out1$Y[,2], main="PCA")
-plot(out2$Y[,1], out2$Y[,2], main="Parameter-Free LPP")
+plot(out1$Y, main="PCA")
+plot(out2$Y, main="Parameter-Free LPP")
+par(opar)
 
 }
 \references{

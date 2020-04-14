@@ -4,8 +4,12 @@
 \alias{do.lpe}
 \title{Locality Pursuit Embedding}
 \usage{
-do.lpe(X, ndim = 2, preprocess = c("center", "scale", "cscale",
-  "decorrelate", "whiten"), numk = max(ceiling(nrow(X)/10), 2))
+do.lpe(
+  X,
+  ndim = 2,
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"),
+  numk = max(ceiling(nrow(X)/10), 2)
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -32,7 +36,7 @@ It aims at preserving local structure by solving a variational problem that mode
 the local geometrical structure by the Euclidean distances.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate swiss roll with auxiliary dimensions
 n = 100
 theta = runif(n)
@@ -50,10 +54,12 @@ out2 = do.lpe(X, numk=10)
 out3 = do.lpe(X, numk=25)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="LPE::numk=5")
-plot(out2$Y[,1], out2$Y[,2], main="LPE::numk=10")
-plot(out3$Y[,1], out3$Y[,2], main="LPE::numk=25")
+plot(out1$Y, main="LPE::numk=5")
+plot(out2$Y, main="LPE::numk=10")
+plot(out3$Y, main="LPE::numk=25")
+par(opar)
 }
 
 }

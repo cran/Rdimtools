@@ -4,8 +4,13 @@
 \alias{do.lmds}
 \title{Landmark Multidimensional Scaling}
 \usage{
-do.lmds(X, ndim = 2, ltype = "random", npoints = max(nrow(X)/5, ndim
-  + 1), preprocess = c("center", "cscale", "decorrelate", "whiten"))
+do.lmds(
+  X,
+  ndim = 2,
+  ltype = "random",
+  npoints = max(nrow(X)/5, ndim + 1),
+  preprocess = c("center", "cscale", "decorrelate", "whiten")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -35,7 +40,7 @@ and graft the others in a manner to preserve as much pairwise distance from
 all the other data points to landmark points as possible.
 }
 \examples{
-\dontrun{
+\donttest{
 # generate data
 X <- aux.gensamples(dname="crown")
 
@@ -49,10 +54,12 @@ output2 <- do.lmds(X,ndim=2,npoints=round(nrow(X)/10),ltype="MaxMin")
 output3 <- do.mds(X,ndim=2)
 
 ## Visualization
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(output1$Y[,1],output2$Y[,2],main="10\% random points")
-plot(output2$Y[,1],output2$Y[,2],main="10\% MaxMin points")
-plot(output3$Y[,1],output3$Y[,2],main="original MDS")
+plot(output1$Y, main="10\% random points")
+plot(output2$Y, main="10\% MaxMin points")
+plot(output3$Y, main="original MDS")
+par(opar)
 }
 
 }

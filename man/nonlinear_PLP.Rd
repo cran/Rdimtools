@@ -4,8 +4,12 @@
 \alias{do.plp}
 \title{Piecewise Laplacian-based Projection (PLP)}
 \usage{
-do.plp(X, ndim = 2, preprocess = c("null", "center", "scale", "cscale",
-  "whiten", "decorrelate"), type = c("proportion", 0.2))
+do.plp(
+  X,
+  ndim = 2,
+  preprocess = c("null", "center", "scale", "cscale", "whiten", "decorrelate"),
+  type = c("proportion", 0.2)
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -53,17 +57,24 @@ intermittently. Such functionality is, however, sacrificed in this version.
 }
 
 \examples{
-\dontrun{
-## generate default dataset
-X <- aux.gensamples()
+\donttest{
+## use iris data
+data(iris)
+X     = as.matrix(iris[,1:4])
+label = as.integer(iris$Species)
 
-## run 5 times under the same setting
-par(mfrow=c(1,5))
-for (i in 1:5){
-    out = do.plp(X,ndim=2,type=c("proportion",0.2))
-    pm  = paste("iteration ",i,sep="")
-    plot(out$Y[,1],out$Y[,2],main=pm)
-}
+## try with 3 levels of connectivity
+out1 = do.plp(X, type=c("proportion", 0.1))
+out2 = do.plp(X, type=c("proportion", 0.2))
+out3 = do.plp(X, type=c("proportion", 0.5))
+
+## visualize
+opar <- par(no.readonly=TRUE)
+par(mfrow=c(1,3))
+plot(out1$Y, col=label, main="PLP::10\% connected")
+plot(out2$Y, col=label, main="PLP::20\% connected")
+plot(out3$Y, col=label, main="PLP::50\% connected")
+par(opar)
 }
 
 }

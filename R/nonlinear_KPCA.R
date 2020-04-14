@@ -19,7 +19,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## generate ribbon-shaped data
 #' X = aux.gensamples(dname="ribbon",n=123)
 #'
@@ -33,15 +33,17 @@
 #' output3 <- do.kpca(X,ndim=2,kernel=c("laplacian",1))
 #'
 #' ## Visualize three different projections
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(output1$Y[,1],output1$Y[,2],main="Gaussian kernel")
-#' plot(output2$Y[,1],output2$Y[,2],main="Gaussian kernel with sigma=5")
-#' plot(output3$Y[,1],output3$Y[,2],main="Laplacian kernel")
+#' plot(output1$Y, main="Gaussian kernel")
+#' plot(output2$Y, main="Gaussian kernel with sigma=5")
+#' plot(output3$Y, main="Laplacian kernel")
+#' par(opar)
 #' }
 #'
 #' @seealso \code{\link{aux.kernelcov}}
 #' @references
-#' \insertRef{goos_kernel_1997}{Rdimtools}
+#' \insertRef{scholkopf_kernel_1997}{Rdimtools}
 #'
 #' @author Kisung You
 #' @rdname nonlinear_KPCA

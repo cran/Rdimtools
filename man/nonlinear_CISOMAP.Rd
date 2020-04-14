@@ -4,9 +4,14 @@
 \alias{do.cisomap}
 \title{Conformal Isometric Feature Mapping}
 \usage{
-do.cisomap(X, ndim = 2, type = c("proportion", 0.1),
-  symmetric = c("union", "intersect", "asymmetric"), weight = TRUE,
-  preprocess = c("center", "scale", "cscale", "whiten", "decorrelate"))
+do.cisomap(
+  X,
+  ndim = 2,
+  type = c("proportion", 0.1),
+  symmetric = c("union", "intersect", "asymmetric"),
+  weight = TRUE,
+  preprocess = c("center", "scale", "cscale", "whiten", "decorrelate")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -39,7 +44,7 @@ preserving full isometry, maintaining infinitestimal angles - conformality - in 
 it alters geodesic distance to reflect scale information.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate data
 X <- aux.gensamples(dname="cswiss",n=500)
 
@@ -53,10 +58,12 @@ output2 <- do.cisomap(X,ndim=2)
 output3 <- do.cisomap(X,ndim=2,weight=FALSE)
 
 ## Visualize three different projections
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(output1$Y[,1],output1$Y[,2],main="Isomap")
-plot(output2$Y[,1],output2$Y[,2],main="C-Isomap")
-plot(output3$Y[,1],output3$Y[,2],main="Binarized C-Isomap")
+plot(output1$Y, main="Isomap")
+plot(output2$Y, main="C-Isomap")
+plot(output3$Y, main="Binarized C-Isomap")
+par(opar)
 }
 
 }

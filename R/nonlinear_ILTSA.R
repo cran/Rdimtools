@@ -23,7 +23,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## generate ribbon-shaped data
 #' X = aux.gensamples(dname="ribbon", n=200)
 #'
@@ -33,10 +33,12 @@
 #' out3 <- do.iltsa(X, t=Inf)
 #'
 #' ## Visualize two comparisons
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(out1$Y[,1], out1$Y[,2], main="ILTSA::t=1")
-#' plot(out2$Y[,1], out2$Y[,2], main="ILTSA::t=100")
-#' plot(out3$Y[,1], out3$Y[,2], main="ILTSA::t=Inf")
+#' plot(out1$Y, main="ILTSA::t=1")
+#' plot(out2$Y, main="ILTSA::t=100")
+#' plot(out3$Y, main="ILTSA::t=Inf")
+#' par(opar)
 #' }
 #'
 #' @references

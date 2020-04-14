@@ -27,30 +27,32 @@
 #' }
 #'
 #'@examples
-#'\dontrun{
-#'## generate data of 100 observations
-#'X <- aux.gensamples(n=100)
+#'\donttest{
+#' ## generate data of 100 observations
+#' X <- aux.gensamples(n=100)
 #'
-#'## 1. use logcosh function for transformation
-#'output1 <- do.ica(X,ndim=2,type="logcosh")
+#' ## 1. use logcosh function for transformation
+#' output1 <- do.ica(X,ndim=2,type="logcosh")
 #'
-#'## 2. use exponential function for transformation
-#'output2 <- do.ica(X,ndim=2,type="exp")
+#' ## 2. use exponential function for transformation
+#' output2 <- do.ica(X,ndim=2,type="exp")
 #'
-#'## 3. use polynomial function for transformation
-#'output3 <- do.ica(X,ndim=2,type="poly")
+#' ## 3. use polynomial function for transformation
+#' output3 <- do.ica(X,ndim=2,type="poly")
 #'
-#'## Visualize three different projections
-#'par(mfrow=c(1,3))
-#'plot(output1$Y[,1],output1$Y[,2],main="logcosh")
-#'plot(output2$Y[,1],output2$Y[,2],main="exp")
-#'plot(output3$Y[,1],output3$Y[,2],main="poly")
+#' ## Visualize three different projections
+#' opar <- par(no.readonly=TRUE)
+#' par(mfrow=c(1,3))
+#' plot(output1$Y, main="ICA::logcosh")
+#' plot(output2$Y, main="ICA::exp")
+#' plot(output3$Y, main="ICA::poly")
+#' par(opar)
 #'}
 #'
 #' @references
 #' \insertRef{hyvarinen_independent_2001}{Rdimtools}
 #'
-#' @author Changhee Suh
+#' @author Kisung You
 #' @rdname linear_ICA
 #' @export
 do.ica <- function(X,ndim=2,type="logcosh",tpar=1,sym=FALSE,tol=1e-6,redundancy=TRUE,maxiter=100){

@@ -4,10 +4,14 @@
 \alias{do.iltsa}
 \title{Improved Local Tangent Space Alignment}
 \usage{
-do.iltsa(X, ndim = 2, type = c("proportion", 0.1),
+do.iltsa(
+  X,
+  ndim = 2,
+  type = c("proportion", 0.1),
   symmetric = c("union", "intersect", "asymmetric"),
   preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"),
-  t = 10)
+  t = 10
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -40,7 +44,7 @@ Improved LTSA (ILTSA) provides a remedy that can efficiently recover the geometr
 structure of data manifolds even when data are sparse or non-uniformly distributed.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate ribbon-shaped data
 X = aux.gensamples(dname="ribbon", n=200)
 
@@ -50,10 +54,12 @@ out2 <- do.iltsa(X, t=100)
 out3 <- do.iltsa(X, t=Inf)
 
 ## Visualize two comparisons
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="ILTSA::t=1")
-plot(out2$Y[,1], out2$Y[,2], main="ILTSA::t=100")
-plot(out3$Y[,1], out3$Y[,2], main="ILTSA::t=Inf")
+plot(out1$Y, main="ILTSA::t=1")
+plot(out2$Y, main="ILTSA::t=100")
+plot(out3$Y, main="ILTSA::t=Inf")
+par(opar)
 }
 
 }

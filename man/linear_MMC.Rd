@@ -4,8 +4,12 @@
 \alias{do.mmc}
 \title{Maximum Margin Criterion}
 \usage{
-do.mmc(X, label, ndim = 2, preprocess = c("center", "scale", "cscale",
-  "decorrelate", "whiten"))
+do.mmc(
+  X,
+  label,
+  ndim = 2,
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -47,9 +51,11 @@ out1 = do.mmc(X, label, ndim=2)
 out2 = do.mmc(X, label, ndim=2, preprocess="decorrelate")
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,2))
-plot(out1$Y[,1], out1$Y[,2], main="centering")
-plot(out2$Y[,1], out2$Y[,2], main="decorrelating")
+plot(out1$Y, main="MMC::centering")
+plot(out2$Y, main="MMC::decorrelating")
+par(opar)
 
 }
 \references{

@@ -28,9 +28,11 @@
 #' res_pls  = do.pls(mat1, mat2, ndim=2)
 #'
 #' ## visualize
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,2))
-#' plot(res_opls$Y[,1], res_opls$Y[,2], main="OPLS result")
-#' plot(res_pls$Y1[,1], res_pls$Y1[,2], main="PLS result")
+#' plot(res_opls$Y, cex=0.5, main="OPLS result")
+#' plot(res_pls$Y1, cex=0.5, main="PLS result")
+#' par(opar)
 #'
 #' @references
 #' \insertRef{barker_partial_2003}{Rdimtools}

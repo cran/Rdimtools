@@ -27,12 +27,10 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
-#' ## generate data with clear difference
-#' X1 <- matrix(rnorm(100),nrow=10)-15
-#' X2 <- matrix(rnorm(100),nrow=10)
-#' X3 <- matrix(rnorm(100),nrow=10)+15
-#' X  <- rbind(X1,X2,X3)
+#' ## use iris data
+#' data(iris)
+#' X     = as.matrix(iris[,1:4])
+#' label = as.integer(iris$Species)
 #'
 #' ## try different preprocessing procedure
 #' out1 <- do.pca(X, ndim=2, preprocess="center")
@@ -40,15 +38,16 @@
 #' out3 <- do.pca(X, ndim=2, preprocess="whiten")
 #'
 #' ## visualize
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(out1$Y[,1], out1$Y[,2], main="PCA::'center'")
-#' plot(out2$Y[,1], out2$Y[,2], main="PCA::'decorrelate'")
-#' plot(out3$Y[,1], out3$Y[,2], main="PCA::'whiten'")
-#' }
+#' plot(out1$Y, col=label, main="PCA::'center'")
+#' plot(out2$Y, col=label, main="PCA::'decorrelate'")
+#' plot(out3$Y, col=label, main="PCA::'whiten'")
+#' par(opar)
 #'
-#' @author Changhee Suh
+#' @author Kisung You
 #' @references
-#' \insertRef{pearson_liii._1901}{Rdimtools}
+#' \insertRef{pearson_liii_1901}{Rdimtools}
 #'
 #' @rdname linear_PCA
 #' @export

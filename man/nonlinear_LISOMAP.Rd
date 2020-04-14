@@ -4,10 +4,16 @@
 \alias{do.lisomap}
 \title{Landmark Isometric Feature Mapping}
 \usage{
-do.lisomap(X, ndim = 2, ltype = c("random", "MaxMin"),
-  npoints = max(nrow(X)/5, ndim + 1), preprocess = c("center", "scale",
-  "cscale", "decorrelate", "whiten"), type = c("proportion", 0.1),
-  symmetric = c("union", "intersect", "asymmetric"), weight = TRUE)
+do.lisomap(
+  X,
+  ndim = 2,
+  ltype = c("random", "MaxMin"),
+  npoints = max(nrow(X)/5, ndim + 1),
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"),
+  type = c("proportion", 0.1),
+  symmetric = c("union", "intersect", "asymmetric"),
+  weight = TRUE
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -44,7 +50,7 @@ and graft the others in a manner to preserve as much pairwise distance from
 all the other data points to landmark points as possible.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate data
 ## in order to pass CRAN pretest, n is set to be small.
 X <- aux.gensamples(n=123)
@@ -59,10 +65,12 @@ output2 <- do.lisomap(X,ndim=2,type=c("proportion",0.50),npoints=10)
 output3 <- do.lisomap(X,ndim=2,type=c("proportion",0.50),npoints=14)
 
 ## Visualize three different projections
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(output1$Y[,1],output1$Y[,2],main="5\%")
-plot(output2$Y[,1],output2$Y[,2],main="10\%")
-plot(output3$Y[,1],output3$Y[,2],main="50\%")
+plot(output1$Y, main="5\%")
+plot(output2$Y, main="10\%")
+plot(output3$Y, main="50\%")
+par(opar)
 }
 
 }

@@ -4,9 +4,15 @@
 \alias{do.mmp}
 \title{Maximum Margin Projection}
 \usage{
-do.mmp(X, label, ndim = 2, preprocess = c("center", "scale", "cscale",
-  "decorrelate", "whiten"), numk = max(ceiling(nrow(X)/10), 2),
-  alpha = 0.5, gamma = 50)
+do.mmp(
+  X,
+  label,
+  ndim = 2,
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"),
+  numk = max(ceiling(nrow(X)/10), 2),
+  alpha = 0.5,
+  gamma = 50
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations.}
@@ -59,13 +65,15 @@ out1 = do.pca(X, ndim=2)
 out2 = do.mmp(X, label_missing, numk=10)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,2))
-plot(out1$Y[,1], out1$Y[,2], main="PCA projection")
-plot(out2$Y[,1], out2$Y[,2], main="20\% missing labels")
+plot(out1$Y, col=label, main="PCA projection")
+plot(out2$Y, col=label, main="20\% missing labels")
+par(opar)
 
 }
 \references{
-\insertRef{xiaofei_he_learning_2008}{Rdimtools}
+\insertRef{xiaofeihe_learning_2008}{Rdimtools}
 }
 \author{
 Kisung You

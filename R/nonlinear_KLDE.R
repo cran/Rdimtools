@@ -24,7 +24,7 @@
 #'
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## generate data of 2 types with clear difference
 #' diff = 5
 #' dt1  = aux.gensamples(n=123)-diff;
@@ -40,14 +40,16 @@
 #' out3 <- do.klde(Y, label, numk=25)
 #'
 #' ## visualize
+#' opar = par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(out1$Y[,1], out1$Y[,2], main="k=5")
-#' plot(out2$Y[,1], out2$Y[,2], main="k=10")
-#' plot(out3$Y[,1], out3$Y[,2], main="k=25")
+#' plot(out1$Y, main="k=5")
+#' plot(out2$Y, main="k=10")
+#' plot(out3$Y, main="k=25")
+#' par(opar)
 #' }
 #'
 #' @references
-#' \insertRef{hwann-tzong_chen_local_2005}{Rdimtools}
+#' \insertRef{hwann-tzongchen_local_2005}{Rdimtools}
 #'
 #' @author Kisung You
 #' @rdname nonlinear_KLDE

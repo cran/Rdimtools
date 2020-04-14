@@ -4,9 +4,13 @@
 \alias{do.isoproj}
 \title{Isometric Projection}
 \usage{
-do.isoproj(X, ndim = 2, type = c("proportion", 0.1),
+do.isoproj(
+  X,
+  ndim = 2,
+  type = c("proportion", 0.1),
   symmetric = c("union", "intersect", "asymmetric"),
-  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"))
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -40,7 +44,7 @@ singular value decomposition and guesses intrinsic dimension by the number of po
 from the decomposition of data matrix, it automatically corrects the target dimension accordingly.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate data
 X <- aux.gensamples(n=28)
 
@@ -51,9 +55,11 @@ output1 <- do.isoproj(X,ndim=2,type=c("proportion",0.10))
 output2 <- do.isoproj(X,ndim=2,type=c("proportion",0.25))
 
 ## Visualize two different projections
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,2))
-plot(output1$Y[,1],output1$Y[,2],main="10\%")
-plot(output2$Y[,1],output2$Y[,2],main="25\%")
+plot(output1$Y, main="10\%")
+plot(output2$Y, main="25\%")
+par(opar)
 }
 
 }

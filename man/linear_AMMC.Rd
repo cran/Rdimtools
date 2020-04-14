@@ -4,8 +4,15 @@
 \alias{do.ammc}
 \title{Adaptive Maximum Margin Criterion}
 \usage{
-do.ammc(X, label, ndim = 2, preprocess = c("center", "scale", "cscale",
-  "decorrelate", "whiten"), a = 1, b = 1, lambda = 1)
+do.ammc(
+  X,
+  label,
+  ndim = 2,
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"),
+  a = 1,
+  b = 1,
+  lambda = 1
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -39,15 +46,10 @@ training samples embedded in MMC framework. With the choice of  \code{a=0}, \cod
 \code{lambda=1}, it is identical to standard MMC method.
 }
 \examples{
-\dontrun{
-## generate data of 3 types with clear difference
-dt1  = aux.gensamples(n=33)-50
-dt2  = aux.gensamples(n=33)
-dt3  = aux.gensamples(n=33)+50
-
-## merge the data and create a label correspondingly
-X      = rbind(dt1,dt2,dt3)
-label  = c(rep(1,33), rep(2,33), rep(3,33))
+## load iris data
+data(iris)
+X     = as.matrix(iris[,1:4])
+label = as.factor(iris$Species)
 
 ## try different lambda values
 out1 = do.ammc(X, label, lambda=0.1)
@@ -55,11 +57,12 @@ out2 = do.ammc(X, label, lambda=1)
 out3 = do.ammc(X, label, lambda=10)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="AMMC::lambda=0.1")
-plot(out2$Y[,1], out2$Y[,2], main="AMMC::lambda=1")
-plot(out3$Y[,1], out3$Y[,2], main="AMMC::lambda=10")
-}
+plot(out1$Y, main="AMMC::lambda=0.1", pch=19, cex=0.5, col=label)
+plot(out2$Y, main="AMMC::lambda=1",   pch=19, cex=0.5, col=label)
+plot(out3$Y, main="AMMC::lambda=10",  pch=19, cex=0.5, col=label)
+par(opar)
 
 }
 \references{

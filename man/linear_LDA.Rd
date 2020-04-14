@@ -43,7 +43,7 @@ subspace can only be spanned by at most \code{K-1} orthogonal vectors.
 }
 
 \examples{
-\dontrun{
+\donttest{
 ## generate data of 3 types with clear difference
 dt1  = aux.gensamples(n=33)-100
 dt2  = aux.gensamples(n=33)
@@ -57,7 +57,9 @@ label  = c(rep(1,33), rep(2,33), rep(3,33))
 output = do.lda(Y, label, ndim=2)
 
 ## visualize
-plot(output$Y[,1], output$Y[,2], main="3 groups on 2d plane")
+opar <- par(no.readonly=TRUE)
+plot(output$Y, main="3 groups on 2d plane")
+par(opar)
 }
 
 }
@@ -67,5 +69,5 @@ plot(output$Y[,1], output$Y[,2], main="3 groups on 2d plane")
 \insertRef{fukunaga_introduction_1990}{Rdimtools}
 }
 \author{
-Changhee Suh
+Kisung You
 }

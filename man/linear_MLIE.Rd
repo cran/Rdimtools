@@ -4,9 +4,14 @@
 \alias{do.mlie}
 \title{Maximal Local Interclass Embedding}
 \usage{
-do.mlie(X, label, ndim = 2, preprocess = c("center", "scale", "cscale",
-  "decorrelate", "whiten"), k1 = max(ceiling(nrow(X)/10), 2),
-  k2 = max(ceiling(nrow(X)/10), 2))
+do.mlie(
+  X,
+  label,
+  ndim = 2,
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"),
+  k1 = max(ceiling(nrow(X)/10), 2),
+  k2 = max(ceiling(nrow(X)/10), 2)
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations.}
@@ -37,6 +42,7 @@ projections that maximize the local interclass scatter and the local
 intraclass compactness at the same time. It can be deemed an extended version of MFA.
 }
 \examples{
+\donttest{
 ## generate data of 3 types with clear difference
 dt1  = aux.gensamples(n=33)-100
 dt2  = aux.gensamples(n=33)
@@ -52,10 +58,13 @@ out2 = do.mlie(X, label, k1=10,k2=10)
 out3 = do.mlie(X, label, k1=25,k2=25)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="MLIE::nbd size=5")
-plot(out2$Y[,1], out2$Y[,2], main="MLIE::nbd size=10")
-plot(out3$Y[,1], out3$Y[,2], main="MLIE::nbd size=25")
+plot(out1$Y, main="MLIE::nbd size=5")
+plot(out2$Y, main="MLIE::nbd size=10")
+plot(out3$Y, main="MLIE::nbd size=25")
+par(opar)
+}
 
 }
 \references{

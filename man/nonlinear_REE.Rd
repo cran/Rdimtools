@@ -4,10 +4,16 @@
 \alias{do.ree}
 \title{Robust Euclidean Embedding}
 \usage{
-do.ree(X, ndim = 2, W = NA, preprocess = c("null", "center", "scale",
-  "cscale", "whiten", "decorrelate"), initc = 1,
-  dmethod = c("euclidean", "maximum", "manhattan", "canberra", "binary",
-  "minkowski"), maxiter = 100, abstol = 0.001)
+do.ree(
+  X,
+  ndim = 2,
+  W = NA,
+  preprocess = c("null", "center", "scale", "cscale", "whiten", "decorrelate"),
+  initc = 1,
+  dmethod = c("euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski"),
+  maxiter = 100,
+  abstol = 0.001
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -44,9 +50,11 @@ paper introduced a subgradient algorithm to overcome memory-intensive nature of
 original semidefinite programming formulation.
 }
 \examples{
-\dontrun{
-## generate swiss roll data
-X = aux.gensamples(n=123)
+\donttest{
+## use iris data
+data(iris)
+X     = as.matrix(iris[,1:4])
+label = as.integer(iris$Species)
 
 ## 1. no preprocessing
 output1 <- do.ree(X,ndim=2,maxiter=50)
@@ -55,9 +63,11 @@ output1 <- do.ree(X,ndim=2,maxiter=50)
 output2 <- do.ree(X,ndim=2,preprocess="decorrelate",maxiter=50)
 
 ## Visualize three different projections
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,2))
-plot(output1$Y[,1],output1$Y[,2],main="centered")
-plot(output2$Y[,1],output2$Y[,2],main="decorrelated")
+plot(output1$Y, col=label, main="centered")
+plot(output2$Y, col=label, main="decorrelated")
+par(opar)
 }
 
 }

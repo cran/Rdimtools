@@ -4,9 +4,15 @@
 \alias{do.kmfa}
 \title{Kernel Marginal Fisher Analysis}
 \usage{
-do.kmfa(X, label, ndim = 2, preprocess = c("center", "scale", "cscale",
-  "decorrelate", "whiten"), k1 = max(ceiling(nrow(X)/10), 2),
-  k2 = max(ceiling(nrow(X)/10), 2), t = 1)
+do.kmfa(
+  X,
+  label,
+  ndim = 2,
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"),
+  k1 = max(ceiling(nrow(X)/10), 2),
+  k2 = max(ceiling(nrow(X)/10), 2),
+  t = 1
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations.}
@@ -38,7 +44,7 @@ For simplicity, we only enabled a heat kernel of a form
 where \eqn{t} is a bandwidth parameter. Note that the method is far sensitive to the choice of \eqn{t}.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate data of 3 types with clear difference
 dt1  = aux.gensamples(n=33)-100
 dt2  = aux.gensamples(n=33)
@@ -53,9 +59,11 @@ out1 = do.kmfa(X, label, k1=5, k2=5, t=1)
 out2 = do.kmfa(X, label, k1=5, k2=5, t=2)
 
 ## visualize
+opar = par(no.readonly=TRUE)
 par(mfrow=c(1,2))
-plot(out1$Y[,1], out1$Y[,2], main="bandwidth=1")
-plot(out2$Y[,1], out2$Y[,2], main="bandwidth=2")
+plot(out1$Y, main="bandwidth=1")
+plot(out2$Y, main="bandwidth=2")
+par(opar)
 }
 }
 \references{

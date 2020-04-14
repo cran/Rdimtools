@@ -4,9 +4,14 @@
 \alias{do.nonpp}
 \title{Nonnegative Orthogonal Neighborhood Preserving Projections}
 \usage{
-do.nonpp(X, ndim = 2, type = c("proportion", 0.1),
-  preprocess = c("center", "decorrelate", "whiten"), maxiter = 1000,
-  reltol = 1e-05)
+do.nonpp(
+  X,
+  ndim = 2,
+  type = c("proportion", 0.1),
+  preprocess = c("null", "center", "decorrelate", "whiten"),
+  maxiter = 1000,
+  reltol = 1e-05
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations.}
@@ -37,6 +42,28 @@ a named list containing
 \description{
 Nonnegative Orthogonal Neighborhood Preserving Projections (NONPP) is a variant of ONPP where
 projection vectors - or, basis for learned subspace - contain no negative values.
+}
+\examples{
+\dontrun{
+## use iris data
+data(iris)
+X     = as.matrix(iris[,1:4])+50
+label = as.integer(iris$Species)
+
+## use different levels of connectivity
+out1 = do.nonpp(X, type=c("proportion",0.1))
+out2 = do.nonpp(X, type=c("proportion",0.2))
+out3 = do.nonpp(X, type=c("proportion",0.5))
+
+## visualize
+opar <- par(no.readonly=TRUE)
+par(mfrow=c(1,3))
+plot(out1$Y, col=label, main="NONPP::10\% connected")
+plot(out2$Y, col=label, main="NONPP::20\% connected")
+plot(out3$Y, col=label, main="NONPP::50\% connected")
+par(opar)
+}
+
 }
 \references{
 \insertRef{zafeiriou_nonnegative_2010}{Rdimtools}

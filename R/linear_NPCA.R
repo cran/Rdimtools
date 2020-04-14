@@ -17,6 +17,28 @@
 #' \item{projection}{a \eqn{(p\times ndim)} whose columns are basis for projection.}
 #' }
 #'
+#'
+#' @examples
+#' \dontrun{
+#' ## use iris data
+#' data(iris)
+#' X     = as.matrix(iris[,1:4])+50
+#' label = as.integer(iris$Species)
+#'
+#' ## use different preprocessing
+#' out1 = do.npca(X, preprocess="center")
+#' out2 = do.npca(X, preprocess="cscale")
+#' out3 = do.npca(X, preprocess="whiten")
+#'
+#' ## visualize
+#' opar <- par(no.readonly=TRUE)
+#' par(mfrow=c(1,3))
+#' plot(out1$Y, col=label, main="NPCA:: center")
+#' plot(out2$Y, col=label, main="NPCA:: cscale")
+#' plot(out3$Y, col=label, main="NPCA:: whiten")
+#' par(opar)
+#' }
+#'
 #' @references
 #' \insertRef{zafeiriou_nonnegative_2010}{Rdimtools}
 #'
@@ -59,8 +81,14 @@ do.npca <- function(X, ndim=2, preprocess=c("center","scale","cscale","decorrela
   #   2. compute C
   C = cov(pX)
   #   3. compute projection matrix
-  projection = aux.adjprojection(method_nnprojmax(C, Uinit, reltol, maxiter))
-
+  projection = method_nnprojmax(C, Uinit, reltol, maxiter)
+  #   4. additional step : NA
+  projection[(is.na(projection)||(is.infinite(projection)))] = 1
+  for (i in 1:ndim){
+    tgt = as.vector(projection[,i])
+    projection[,i] = tgt/sqrt(sum(tgt^2))
+  }
+  projection = aux.adjprojection(projection)
 
   #------------------------------------------------------------------------
   ## RETURN

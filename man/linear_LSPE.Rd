@@ -4,9 +4,14 @@
 \alias{do.lspe}
 \title{Locality and Similarity Preserving Embedding}
 \usage{
-do.lspe(X, ndim = 2, preprocess = c("null", "center", "scale",
-  "cscale", "whiten", "decorrelate"), alpha = 1, beta = 1,
-  bandwidth = 1)
+do.lspe(
+  X,
+  ndim = 2,
+  preprocess = c("null", "center", "scale", "cscale", "whiten", "decorrelate"),
+  alpha = 1,
+  beta = 1,
+  bandwidth = 1
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -39,7 +44,7 @@ then mapping the locality structure to reconstruct coefficients such that data s
 Use of \eqn{\ell_{2,1}} norm boosts to impose column-sparsity that enables feature selection procedure.
 }
 \examples{
-\dontrun{
+\donttest{
 #### generate R12in72 dataset
 X = aux.gensamples(dname="R12in72")
 
@@ -49,10 +54,12 @@ out2 = do.lspe(X, bandwidth=1)
 out3 = do.lspe(X, bandwidth=10)
 
 #### visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="LSPE::bandwidth=0.1")
-plot(out2$Y[,1], out2$Y[,2], main="LSPE::bandwidth=1")
-plot(out3$Y[,1], out3$Y[,2], main="LSPE::bandwidth=10")
+plot(out1$Y, main="LSPE::bandwidth=0.1")
+plot(out2$Y, main="LSPE::bandwidth=1")
+plot(out3$Y, main="LSPE::bandwidth=10")
+par(opar)
 }
 
 }

@@ -4,9 +4,14 @@
 \alias{do.ssldp}
 \title{Semi-Supervised Locally Discriminant Projection}
 \usage{
-do.ssldp(X, label, ndim = 2, type = c("proportion", 0.1),
+do.ssldp(
+  X,
+  label,
+  ndim = 2,
+  type = c("proportion", 0.1),
   preprocess = c("center", "scale", "cscale", "whiten", "decorrelate"),
-  beta = 0.5)
+  beta = 0.5
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -42,14 +47,10 @@ it both constructs the within- and between-class weight matrices incorporating t
 neighborhood information of the data set.
 }
 \examples{
-## generate data of 3 types with clear difference
-dt1  = aux.gensamples(n=33)-100
-dt2  = aux.gensamples(n=33)
-dt3  = aux.gensamples(n=33)+100
-
-## merge the data and create a label correspondingly
-Z      = rbind(dt1,dt2,dt3)
-label  = c(rep(1,33), rep(2,33), rep(3,33))
+## use iris data
+data(iris)
+X     = as.matrix(iris[,1:4])
+label = as.integer(iris$Species)
 
 ## copy a label and let 10\% of elements be missing
 nlabel = length(label)
@@ -57,20 +58,22 @@ nmissing = round(nlabel*0.10)
 label_missing = label
 label_missing[sample(1:nlabel, nmissing)]=NA
 
-## compute with 3 different neighborhood size
-out1 = do.ssldp(Z, label_missing, type=c("proportion",0.05))
-out2 = do.ssldp(Z, label_missing, type=c("proportion",0.10))
-out3 = do.ssldp(Z, label_missing, type=c("proportion",0.25))
+## compute with 3 different levels of 'beta' values
+out1 = do.ssldp(X, label_missing, beta=0.1)
+out2 = do.ssldp(X, label_missing, beta=0.5)
+out3 = do.ssldp(X, label_missing, beta=0.9)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="5\% connectivity")
-plot(out2$Y[,1], out2$Y[,2], main="10\% connectivity")
-plot(out3$Y[,1], out3$Y[,2], main="25\% connectivity")
+plot(out1$Y, col=label, main="SSLDP::beta=0.1")
+plot(out2$Y, col=label, main="SSLDP::beta=0.5")
+plot(out3$Y, col=label, main="SSLDP::beta=0.9")
+par(opar)
 
 }
 \references{
-\insertRef{zhang_semi-supervised_2011}{Rdimtools}
+\insertRef{zhang_semisupervised_2011}{Rdimtools}
 }
 \author{
 Kisung You

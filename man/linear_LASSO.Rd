@@ -4,9 +4,14 @@
 \alias{do.lasso}
 \title{Least Absolute Shrinkage and Selection Operator}
 \usage{
-do.lasso(X, response, ndim = 2, preprocess = c("null", "center",
-  "scale", "cscale", "whiten", "decorrelate"), ycenter = FALSE,
-  lambda = 1)
+do.lasso(
+  X,
+  response,
+  ndim = 2,
+  preprocess = c("null", "center", "scale", "cscale", "whiten", "decorrelate"),
+  ycenter = FALSE,
+  lambda = 1
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -41,7 +46,7 @@ meaningful features by solving
 where \eqn{y} is \code{response} in our method.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate swiss roll with auxiliary dimensions
 ## it follows reference example from LSIR paper.
 n = 123
@@ -63,10 +68,12 @@ out2 = do.lasso(X, y, lambda=1)
 out3 = do.lasso(X, y, lambda=10)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="LASSO::lambda=0.1")
-plot(out2$Y[,1], out2$Y[,2], main="LASSO::lambda=1")
-plot(out3$Y[,1], out3$Y[,2], main="LASSO::lambda=10")
+plot(out1$Y, main="LASSO::lambda=0.1")
+plot(out2$Y, main="LASSO::lambda=1")
+plot(out3$Y, main="LASSO::lambda=10")
+par(opar)
 }
 
 }

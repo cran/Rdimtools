@@ -26,7 +26,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## generate sample data
 #' X = aux.gensamples(n=200)
 #'
@@ -36,10 +36,12 @@
 #' out3 <- do.kudp(X, bandwidth=1000)
 #'
 #' ## visualize
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(out1$Y[,1],out1$Y[,2],main="bandwidth=0.1")
-#' plot(out2$Y[,1],out2$Y[,2],main="bandwidth=10")
-#' plot(out3$Y[,1],out3$Y[,2],main="bandwidth=1000")
+#' plot(out1$Y, main="bandwidth=0.1")
+#' plot(out2$Y, main="bandwidth=10")
+#' plot(out3$Y, main="bandwidth=1000")
+#' par(opar)
 #' }
 #'
 #' @seealso \code{\link{do.udp}}
@@ -93,7 +95,7 @@ do.kudp <- function(X, ndim=2, type=c("proportion",0.1),
   # 1. compute St
   tmpSt = kudp_ST(pX)
   # 2. target rank
-  tmpndim = min((max(as.integer(Matrix::rankMatrix(tmpSt)), (ndim+1))), p)
+  tmpndim = min((max(round(aux_rank(tmpSt)), (ndim+1))), p)
   # 3. perform PCA
   if (tmpndim==p){
     proj_first = diag(rep(1,p))

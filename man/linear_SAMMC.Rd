@@ -4,9 +4,17 @@
 \alias{do.sammc}
 \title{Semi-Supervised Adaptive Maximum Margin Criterion}
 \usage{
-do.sammc(X, label, ndim = 2, type = c("proportion", 0.1),
+do.sammc(
+  X,
+  label,
+  ndim = 2,
+  type = c("proportion", 0.1),
   preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"),
-  a = 1, b = 1, lambda = 1, beta = 1)
+  a = 1,
+  b = 1,
+  lambda = 1,
+  beta = 1
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -45,7 +53,7 @@ Semi-Supervised Adaptive Maximum Margin Criterion (SAMMC) is a semi-supervised v
 AMMC by making use of both labeled and unlabeled data.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate data of 3 types with clear difference
 dt1  = aux.gensamples(n=33)-50
 dt2  = aux.gensamples(n=33)
@@ -67,10 +75,12 @@ out2 = do.sammc(X, label_missing, beta=1)
 out3 = do.sammc(X, label_missing, beta=10)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="SAMMC::beta=0.1")
-plot(out2$Y[,1], out2$Y[,2], main="SAMMC::beta=1")
-plot(out3$Y[,1], out3$Y[,2], main="SAMMC::beta=10")
+plot(out1$Y, main="SAMMC::beta=0.1")
+plot(out2$Y, main="SAMMC::beta=1")
+plot(out3$Y, main="SAMMC::beta=10")
+par(opar)
 }
 
 }

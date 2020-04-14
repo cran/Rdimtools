@@ -30,10 +30,9 @@ Canonical Correlation Analysis (CCA) is similar to Partial Least Squares (PLS), 
 on maximizing covariance, CCA maximizes the correlation. This difference sometimes incurs quite distinct results compared to PLS.
 For algorithm aspects, we used recursive gram-schmidt orthogonalization in conjunction with extracting projection vectors under
 eigen-decomposition formulation, as the problem dimension matters only up to original dimensionality.
-For more details, see \href{https://en.wikipedia.org/wiki/Canonical_correlation}{Wikipedia entry} on Canonical Correlation.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate 2 normal data matrices
 mat1 = matrix(rnorm(100*12),nrow=100)+10 # 12-dim normal
 mat2 = matrix(rnorm(100*6), nrow=100)-10 # 6-dim normal
@@ -42,9 +41,11 @@ mat2 = matrix(rnorm(100*6), nrow=100)-10 # 6-dim normal
 output = do.cca(mat1, mat2, ndim=2)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,2))
-plot(output$Y1[,1], output$Y1[,2], main="proj(mat1)")
-plot(output$Y2[,1], output$Y2[,2], main="proj(mat2)")
+plot(output$Y1, main="proj(mat1)")
+plot(output$Y2, main="proj(mat2)")
+par(opar)
 }
 
 }

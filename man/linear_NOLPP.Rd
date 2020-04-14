@@ -4,9 +4,15 @@
 \alias{do.nolpp}
 \title{Nonnegative Orthogonal Locality Preserving Projection}
 \usage{
-do.nolpp(X, ndim = 2, type = c("proportion", 0.1),
-  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"),
-  t = 1, maxiter = 1000, reltol = 1e-05)
+do.nolpp(
+  X,
+  ndim = 2,
+  type = c("proportion", 0.1),
+  preprocess = c("null", "center", "scale", "cscale", "decorrelate", "whiten"),
+  t = 1,
+  maxiter = 1000,
+  reltol = 1e-05
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations.}
@@ -19,7 +25,7 @@ Default is \code{c("proportion",0.1)}, connecting about 1/10 of nearest data poi
 among all data points. See also \code{\link{aux.graphnbd}} for more details.}
 
 \item{preprocess}{an additional option for preprocessing the data.
-Default is "center". See also \code{\link{aux.preprocess}} for more details.}
+Default is "null". See also \code{\link{aux.preprocess}} for more details.}
 
 \item{t}{kernel bandwidth in \eqn{(0,\infty)}.}
 
@@ -38,6 +44,28 @@ a named list containing
 \description{
 Nonnegative Orthogonal Locality Preserving Projection (NOLPP) is a variant of OLPP where
 projection vectors - or, basis for learned subspace - contain no negative values.
+}
+\examples{
+\dontrun{
+## use iris data
+data(iris)
+X     = as.matrix(iris[,1:4])+50
+label = as.integer(iris$Species)
+
+## use different kernel bandwidths with 20\% connectivity
+out1 = do.nolpp(X, type=c("proportion",0.5), t=0.01)
+out2 = do.nolpp(X, type=c("proportion",0.5), t=0.1)
+out3 = do.nolpp(X, type=c("proportion",0.5), t=1)
+
+## visualize
+opar <- par(no.readonly=TRUE)
+par(mfrow=c(1,3))
+plot(out1$Y, col=label, main="NOLPP::t=0.01")
+plot(out2$Y, col=label, main="NOLPP::t=0.1")
+plot(out3$Y, col=label, main="NOLPP::t=1")
+par(opar)
+}
+
 }
 \references{
 \insertRef{zafeiriou_nonnegative_2010}{Rdimtools}

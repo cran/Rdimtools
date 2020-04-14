@@ -4,8 +4,13 @@
 \alias{do.sir}
 \title{Sliced Inverse Regression}
 \usage{
-do.sir(X, response, ndim = 2, h = max(2, round(nrow(X)/5)),
-  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"))
+do.sir(
+  X,
+  response,
+  ndim = 2,
+  h = max(2, round(nrow(X)/5)),
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -35,7 +40,7 @@ conditional independence after projection is guaranteed. It first divides the ra
 response variable. Projection vectors are extracted where projected data best explains response variable.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate swiss roll with auxiliary dimensions
 ## it follows reference example from LSIR paper.
 n = 123
@@ -57,10 +62,12 @@ out2 = do.sir(X, y, h=5)
 out3 = do.sir(X, y, h=10)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="SIR::2 slices")
-plot(out2$Y[,1], out2$Y[,2], main="SIR::5 slices")
-plot(out3$Y[,1], out3$Y[,2], main="SIR::10 slices")
+plot(out1$Y, main="SIR::2 slices")
+plot(out2$Y, main="SIR::5 slices")
+plot(out3$Y, main="SIR::10 slices")
+par(opar)
 }
 
 }
@@ -68,5 +75,5 @@ plot(out3$Y[,1], out3$Y[,2], main="SIR::10 slices")
 \insertRef{li_sliced_1991}{Rdimtools}
 }
 \author{
-Changhee Suh
+Kisung You
 }

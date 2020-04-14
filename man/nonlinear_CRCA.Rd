@@ -4,8 +4,7 @@
 \alias{do.crca}
 \title{Curvilinear Component Analysis}
 \usage{
-do.crca(X, ndim = 2, lambda = 1, alpha = 1, maxiter = 1000,
-  tolerance = 1e-06)
+do.crca(X, ndim = 2, lambda = 1, alpha = 1, maxiter = 1000, tolerance = 1e-06)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -38,7 +37,7 @@ similar to that of subgradient method in that at each iteration \eqn{t} the grad
 weighted by \eqn{\alpha /t}.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate sample data
 X <- aux.gensamples(n=200)
 
@@ -48,10 +47,12 @@ out2 <- do.crca(X,alpha=5)
 out3 <- do.crca(X,alpha=10)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1],out1$Y[,2],main="alpha=1.0")
-plot(out2$Y[,1],out2$Y[,2],main="alpha=5.0")
-plot(out3$Y[,1],out3$Y[,2],main="alpha=10.0")
+plot(out1$Y, main="alpha=1.0")
+plot(out2$Y, main="alpha=5.0")
+plot(out3$Y, main="alpha=10.0")
+par(opar)
 }
 
 
@@ -59,7 +60,7 @@ plot(out3$Y[,1],out3$Y[,2],main="alpha=10.0")
 \references{
 \insertRef{demartines_curvilinear_1997}{Rdimtools}
 
-\insertRef{goos_curvilinear_1999}{Rdimtools}
+\insertRef{herault_curvilinear_1999}{Rdimtools}
 }
 \seealso{
 \code{\link{do.crda}}

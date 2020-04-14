@@ -4,8 +4,12 @@
 \alias{do.sammon}
 \title{Sammon Mapping}
 \usage{
-do.sammon(X, ndim = 2, preprocess = c("null", "center", "scale",
-  "cscale", "decorrelate", "whiten"), initialize = c("random", "pca"))
+do.sammon(
+  X,
+  ndim = 2,
+  preprocess = c("null", "center", "scale", "cscale", "decorrelate", "whiten"),
+  initialize = c("pca", "random")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -33,18 +37,22 @@ dimension reduction techniques that aims to find low-dimensional embedding
 that preserves pairwise distance structure in high-dimensional data space.
 }
 \examples{
-\dontrun{
-## generate default dataset
-## in order to pass CRAN pretest, n is set to be small.
-X <- aux.gensamples(n=99)
+\donttest{
+## load iris data
+data(iris)
+X     = as.matrix(iris[,1:4])
+label = as.factor(iris$Species)
 
 ## compare two initialization
 out1 = do.sammon(X,ndim=2)                   # random projection
 out2 = do.sammon(X,ndim=2,initialize="pca")  # pca as initialization
 
+## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,2))
-plot(out1$Y[,1],out1$Y[,2],main="out1:rndproj")
-plot(out2$Y[,1],out2$Y[,2],main="out2:pca")
+plot(out1$Y, col=label, main="out1:rndproj")
+plot(out2$Y, col=label, main="out2:pca")
+par(opar)
 }
 
 }

@@ -4,8 +4,12 @@
 \alias{do.udp}
 \title{Unsupervised Discriminant Projection}
 \usage{
-do.udp(X, ndim = 2, type = c("proportion", 0.1),
-  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"))
+do.udp(
+  X,
+  ndim = 2,
+  type = c("proportion", 0.1),
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -38,9 +42,11 @@ It performs PCA as intermittent preprocessing for rank singularity issue. Author
 by Locality Preserving Projection, which minimizes the local scatter only.
 }
 \examples{
-\dontrun{
-## generate sample data
-X = aux.gensamples(n=200)
+\donttest{
+## use iris data
+data(iris)
+X     = as.matrix(iris[,1:4])
+label = as.integer(iris$Species)
 
 ## use different connectivity level
 out1 <- do.udp(X, type=c("proportion",0.05))
@@ -48,10 +54,12 @@ out2 <- do.udp(X, type=c("proportion",0.10))
 out3 <- do.udp(X, type=c("proportion",0.25))
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1],out1$Y[,2],main="connectivity 5\%")
-plot(out2$Y[,1],out2$Y[,2],main="connectivity 10\%")
-plot(out3$Y[,1],out3$Y[,2],main="connectivity 25\%")
+plot(out1$Y, col=label, main="connectivity 5\%")
+plot(out2$Y, col=label, main="connectivity 10\%")
+plot(out3$Y, col=label, main="connectivity 25\%")
+par(opar)
 }
 
 }

@@ -4,9 +4,12 @@
 \alias{do.rpca}
 \title{Robust Principal Component Analysis}
 \usage{
-do.rpca(X, mu = 1, lambda = sqrt(1/(max(dim(X)))),
-  preprocess = c("null", "center", "scale", "cscale", "decorrelate",
-  "whiten"))
+do.rpca(
+  X,
+  mu = 1,
+  lambda = sqrt(1/(max(dim(X)))),
+  preprocess = c("null", "center", "scale", "cscale", "decorrelate", "whiten")
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations and columns represent independent variables.}
@@ -36,12 +39,13 @@ it should be considered as \emph{preprocessing} procedure of denoising. Note tha
 as kind of a new data matrix for any manifold learning scheme to be applied.
 }
 \examples{
-\dontrun{
+\donttest{
 ## Load Iris data and put some noise
 data(iris)
 noise = 0.2
 X = as.matrix(iris[,1:4])
 X = X + matrix(noise*rnorm(length(X)), nrow=nrow(X))
+label = as.integer(iris$Species)
 
 ## try different regularization parameters
 rpca1 = do.rpca(X, lambda=0.1)
@@ -54,10 +58,12 @@ out2 = do.pca(rpca2$L, ndim=2)
 out3 = do.pca(rpca3$L, ndim=2)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="RPCA+PCA::lambda=0.1")
-plot(out2$Y[,1], out2$Y[,2], main="RPCA+PCA::lambda=1")
-plot(out3$Y[,1], out3$Y[,2], main="RPCA+PCA::lambda=10")
+plot(out1$Y, col=label, main="RPCA+PCA::lambda=0.1")
+plot(out2$Y, col=label, main="RPCA+PCA::lambda=1")
+plot(out3$Y, col=label, main="RPCA+PCA::lambda=10")
+par(opar)
 }
 
 }

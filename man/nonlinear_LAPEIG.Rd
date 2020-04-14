@@ -4,10 +4,15 @@
 \alias{do.lapeig}
 \title{Laplacian Eigenmaps}
 \usage{
-do.lapeig(X, ndim = 2, type = c("proportion", 0.1),
+do.lapeig(
+  X,
+  ndim = 2,
+  type = c("proportion", 0.1),
   symmetric = c("union", "intersect", "asymmetric"),
-  preprocess = c("null", "center", "scale", "cscale", "whiten",
-  "decorrelate"), weighted = TRUE, kernelscale = 1)
+  preprocess = c("null", "center", "scale", "cscale", "whiten", "decorrelate"),
+  weighted = TRUE,
+  kernelscale = 1
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations
@@ -44,7 +49,7 @@ manifold embedded in high-dimensional data space using graph laplacians. This
 is a classic algorithm employing spectral graph theory.
 }
 \examples{
-\dontrun{
+\donttest{
 ## generate swiss-roll dataset of size 100
 X <- aux.gensamples(n=100)
 
@@ -53,9 +58,11 @@ out1 <- do.lapeig(X,ndim=2,type=c("proportion",0.05),kernelscale=10) # weighted 
 out2 <- do.lapeig(X,ndim=2,type=c("proportion",0.05),weighted=FALSE) # combinatorial
 
 ## Visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,2))
-plot(out1$Y[,1],out1$Y[,2],main="weighted")
-plot(out2$Y[,1],out2$Y[,2],main="combinatorial")
+plot(out1$Y, main="weighted")
+plot(out2$Y, main="combinatorial")
+par(opar)
 }
 
 }

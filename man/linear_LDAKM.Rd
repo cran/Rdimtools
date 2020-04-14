@@ -4,8 +4,13 @@
 \alias{do.ldakm}
 \title{Combination of LDA and K-means}
 \usage{
-do.ldakm(X, ndim = 2, preprocess = c("center", "scale", "cscale",
-  "decorrelate", "whiten"), maxiter = 10, abstol = 0.001)
+do.ldakm(
+  X,
+  ndim = 2,
+  preprocess = c("center", "scale", "cscale", "decorrelate", "whiten"),
+  maxiter = 10,
+  abstol = 0.001
+)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix or data frame whose rows are observations.}
@@ -43,10 +48,12 @@ out2 = do.ldakm(X, abstol=1e-3)
 out3 = do.ldakm(X, abstol=1e-4)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y[,1], out1$Y[,2], main="LDA-KM::tol=1e-2")
-plot(out2$Y[,1], out2$Y[,2], main="LDA-KM::tol=1e-3")
-plot(out3$Y[,1], out3$Y[,2], main="LDA-KM::tol=1e-4")
+plot(out1$Y, main="LDA-KM::tol=1e-2")
+plot(out2$Y, main="LDA-KM::tol=1e-3")
+plot(out3$Y, main="LDA-KM::tol=1e-4")
+par(opar)
 
 }
 \references{

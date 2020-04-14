@@ -25,7 +25,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## generate data of 3 types with clear difference
 #' dt1  = aux.gensamples(n=33)-100
 #' dt2  = aux.gensamples(n=33)
@@ -41,10 +41,12 @@
 #' out3 = do.lpfda(X, label, type=c("proportion",0.25))
 #'
 #' ## visualize
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(out1$Y[,1], out1$Y[,2], main="1% connectivity")
-#' plot(out2$Y[,1], out2$Y[,2], main="10% connectivity")
-#' plot(out3$Y[,1], out3$Y[,2], main="25% connectivity")
+#' plot(out1$Y, main="1% connectivity")
+#' plot(out2$Y, main="10% connectivity")
+#' plot(out3$Y, main="25% connectivity")
+#' par(opar)
 #' }
 #'
 #' @references
