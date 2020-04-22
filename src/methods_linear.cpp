@@ -265,7 +265,7 @@ Rcpp::List method_rpgauss(arma::mat& X, const int k){
  * 6. Factor Analysis
  *    Notations are consistent with that of Gharahmani's paper.
  */
-//' @keywords internal
+
 // [[Rcpp::export]]
 Rcpp::List method_fa(arma::mat& X, const int k, const int maxiter, const double tolerance){
   // 6-1. basic settings
