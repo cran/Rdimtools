@@ -1,3 +1,4 @@
+
 #' Locality and Similarity Preserving Embedding
 #'
 #' Locality and Similarity Preserving Embedding (LSPE) is a feature selection method based on Neighborhood Preserving Embedding (\code{\link{do.npe}}) and
@@ -25,7 +26,8 @@
 #' @examples
 #' \donttest{
 #' #### generate R12in72 dataset
-#' X = aux.gensamples(dname="R12in72")
+#' set.seed(100)
+#' X = aux.gensamples(n=50, dname="R12in72")
 #'
 #' #### try different bandwidth values
 #' out1 = do.lspe(X, bandwidth=0.1)
@@ -47,7 +49,7 @@
 #' @seealso \code{\link{do.rsr}}
 #' @rdname linear_LSPE
 #' @author Kisung You
-#' @concept linear_methods 
+#' @concept linear_methods
 #' @export
 do.lspe <- function(X, ndim=2, preprocess=c("null","center","scale","cscale","whiten","decorrelate"),
                     alpha=1.0, beta=1.0, bandwidth=1.0){

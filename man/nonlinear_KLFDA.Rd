@@ -52,11 +52,12 @@ only the gaussian kernel parametrized by its bandwidth \code{t} is supported.
 \examples{
 \donttest{
 ## generate 3 different groups of data X and label vector
+set.seed(100)
 x1 = matrix(rnorm(4*10), nrow=10)-20
 x2 = matrix(rnorm(4*10), nrow=10)
 x3 = matrix(rnorm(4*10), nrow=10)+20
-X  = rbind(x1, x2, x3)
-label = c(rep(1,10), rep(2,10), rep(3,10))
+X     = rbind(x1, x2, x3)
+label = rep(1:3, each=10)
 
 ## try different affinity matrices
 out1 = do.klfda(X, label, t=0.1)
@@ -66,9 +67,9 @@ out3 = do.klfda(X, label, t=10)
 ## visualize
 opar = par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y, col=label, main="bandwidth=0.1")
-plot(out2$Y, col=label, main="bandwidth=1")
-plot(out3$Y, col=label, main="bandwidth=10")
+plot(out1$Y, pch=19, col=label, main="bandwidth=0.1")
+plot(out2$Y, pch=19, col=label, main="bandwidth=1")
+plot(out3$Y, pch=19, col=label, main="bandwidth=10")
 par(opar)
 }
 

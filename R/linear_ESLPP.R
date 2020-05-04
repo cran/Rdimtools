@@ -20,29 +20,28 @@
 #'
 #'
 #' @examples
-#' \donttest{
 #' ## generate data of 2 types with clear difference
-#' diff = 15
-#' dt1  = aux.gensamples(n=123)-diff;
-#' dt2  = aux.gensamples(n=123)+diff;
+#' set.seed(100)
+#' diff = 50
+#' dt1  = aux.gensamples(n=50)-diff;
+#' dt2  = aux.gensamples(n=50)+diff;
 #'
 #' ## merge the data and create a label correspondingly
 #' Y      = rbind(dt1,dt2)
-#' label  = c(rep(1,123), rep(2,123))
+#' label  = rep(1:2, each=50)
 #'
 #' ## compare LPP, SLPP and ESLPP
-#' outLPP  <- do.lpp(Y)
-#' outSLPP <- do.slpp(Y, label)
+#' outLPP   <- do.lpp(Y)
+#' outSLPP  <- do.slpp(Y, label)
 #' outESLPP <- do.eslpp(Y, label)
 #'
 #' ## visualize
 #' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(outLPP$Y,   main="LPP")
-#' plot(outSLPP$Y,  main="SLPP")
-#' plot(outESLPP$Y, main="ESLPP")
+#' plot(outLPP$Y,   col=label, pch=19, main="LPP")
+#' plot(outSLPP$Y,  col=label, pch=19, main="SLPP")
+#' plot(outESLPP$Y, col=label, pch=19, main="ESLPP")
 #' par(opar)
-#' }
 #'
 #' @references
 #' \insertRef{zheng_gabor_2007}{Rdimtools}
@@ -52,7 +51,7 @@
 #' @seealso \code{\link{do.lpp}}, \code{\link{do.slpp}}, \code{\link{do.extlpp}}
 #' @author Kisung You
 #' @rdname linear_ESLPP
-#' @concept linear_methods 
+#' @concept linear_methods
 #' @export
 do.eslpp <- function(X, label, ndim=2, numk=max(ceiling(nrow(X)/10),2),
                       preprocess=c("center","scale","cscale","decorrelate","whiten")){

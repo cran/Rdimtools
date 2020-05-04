@@ -56,6 +56,7 @@ optimality criterion suggested by authors.
 \examples{
 \donttest{
 ## generate swiss-roll data
+set.seed(100)
 X = aux.gensamples(n=100)
 
 ## 1. connecting 10\% of data for graph construction.
@@ -79,9 +80,6 @@ par(opar)
 }
 \references{
 \insertRef{roweis_nonlinear_2000}{Rdimtools}
-}
-\seealso{
-\href{https://www.cs.nyu.edu/~roweis/lle/}{Prof.Roweis' website}
 }
 \author{
 Kisung You

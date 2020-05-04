@@ -18,6 +18,7 @@ using namespace std;
  *    (04) dt_mds   : MDS
  *    (05) dt_lasso : LASSO
  *    (06) dt_enet  : Elastic Net
+ *    (07) dt_lmds  : Landmark MDS
  */
 
 // Auxiliary Functions ======================================================
@@ -31,7 +32,7 @@ public:
   };
 
   // ClLLproc : functions
-  arma::mat MainFunc(const arma::mat& X){
+  arma::mat MainFunc(arma::mat& X){
     // prepare : parameter
     int N = X.n_rows;
     int P = X.n_cols;
@@ -100,7 +101,7 @@ public:
 
 // 01. PCA ====================================================================
 // [[Rcpp::export]]
-Rcpp::List dt_pca(const arma::mat& X, int ndim, std::string ptype, bool cor){
+Rcpp::List dt_pca(arma::mat& X, int ndim, std::string ptype, bool cor){
   // preliminary --------------------------------------------------------------
   // parameters
   int N = X.n_rows;
@@ -166,7 +167,7 @@ Rcpp::List dt_pca(const arma::mat& X, int ndim, std::string ptype, bool cor){
 
 // 02. FA =====================================================================
 // [[Rcpp::export]]
-Rcpp::List dt_fa(const arma::mat& X, int ndim, std::string ptype, int maxiter, double tolerance){
+Rcpp::List dt_fa(arma::mat& X, int ndim, std::string ptype, int maxiter, double tolerance){
   // preliminary --------------------------------------------------------------
   // parameters
   int N = X.n_rows;
@@ -250,7 +251,7 @@ arma::mat dt_spca_deflation(arma::mat& Sig, arma::vec& Vec){
 }
 // main function for spca
 // [[Rcpp::export]]
-Rcpp::List dt_spca(const arma::mat& X, int ndim, std::string ptype, double mu, double rho, const double abstol, const double reltol, const int maxiter){
+Rcpp::List dt_spca(arma::mat& X, int ndim, std::string ptype, double mu, double rho, const double abstol, const double reltol, const int maxiter){
   // preliminary --------------------------------------------------------------
   // parameters
   int N = X.n_rows;
@@ -329,7 +330,7 @@ Rcpp::List dt_spca(const arma::mat& X, int ndim, std::string ptype, double mu, d
 
 // 04. MDS ================================================================
 // [[Rcpp::export]]
-Rcpp::List dt_mds(const arma::mat& X, int ndim, std::string ptype){
+Rcpp::List dt_mds(arma::mat& X, int ndim, std::string ptype){
   // preliminary --------------------------------------------------------------
   // parameters
   int N = X.n_rows;
@@ -491,8 +492,8 @@ arma::vec admm_lasso(arma::mat& A, arma::vec& b, double lambda){
   return(x);
 }
 // [[Rcpp::export]]
-Rcpp::List dt_lasso(const arma::mat& X, int ndim, std::string ptype,
-                    const arma::vec& y, bool ycenter, double lambda){
+Rcpp::List dt_lasso(arma::mat& X, int ndim, std::string ptype,
+                    arma::vec& y, bool ycenter, double lambda){
   // preliminary --------------------------------------------------------------
   // parameters
   int N = X.n_rows;
@@ -649,8 +650,8 @@ arma::vec admm_enet(arma::mat& A, arma::vec& b,  double lambda, double alpha, do
   return(x);
 }
 // [[Rcpp::export]]
-Rcpp::List dt_enet(const arma::mat& X, int ndim, std::string ptype,
-                   const arma::vec& y, bool ycenter, double lambda1, double lambda2){
+Rcpp::List dt_enet(arma::mat& X, int ndim, std::string ptype,
+                   arma::vec& y, bool ycenter, double lambda1, double lambda2){
   // preliminary --------------------------------------------------------------
   // parameters
   int N = X.n_rows;
@@ -725,5 +726,73 @@ Rcpp::List dt_enet(const arma::mat& X, int ndim, std::string ptype,
       Rcpp::Named("featidx") = idRvec,
       Rcpp::Named("trfinfo") = info,
       Rcpp::Named("projection") = proj
+  ));
+}
+
+
+
+
+
+// 07. LMDS ===================================================================
+// [[Rcpp::export]]
+Rcpp::List dt_lmds(arma::mat& X, int ndim, std::string ptype, int npts){
+  // preliminary --------------------------------------------------------------
+  // parameters
+  int N = X.n_rows;
+  int P = X.n_cols;
+  if ((ndim < 1)||(ndim >= P)){
+    throw std::invalid_argument("* do.lmds : 'ndim' should be in [1,ncol(X)).");
+  }
+  if ((npts<2)||(npts>N)){
+    throw std::invalid_argument("* do.lmds : the number of landmark points is not valid.");
+  }
+
+  // preprocessing
+  ClLLproc init(ptype);
+  arma::mat premat    = init.MainFunc(X);
+  arma::rowvec mymean = premat.row(0);
+  arma::mat    mymult = premat.rows(1,P);
+  std::string  mytype = init.GetType();
+
+  // data prep
+  arma::mat pX;
+  if (mytype=="null"){
+    pX = X;
+  } else {
+    pX.set_size(N,P);
+    for (int n=0;n<N;n++){
+      pX.row(n) = X.row(n) - mymean;
+    }
+    pX = pX*mymult;
+  }
+
+
+  // main computation ---------------------------------------------------------
+  // 1. random selection
+  arma::uvec idselect = arma::randperm(N,npts);
+  // 2. do the pca
+  arma::mat subX = pX.rows(idselect);
+  arma::mat psdX = arma::cov(subX);
+  arma::vec eigval;
+  arma::mat eigvec;
+  arma::eig_sym(eigval, eigvec, psdX); // ascending order issue
+  arma::vec vars = arma::reverse(eigval.tail(ndim));
+  arma::mat proj = arma::fliplr(eigvec.tail_cols(ndim));
+
+  // 3. computation
+  arma::mat Y = pX*proj;
+
+  // wrap and report ---------------------------------------------------
+  // trfinfo
+  Rcpp::List info = Rcpp::List::create(
+    Rcpp::Named("type")=mytype,
+    Rcpp::Named("mean")=mymean,
+    Rcpp::Named("multiplier")=mymult,
+    Rcpp::Named("algtype")="linear"
+  );
+  return(Rcpp::List::create(
+      Rcpp::Named("Y") = Y,
+      Rcpp::Named("projection") = proj,
+      Rcpp::Named("trfinfo") = info
   ));
 }

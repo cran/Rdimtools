@@ -65,12 +65,10 @@ aux_rank <- function(A) {
     .Call(`_Rdimtools_aux_rank`, A)
 }
 
-#' @keywords internal
 methods_boxcount <- function(tX, Imin, currentr) {
     .Call(`_Rdimtools_methods_boxcount`, tX, Imin, currentr)
 }
 
-#' @keywords internal
 aux_numderiv <- function(x, y) {
     .Call(`_Rdimtools_aux_numderiv`, x, y)
 }
@@ -294,6 +292,10 @@ dt_lasso <- function(X, ndim, ptype, y, ycenter, lambda) {
 
 dt_enet <- function(X, ndim, ptype, y, ycenter, lambda1, lambda2) {
     .Call(`_Rdimtools_dt_enet`, X, ndim, ptype, y, ycenter, lambda1, lambda2)
+}
+
+dt_lmds <- function(X, ndim, ptype, npts) {
+    .Call(`_Rdimtools_dt_lmds`, X, ndim, ptype, npts)
 }
 
 dt_rpca <- function(X, ndim, ptype, mu, lambda) {

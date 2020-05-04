@@ -36,9 +36,11 @@ out1 = est.mle1(X1)
 out2 = est.mle1(X2)
 out3 = est.mle1(X3)
 
-cat("* est.mle1 : estimated dimension for 'swiss'  data is ",round(out1$estdim,2))
-cat("* est.mle1 : estimated dimension for 'ribbon' data is ",round(out2$estdim,2))
-cat("* est.mle1 : estimated dimension for 'saddle' data is ",round(out3$estdim,2))
+## print the estimates
+line1 = paste0("* est.mle1 : 'swiss'  estiamte is ",round(out1$estdim,2))
+line2 = paste0("* est.mle1 : 'ribbon' estiamte is ",round(out2$estdim,2))
+line3 = paste0("* est.mle1 : 'saddle' estiamte is ",round(out3$estdim,2))
+cat(paste0(line1,"\n",line2,"\n",line3))
 }
 
 }

@@ -21,15 +21,17 @@
 #' }
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' ## generate data of 3 types with clear difference
-#' dt1  = aux.gensamples(n=33)-100
-#' dt2  = aux.gensamples(n=33)
-#' dt3  = aux.gensamples(n=33)+100
+#' set.seed(100)
+#' diff = 100
+#' dt1  = aux.gensamples(n=20)-diff
+#' dt2  = aux.gensamples(n=20)
+#' dt3  = aux.gensamples(n=20)+diff
 #'
 #' ## merge the data and create a label correspondingly
 #' X      = rbind(dt1,dt2,dt3)
-#' label  = c(rep(1,33), rep(2,33), rep(3,33))
+#' label  = rep(1:3, each=20)
 #'
 #' ## try different numbers for neighborhood size
 #' out1 = do.mlie(X, label, k1=5, k2=5)
@@ -50,7 +52,7 @@
 #'
 #' @seealso \code{\link{do.mfa}}
 #' @rdname linear_MLIE
-#' @concept linear_methods 
+#' @concept linear_methods
 #' @export
 do.mlie <- function(X, label, ndim=2, preprocess=c("center","scale","cscale","decorrelate","whiten"),
                     k1=max(ceiling(nrow(X)/10),2), k2=max(ceiling(nrow(X)/10),2)){
@@ -85,9 +87,9 @@ do.mlie <- function(X, label, ndim=2, preprocess=c("center","scale","cscale","de
   pX      = tmplist$pX
 
   #   2. PCA preprocessing
-  eigtest = eigen(cov(pX), only.values=TRUE)
+  eigtest = base::eigen(stats::cov(pX), only.values=TRUE)
   pcadim  = sum(eigtest$values > 0)
-  if (pcadim <= ndim){
+  if (pcadim < ndim){
     warning("* do.mlie : target 'ndim' is larger than intrinsic data dimension achieved from PCA.")
     projection_first = diag(p)
     pcapX = pX

@@ -32,6 +32,7 @@
 #' @examples
 #' \donttest{
 #' ## generate swiss-roll data
+#' set.seed(100)
 #' X = aux.gensamples(n=100)
 #'
 #' ## 1. connecting 10% of data for graph construction.
@@ -52,14 +53,12 @@
 #' par(opar)
 #' }
 #'
-#' @seealso \href{https://www.cs.nyu.edu/~roweis/lle/}{Prof.Roweis' website}
 #' @references
 #' \insertRef{roweis_nonlinear_2000}{Rdimtools}
 #'
-#'
 #' @author Kisung You
 #' @rdname nonlinear_LLE
-#' @concept nonlinear_methods 
+#' @concept nonlinear_methods
 #' @export
 do.lle <- function(X,ndim=2,type=c("proportion",0.1),symmetric="union",weight=TRUE,
                    preprocess=c("null","center","scale","cscale","decorrelate","whiten"),

@@ -21,10 +21,10 @@
 #' }
 #'
 #' @examples
-#' \donttest{
 #' ## generate swiss roll with auxiliary dimensions
 #' ## it follows reference example from LSIR paper.
-#' n = 123
+#' set.seed(100)
+#' n = 50
 #' theta = runif(n)
 #' h     = runif(n)
 #' t     = (1+2*theta)*(3*pi/2)
@@ -49,14 +49,13 @@
 #' plot(out2$Y, main="SIR::5 slices")
 #' plot(out3$Y, main="SIR::10 slices")
 #' par(opar)
-#' }
 #'
 #' @references
 #' \insertRef{li_sliced_1991}{Rdimtools}
 #'
 #' @author Kisung You
 #' @rdname linear_SIR
-#' @concept linear_methods 
+#' @concept linear_methods
 #' @export
 do.sir <- function(X, response, ndim=2, h=max(2, round(nrow(X)/5)),
                    preprocess=c("center","scale","cscale","decorrelate","whiten")){

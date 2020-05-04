@@ -28,7 +28,8 @@
 #' \donttest{
 #' ## generate ribbon-shaped data
 #' ## in order to pass CRAN pretest, n is set to be small.
-#' X = aux.gensamples(dname="ribbon",n=50)
+#' set.seed(100)
+#' X = aux.gensamples(dname="ribbon",n=25)
 #'
 #' ## Compare MVU and MVE
 #' #  Note that MVE actually requires much larger number of iterations
@@ -50,7 +51,7 @@
 #' @seealso \code{\link{do.mvu}}
 #' @author Kisung You
 #' @rdname nonlinear_MVE
-#' @concept nonlinear_methods 
+#' @concept nonlinear_methods
 #' @export
 do.mve <- function(X, ndim=2, knn=ceiling(nrow(X)/10), kwidth=1.0,
                    preprocess=c("null","center","scale","cscale","whiten","decorrelate"),

@@ -47,15 +47,15 @@ the margin between data opints from different classes, while labeled ones are us
 the geometrical structure of the data space.
 }
 \examples{
-\donttest{
 ## generate data of 3 types with clear difference
-dt1  = aux.gensamples(n=33)-100
-dt2  = aux.gensamples(n=33)
-dt3  = aux.gensamples(n=33)+100
+set.seed(100)
+dt1  = aux.gensamples(n=20)-50
+dt2  = aux.gensamples(n=20)
+dt3  = aux.gensamples(n=20)+50
 
 ## merge the data and create a label correspondingly
 X      = rbind(dt1,dt2,dt3)
-label  = c(rep(1,33), rep(2,33), rep(3,33))
+label  = rep(1:3, each=20)
 
 ## copy a label and let 20\% of elements be missing
 nlabel = length(label)
@@ -64,18 +64,17 @@ label_missing = label
 label_missing[sample(1:nlabel, nmissing)]=NA
 
 ## try different neighborhood sizes
-out1 = do.lsdf(X, label_missing, type=c("proportion",0.01))
-out2 = do.lsdf(X, label_missing, type=c("proportion",0.1))
-out3 = do.lsdf(X, label_missing, type=c("proportion",0.25))
+out1 = do.lsdf(X, label_missing, type=c("proportion",0.10))
+out2 = do.lsdf(X, label_missing, type=c("proportion",0.25))
+out3 = do.lsdf(X, label_missing, type=c("proportion",0.50))
 
 ## visualize
 opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y, main="1\% connectivity")
-plot(out2$Y, main="10\% connectivity")
-plot(out3$Y, main="25\% connectivity")
+plot(out1$Y, pch=19, col=label, main="10\% connectivity")
+plot(out2$Y, pch=19, col=label, main="25\% connectivity")
+plot(out3$Y, pch=19, col=label, main="50\% connectivity")
 par(opar)
-}
 
 }
 \references{

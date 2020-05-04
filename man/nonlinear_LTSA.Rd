@@ -46,6 +46,7 @@ in target dimensional space.
 \examples{
 \donttest{
 ## generate data
+set.seed(100)
 X <- aux.gensamples(dname="cswiss",n=100)
 
 ## 1. use 10\%-connected graph

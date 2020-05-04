@@ -18,11 +18,12 @@
 #'
 #'
 #' @examples
-#' \donttest{
 #' ## use iris data
 #' data(iris)
-#' X   = as.matrix(iris[,1:4])
-#' lab = as.factor(iris$Species)
+#' set.seed(100)
+#' subid = sample(1:150,50)
+#' X     = as.matrix(iris[subid,1:4])
+#' lab   = as.factor(iris[subid,5])
 #'
 #' ## try different preprocessing
 #' out1 <- do.mds(X,ndim=2)
@@ -39,7 +40,6 @@
 #' plot(Y2, pch=19, col=lab, main="MDS::decorrelate")
 #' plot(Y3, pch=19, col=lab, main="MDS::whiten")
 #' par(opar)
-#' }
 #'
 #' @references
 #' \insertRef{kruskal_multidimensional_1964}{Rdimtools}
@@ -96,4 +96,10 @@ do.mds <- function(X,ndim=2,preprocess=c("center","cscale","decorrelate","whiten
   # RHS = tpX %*% result$Y
   # result$projection = solve(LHS,RHS)
   # return(result)
+}
+
+# call for later use ------------------------------------------------------
+#' @keywords internal
+pydo_mds <- function(myX, mydim, myproc){
+  return(do.mds(myX, ndim=mydim, preprocess=myproc))
 }

@@ -37,8 +37,10 @@ we opted for a global optimization method of \emph{Differential Evolution} (\cod
 \donttest{
 ## use iris data
 data(iris)
-X     = as.matrix(iris[,1:4])
-label = as.integer(iris$Species)
+set.seed(100)
+subid = sample(1:150,50)
+X     = as.matrix(iris[subid,1:4])
+label = as.factor(iris[subid,5])
 
 ## let's compare with other methods
 out1 <- do.nnp(X, ndim=2)      # NNP
@@ -48,9 +50,9 @@ out3 <- do.lamp(X, ndim=2)     # LAMP
 ## visualize
 opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y, col=label, main="NNP")
-plot(out2$Y, col=label, main="PCA")
-plot(out3$Y, col=label, main="LAMP")
+plot(out1$Y, pch=19, col=label, main="NNP")
+plot(out2$Y, pch=19, col=label, main="PCA")
+plot(out3$Y, pch=19, col=label, main="LAMP")
 par(opar)
 }
 

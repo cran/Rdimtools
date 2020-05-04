@@ -32,11 +32,12 @@ a named list containing
 \code{\link[stats]{cmdscale}}.
 }
 \examples{
-\donttest{
 ## use iris data
 data(iris)
-X   = as.matrix(iris[,1:4])
-lab = as.factor(iris$Species)
+set.seed(100)
+subid = sample(1:150,50)
+X     = as.matrix(iris[subid,1:4])
+lab   = as.factor(iris[subid,5])
 
 ## try different preprocessing
 out1 <- do.mds(X,ndim=2)
@@ -53,7 +54,6 @@ plot(Y1, pch=19, col=lab, main="MDS::center")
 plot(Y2, pch=19, col=lab, main="MDS::decorrelate")
 plot(Y3, pch=19, col=lab, main="MDS::whiten")
 par(opar)
-}
 
 }
 \references{

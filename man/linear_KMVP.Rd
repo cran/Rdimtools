@@ -43,11 +43,12 @@ where \eqn{x_i} is an \eqn{i}-th data point and \eqn{t} a kernel bandwidth (\cod
 when the bandwidth value is too small, it might suffer from numerical instability and rank deficiency due to its formulation.
 }
 \examples{
-\donttest{
-## load iris data
+## use iris data
 data(iris)
-X     = as.matrix(iris[,1:4])
-label = as.factor(iris$Species)
+set.seed(100)
+subid = sample(1:150, 50)
+X     = as.matrix(iris[subid,1:4])
+label = as.factor(iris[subid,5])
 
 ## perform KMVP with different bandwidths
 out1 = do.kmvp(X, label, bandwidth=0.1)
@@ -57,11 +58,10 @@ out3 = do.kmvp(X, label, bandwidth=10)
 ## visualize
 opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y, main="bandwidth=0.1", col=label)
-plot(out2$Y, main="bandwidth=1",   col=label)
-plot(out3$Y, main="bandwidth=10",  col=label)
+plot(out1$Y, main="bandwidth=0.1", col=label, pch=19)
+plot(out2$Y, main="bandwidth=1",   col=label, pch=19)
+plot(out3$Y, main="bandwidth=10",  col=label, pch=19)
 par(opar)
-}
 
 }
 \references{

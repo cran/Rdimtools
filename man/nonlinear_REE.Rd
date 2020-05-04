@@ -53,20 +53,22 @@ original semidefinite programming formulation.
 \donttest{
 ## use iris data
 data(iris)
-X     = as.matrix(iris[,1:4])
-label = as.integer(iris$Species)
+set.seed(100)
+subid = sample(1:150,50)
+X     = as.matrix(iris[subid,1:4])
+label = as.factor(iris[subid,5])
 
-## 1. no preprocessing
-output1 <- do.ree(X,ndim=2,maxiter=50)
+## try different distance method
+output1 <- do.ree(X, maxiter=50, dmethod="euclidean")
+output2 <- do.ree(X, maxiter=50, dmethod="maximum")
+output3 <- do.ree(X, maxiter=50, dmethod="canberra")
 
-## 2. use decorrelated data
-output2 <- do.ree(X,ndim=2,preprocess="decorrelate",maxiter=50)
-
-## Visualize three different projections
+## visualize three different projections
 opar <- par(no.readonly=TRUE)
-par(mfrow=c(1,2))
-plot(output1$Y, col=label, main="centered")
-plot(output2$Y, col=label, main="decorrelated")
+par(mfrow=c(1,3))
+plot(output1$Y, col=label, pch=19, main="dmethod-euclidean")
+plot(output2$Y, col=label, pch=19, main="dmethod-maximum")
+plot(output3$Y, col=label, pch=19, main="dmethod-canberra")
 par(opar)
 }
 

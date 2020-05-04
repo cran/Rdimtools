@@ -33,19 +33,23 @@
 #' \insertRef{bishop_bayesian_1999}{Rdimtools}
 #'
 #' @examples
-#' \donttest{
-#' ## generate swiss roll data
-#' X = aux.gensamples(n=200)
+#' \dontrun{
+#' ## use iris dataset
+#' data(iris)
+#' set.seed(100)
+#' subid = sample(1:150,50)
+#' X     = as.matrix(iris[subid,1:4])
+#' lab   = as.factor(iris[subid,5])
 #'
-#' ## Compare PCA and BPCA
-#' out1  <- do.pca(X, ndim=2, preprocess="center")
-#' out2  <- do.bpca(X, ndim=2, preprocess="center")
+#' ## compare PCA and BPCA
+#' out1  <- do.pca(X,  ndim=2)
+#' out2  <- do.bpca(X, ndim=2)
 #'
-#' ## Visualize
+#' ## visualize
 #' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,2))
-#' plot(out1$Y, pch=19, cex=0.8, main="PCA")
-#' plot(out2$Y, pch=19, cex=0.8, main="BPCA")
+#' plot(out1$Y, col=lab, pch=19, cex=0.8, main="PCA")
+#' plot(out2$Y, col=lab, pch=19, cex=0.8, main="BPCA")
 #' par(opar)
 #' }
 #'
@@ -91,14 +95,13 @@ do.bpca <- function(X, ndim=2, preprocess=c("center","scale","cscale","decorrela
   rcppbpca = method_bpca(t(pX), reltol, maxiter);
 
   #   3. we select alpha with smallest values only.
-  smallidx = order(rcppbpca$alpha)[1:ndim]
+  smallidx = order(as.vector(rcppbpca$alpha))[1:ndim]
   #      in that we find projection as required
   mlsig2 = rcppbpca$sig2
   mlW    = rcppbpca$W[,smallidx]
   M = (t(mlW)%*%mlW)+(diag(ncol(mlW))*mlsig2)
   SOL = aux.bicgstab(M, t(mlW), verbose=FALSE)
   projection = t(SOL$x)
-
 
   #------------------------------------------------------------------------
   ## RETURN

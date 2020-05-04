@@ -23,11 +23,12 @@
 #' }
 #'
 #' @examples
-#' \donttest{
 #' ## use iris data
 #' data(iris)
-#' X     = as.matrix(iris[,1:4])
-#' label = as.integer(iris$Species)
+#' set.seed(100)
+#' subid = sample(1:150, 50)
+#' X     = as.matrix(iris[subid,1:4])
+#' label = as.factor(iris[subid,5])
 #'
 #' #### try different neighborhood size
 #' out1 = do.udfs(X, k=5)
@@ -37,18 +38,17 @@
 #' #### visualize
 #' opar = par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(out1$Y, col=label, main="UDFS::k=5")
-#' plot(out2$Y, col=label, main="UDFS::k=10")
-#' plot(out3$Y, col=label, main="UDFS::k=25")
+#' plot(out1$Y, pch=19, col=label, main="UDFS::k=5")
+#' plot(out2$Y, pch=19, col=label, main="UDFS::k=10")
+#' plot(out3$Y, pch=19, col=label, main="UDFS::k=25")
 #' par(opar)
-#' }
 #'
 #' @references
 #' \insertRef{yang_l2_2011}{Rdimtools}
 #'
 #' @author Kisung You
 #' @rdname linear_UDFS
-#' @concept linear_methods 
+#' @concept linear_methods
 #' @export
 do.udfs <- function(X, ndim=2, lbd=1.0, gamma=1.0, k=5,
                     preprocess=c("null","center","scale","cscale","whiten","decorrelate")){

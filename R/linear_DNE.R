@@ -22,20 +22,22 @@
 #' @examples
 #' ## load iris data
 #' data(iris)
-#' X     = as.matrix(iris[,1:4])
-#' label = as.factor(iris$Species)
+#' set.seed(100)
+#' subid = sample(1:150,50)
+#' X     = as.matrix(iris[subid,1:4])
+#' label = as.factor(iris[subid,5])
 #'
 #' ## try different numbers for neighborhood size
 #' out1 = do.dne(X, label, numk=5)
 #' out2 = do.dne(X, label, numk=10)
-#' out3 = do.dne(X, label, numk=25)
+#' out3 = do.dne(X, label, numk=20)
 #'
 #' ## visualize
 #' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(out1$Y, main="DNE::nbd size=5",  col=label, pch=19, cex=0.5)
-#' plot(out2$Y, main="DNE::nbd size=10", col=label, pch=19, cex=0.5)
-#' plot(out3$Y, main="DNE::nbd size=25", col=label, pch=19, cex=0.5)
+#' plot(out1$Y, main="DNE::nbd size=5",  col=label, pch=19)
+#' plot(out2$Y, main="DNE::nbd size=10", col=label, pch=19)
+#' plot(out3$Y, main="DNE::nbd size=20", col=label, pch=19)
 #' par(opar)
 #'
 #' @references
@@ -43,7 +45,7 @@
 #'
 #' @author Kisung You
 #' @rdname linear_DNE
-#' @concept linear_methods 
+#' @concept linear_methods
 #' @export
 do.dne <- function(X, label, ndim=2, numk=max(ceiling(nrow(X)/10),2),
                    preprocess=c("center","scale","cscale","decorrelate","whiten")){

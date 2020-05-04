@@ -20,9 +20,9 @@
 #' }
 #'
 #' @examples
-#' \donttest{
 #' ## generate data
-#' X <- aux.gensamples(n=123)
+#' set.seed(100)
+#' X <- aux.gensamples(n=75)
 #'
 #' ## run Extended LPP with different neighborhood graph
 #' out1 <- do.extlpp(X, numk=5)
@@ -36,7 +36,6 @@
 #' plot(out2$Y, main="EXTLPP::k=10")
 #' plot(out3$Y, main="EXTLPP::k=25")
 #' par(opar)
-#' }
 #'
 #' @references
 #' \insertRef{shikkenawis_improving_2012}{Rdimtools}
@@ -44,7 +43,7 @@
 #' @seealso \code{\link{do.lpp}}
 #' @author Kisung You
 #' @rdname linear_EXTLPP
-#' @concept linear_methods 
+#' @concept linear_methods
 #' @export
 do.extlpp <- function(X, ndim=2, numk=max(ceiling(nrow(X)/10),2),
                       preprocess=c("center","scale","cscale","decorrelate","whiten")){

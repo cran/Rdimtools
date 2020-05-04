@@ -45,9 +45,12 @@ whence UDP uses binary connectivity. If \code{bandwidth} is \eqn{+\infty}, it be
 a standard UDP problem. Like UDP, it also performs PCA preprocessing for rank-deficient case.
 }
 \examples{
-\donttest{
-## generate sample data
-X = aux.gensamples(n=200)
+## use iris dataset
+data(iris)
+set.seed(100)
+subid = sample(1:150,50)
+X     = as.matrix(iris[subid,1:4])
+lab   = as.factor(iris[subid,5])
 
 ## use different kernel bandwidth
 out1 <- do.kudp(X, bandwidth=0.1)
@@ -57,11 +60,10 @@ out3 <- do.kudp(X, bandwidth=1000)
 ## visualize
 opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(out1$Y, main="bandwidth=0.1")
-plot(out2$Y, main="bandwidth=10")
-plot(out3$Y, main="bandwidth=1000")
+plot(out1$Y, col=lab, pch=19, main="bandwidth=0.1")
+plot(out2$Y, col=lab, pch=19, main="bandwidth=10")
+plot(out3$Y, col=lab, pch=19, main="bandwidth=1000")
 par(opar)
-}
 
 }
 \references{

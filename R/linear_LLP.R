@@ -30,7 +30,8 @@
 #' @examples
 #' \donttest{
 #' ## generate data
-#' X <- aux.gensamples(dname="crown")
+#' set.seed(100)
+#' X <- aux.gensamples(n=100, dname="crown")
 #'
 #' ## test different lambda - regularization - values
 #' out1 <- do.llp(X,ndim=2,lambda=0.1)
@@ -40,9 +41,9 @@
 #' # visualize
 #' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(out1$Y, main="lambda = 0.1")
-#' plot(out2$Y, main="lambda = 1")
-#' plot(out3$Y, main="lambda = 10")
+#' plot(out1$Y, pch=19, main="lambda=0.1")
+#' plot(out2$Y, pch=19, main="lambda=1")
+#' plot(out3$Y, pch=19, main="lambda=10")
 #' par(opar)
 #' }
 #'
@@ -50,7 +51,7 @@
 #' \insertRef{wu_local_2007}{Rdimtools}
 #'
 #' @rdname linear_LLP
-#' @concept linear_methods 
+#' @concept linear_methods
 #' @export
 do.llp <- function(X, ndim=2, type=c("proportion",0.1), symmetric=c("union","intersect","asymmetric"),
                    preprocess = c("center","scale","cscale","decorrelate","whiten"), t=1.0, lambda=1.0){

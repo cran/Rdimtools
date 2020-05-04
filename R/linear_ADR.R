@@ -21,8 +21,10 @@
 #' @examples
 #' ## load iris data
 #' data(iris)
-#' X     = as.matrix(iris[,1:4])
-#' label = as.factor(iris$Species)
+#' set.seed(100)
+#' subid = sample(1:150,50)
+#' X     = as.matrix(iris[subid,1:4])
+#' label = as.factor(iris[subid,5])
 #'
 #' ## try different tolerance level
 #' out1 = do.adr(X, abstol=1e-2)
@@ -32,9 +34,9 @@
 #' ## visualize
 #' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(out1$Y, main="tol=1e-2", col=label, pch=19, cex=0.5)
-#' plot(out2$Y, main="tol=1e-3", col=label, pch=19, cex=0.5)
-#' plot(out3$Y, main="tol=1e-4", col=label, pch=19, cex=0.5)
+#' plot(out1$Y, main="tol=1e-2", col=label, pch=19)
+#' plot(out2$Y, main="tol=1e-3", col=label, pch=19)
+#' plot(out3$Y, main="tol=1e-4", col=label, pch=19)
 #' par(opar)
 #'
 #' @references
@@ -43,7 +45,7 @@
 #' @seealso  \code{\link{do.ldakm}}
 #' @author Kisung You
 #' @rdname linear_ADR
-#' @concept linear_methods 
+#' @concept linear_methods
 #' @export
 do.adr <- function(X, ndim=2, preprocess=c("center","scale","cscale","decorrelate","whiten"), maxiter=10, abstol=1e-3){
   #------------------------------------------------------------------------

@@ -38,7 +38,8 @@ the local geometrical structure by the Euclidean distances.
 \examples{
 \donttest{
 ## generate swiss roll with auxiliary dimensions
-n = 100
+set.seed(100)
+n     = 100
 theta = runif(n)
 h     = runif(n)
 t     = (1+2*theta)*(3*pi/2)

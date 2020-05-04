@@ -46,7 +46,8 @@ it alters geodesic distance to reflect scale information.
 \examples{
 \donttest{
 ## generate data
-X <- aux.gensamples(dname="cswiss",n=500)
+set.seed(100)
+X <- aux.gensamples(dname="cswiss",n=100)
 
 ## 1. original Isomap
 output1 <- do.isomap(X,ndim=2)

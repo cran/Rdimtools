@@ -28,8 +28,10 @@
 #' \donttest{
 #' ## load iris data
 #' data(iris)
-#' X     = as.matrix(iris[,1:4])
-#' label = as.factor(iris$Species)
+#' set.seed(100)
+#' subid = sample(1:150,50)
+#' X     = as.matrix(iris[subid,1:4])
+#' label = as.factor(iris[subid,5])
 #'
 #' ## try different preprocessing
 #' out1 <- do.bmds(X, ndim=2, preprocess="center")
@@ -57,7 +59,7 @@
 #' @export
 do.bmds <- function(X, ndim=2, par.a=5, par.alpha=0.5, par.step=1, mc.iter=50,
                     preprocess=c("null","center","scale","cscale","whiten",
-                                 "decorrelate"), print.progress = TRUE){
+                                 "decorrelate"), print.progress = FALSE){
   #------------------------------------------------------------------------
   # Preprocessing
   if (!is.matrix(X)){stop("* do.bmds : 'X' should be a matrix.")}

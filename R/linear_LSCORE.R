@@ -6,12 +6,13 @@
 #' the algorithm selects variables with smallest scores.
 #'
 #' @examples
-#' \donttest{
 #' ## use iris data
 #' ## it is known that feature 3 and 4 are more important.
 #' data(iris)
-#' iris.dat = as.matrix(iris[,1:4])
-#' iris.lab = as.factor(iris[,5])
+#' set.seed(100)
+#' subid    <- sample(1:150, 50)
+#' iris.dat <- as.matrix(iris[subid,1:4])
+#' iris.lab <- as.factor(iris[subid,5])
 #'
 #' ## try different kernel bandwidth
 #' out1 = do.lscore(iris.dat, t=0.1)
@@ -21,11 +22,10 @@
 #' ## visualize
 #' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(out1$Y, col=iris.lab, main="bandwidth=0.1")
-#' plot(out2$Y, col=iris.lab, main="bandwidth=1")
-#' plot(out3$Y, col=iris.lab, main="bandwidth=10")
+#' plot(out1$Y, pch=19, col=iris.lab, main="bandwidth=0.1")
+#' plot(out2$Y, pch=19, col=iris.lab, main="bandwidth=1")
+#' plot(out3$Y, pch=19, col=iris.lab, main="bandwidth=10")
 #' par(opar)
-#' }
 #'
 #' @param X an \eqn{(n\times p)} matrix or data frame whose rows are observations
 #' and columns represent independent variables.
@@ -52,7 +52,7 @@
 #'
 #' @rdname linear_LSCORE
 #' @author Kisung You
-#' @concept linear_methods 
+#' @concept linear_methods
 #' @export
 do.lscore <- function(X, ndim=2, type=c("proportion",0.1),
                       preprocess=c("null","center","scale","cscale","whiten","decorrelate"), t=10.0){

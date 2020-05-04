@@ -23,11 +23,12 @@
 #' }
 #'
 #' @examples
-#' \donttest{
 #' ## use iris data
 #' data(iris)
-#' X     = as.matrix(iris[,1:4])
-#' label = as.integer(iris$Species)
+#' set.seed(100)
+#' subid = sample(1:150, 50)
+#' X     = as.matrix(iris[subid,1:4])
+#' label = as.factor(iris[subid,5])
 #'
 #' ## Compare PCA and PPCA
 #' PCA  <- do.pca(X, ndim=2, preprocess="center")
@@ -36,10 +37,9 @@
 #' ## Visualize
 #' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,2))
-#' plot(PCA$Y,  col=label, main="PCA")
-#' plot(PPCA$Y, col=label, main="PPCA")
+#' plot(PCA$Y,  pch=19, col=label, main="PCA")
+#' plot(PPCA$Y, pch=19, col=label, main="PPCA")
 #' par(opar)
-#' }
 #'
 #' @seealso \code{\link{do.pca}}
 #' @author Kisung You
@@ -47,7 +47,7 @@
 #' \insertRef{tipping_probabilistic_1999}{Rdimtools}
 #'
 #' @rdname linear_PPCA
-#' @concept linear_methods 
+#' @concept linear_methods
 #' @export
 do.ppca <- function(X, ndim=2, preprocess=c("center","scale","cscale","decorrelate","whiten")){
   #------------------------------------------------------------------------

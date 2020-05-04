@@ -27,6 +27,7 @@
 #' @examples
 #' \donttest{
 #' ## generate data
+#' set.seed(100)
 #' X <- aux.gensamples(dname="cswiss",n=100)
 #'
 #' ## 1. use 10%-connected graph
@@ -52,7 +53,7 @@
 #'
 #' @author Kisung You
 #' @rdname nonlinear_LTSA
-#' @concept nonlinear_methods 
+#' @concept nonlinear_methods
 #' @export
 do.ltsa <- function(X, ndim=2, type=c("proportion",0.1),
                     symmetric=c("union","intersect","asymmetric"),

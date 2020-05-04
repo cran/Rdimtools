@@ -21,7 +21,8 @@
 #' @examples
 #' \donttest{
 #' ## generate swiss roll with auxiliary dimensions
-#' n = 100
+#' set.seed(100)
+#' n     = 100
 #' theta = runif(n)
 #' h     = runif(n)
 #' t     = (1+2*theta)*(3*pi/2)
@@ -50,7 +51,7 @@
 #'
 #' @author Kisung You
 #' @rdname linear_LPE
-#' @concept linear_methods 
+#' @concept linear_methods
 #' @export
 do.lpe <- function(X, ndim=2, preprocess=c("center","scale","cscale","decorrelate","whiten"), numk=max(ceiling(nrow(X)/10),2)){
   #------------------------------------------------------------------------

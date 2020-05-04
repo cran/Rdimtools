@@ -20,15 +20,15 @@
 #' }
 #'
 #' @examples
-#' \donttest{
 #' ## generate data of 3 types with clear difference
-#' dt1  = aux.gensamples(n=33)-100
-#' dt2  = aux.gensamples(n=33)
-#' dt3  = aux.gensamples(n=33)+100
+#' set.seed(100)
+#' dt1  = aux.gensamples(n=20)-50
+#' dt2  = aux.gensamples(n=20)
+#' dt3  = aux.gensamples(n=20)+50
 #'
 #' ## merge the data and create a label correspondingly
 #' X      = rbind(dt1,dt2,dt3)
-#' label  = c(rep(1,33), rep(2,33), rep(3,33))
+#' label  = rep(1:3, each=20)
 #'
 #' ## try different balancing parameter
 #' out1 = do.mmsd(X, label, C=0.01)
@@ -38,18 +38,17 @@
 #' ## visualize
 #' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(out1$Y, main="MMSD::C=0.01")
-#' plot(out2$Y, main="MMSD::C=1")
-#' plot(out3$Y, main="MMSD::C=100")
+#' plot(out1$Y, pch=19, col=label, main="MMSD::C=0.01")
+#' plot(out2$Y, pch=19, col=label, main="MMSD::C=1")
+#' plot(out3$Y, pch=19, col=label, main="MMSD::C=100")
 #' par(opar)
-#' }
 #'
 #' @references
 #' \insertRef{fengxisong_multiple_2007}{Rdimtools}
 #'
 #' @author Kisung You
 #' @rdname linear_MMSD
-#' @concept linear_methods 
+#' @concept linear_methods
 #' @export
 do.mmsd <- function(X, label, ndim=2, preprocess=c("center","scale","cscale","whiten","decorrelate"), C=1.0){
   #------------------------------------------------------------------------
