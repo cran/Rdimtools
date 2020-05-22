@@ -1,8 +1,12 @@
+# Rdimtools 1.0.3
+
+* Fixed memory leaks in `do.sne` and `do.tsne`.
+* `do.lsls` added as a supervised feature selection method.
+
 # Rdimtools 1.0.2
 
 * README contains minimal examples for both dimension reduction and estimation.
 * Porting to pure C++ implementations started, gaining computational efficiency. 
-* LICENSE is updated for all of its dependencies for better documentation.
 * `do.lmds` function is fixed for its discrepancy in nested structure.
 
 
