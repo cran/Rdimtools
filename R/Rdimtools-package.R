@@ -2,7 +2,7 @@
 #'
 #' \pkg{Rdimtools} is an R suite of a number of dimension reduction and estimation methods
 #' implemented using \pkg{RcppArmadillo} for efficient computations. Please see the reference
-#' from the \href{http://kyoustat.com/Rdimtools}{package webpage}.
+#' from the \href{http://kyoustat.com/Rdimtools/}{package webpage}.
 #'
 #' @docType package
 #' @name package-Rdimtools
@@ -11,7 +11,8 @@
 #' @import Rdpack
 #' @import CVXR
 #' @import RcppDE
-#' @importFrom maotai weiszfeld bmds
+#' @import maotai
+#' @importFrom mclustcomp mclustcomp
 #' @importFrom utils packageVersion combn getFromNamespace
 #' @importFrom RSpectra eigs svds
 #' @importFrom stats dist cov rnorm runif kmeans cor var sd approx lm coef coefficients as.dist hclust cutree quantile median integrate optimize

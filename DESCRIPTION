@@ -1,31 +1,28 @@
 Package: Rdimtools
 Type: Package
 Title: Dimension Reduction and Estimation Methods
-Version: 1.0.3
+Version: 1.0.4
 Authors@R: c(person("Kisung", "You", role = c("aut", "cre"), email = "kyoustat@gmail.com",comment=c(ORCID="0000-0002-8584-459X")), person("Changhee","Suh",role=c("ctb"),email="cs19bc@my.fsu.edu"))
 Description: We provide linear and nonlinear dimension reduction techniques.
 	Intrinsic dimension estimation methods for exploratory analysis are also provided.
-    For more details on dimensionality techniques, see the paper by
-    Ma and Zhu (2013) <doi:10.1111/j.1751-5823.2012.00182.x> if you are interested in
-    statistical approach, or Engel, Huttenberger, and Hamann (2012)
-    <doi:10.4230/OASIcs.VLUDS.2011.135> for a broader multi-disciplinary overview.
+	For more details on the package, see the paper by You (2020) <arXiv:2005.11107>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.0.0)
 Imports: CVXR (>= 1.0), Rcpp (>= 0.12.15), RcppDE, Rcsdp, Rdpack,
-        RSpectra, graphics, maotai (>= 0.1.5), stats, utils
+        RSpectra, graphics, maotai (>= 0.1.6), mclustcomp, stats, utils
 LinkingTo: Rcpp, RcppArmadillo, RcppDist, maotai
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 RdMacros: Rdpack
-URL: http://kyoustat.com/Rdimtools
-BugReports: http://github.com/kyoustat/Rdimtools/issues
+URL: http://kyoustat.com/Rdimtools/
+BugReports: https://github.com/kyoustat/Rdimtools/issues
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: yes
-Packaged: 2020-05-18 18:14:33 UTC; kisung
+Packaged: 2020-09-07 21:20:31 UTC; kisung
 Author: Kisung You [aut, cre] (<https://orcid.org/0000-0002-8584-459X>),
   Changhee Suh [ctb]
 Maintainer: Kisung You <kyoustat@gmail.com>
 Repository: CRAN
-Date/Publication: 2020-05-22 08:50:06 UTC
+Date/Publication: 2020-09-07 23:21:37

@@ -14,6 +14,11 @@ knitr::opts_chunk$set(
 ## ----setup, message=FALSE, warning=FALSE--------------------------------------
 library(Rdimtools)
 
+## ----echo=FALSE, include=FALSE------------------------------------------------
+vernow = utils::packageVersion("Rdimtools")
+ndo    = (sum(unlist(lapply(ls("package:Rdimtools"), startsWith, "do."))))
+nest   = (sum(unlist(lapply(ls("package:Rdimtools"), startsWith, "est."))))
+
 ## ----message=FALSE, warning=FALSE, fig.align='center', fig.width=7, fig.height=3----
 # load the iris data
 X   = as.matrix(iris[,1:4])

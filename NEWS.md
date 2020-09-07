@@ -1,3 +1,8 @@
+# Rdimtools 1.0.4
+
+* Methods for feature selection `do.wdfs`, `do.uwdfs`, `do.procrustes`, and `do.mifs` are added.
+* `README` now shows numbers of currently available functions for DR and IDE.
+
 # Rdimtools 1.0.3
 
 * Fixed memory leaks in `do.sne` and `do.tsne`.
@@ -12,7 +17,7 @@
 
 # Rdimtools 1.0.1
 
-* NEWS reformatted and [package website](https://kyoustat.com/Rdimtools) is now available.
+* NEWS reformatted and [package website](http://kyoustat.com/Rdimtools/) is now available.
 * Dependency on R package [ADMM](https://CRAN.R-project.org/package=ADMM) is removed.
 
 
