@@ -1,7 +1,7 @@
 Package: Rdimtools
 Type: Package
 Title: Dimension Reduction and Estimation Methods
-Version: 1.0.4
+Version: 1.0.6
 Authors@R: c(person("Kisung", "You", role = c("aut", "cre"), email = "kyoustat@gmail.com",comment=c(ORCID="0000-0002-8584-459X")), person("Changhee","Suh",role=c("ctb"),email="cs19bc@my.fsu.edu"))
 Description: We provide linear and nonlinear dimension reduction techniques.
 	Intrinsic dimension estimation methods for exploratory analysis are also provided.
@@ -10,8 +10,9 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.0.0)
-Imports: CVXR (>= 1.0), Rcpp (>= 0.12.15), RcppDE, Rcsdp, Rdpack,
-        RSpectra, graphics, maotai (>= 0.1.6), mclustcomp, stats, utils
+Imports: CVXR (>= 1.0), MASS, RANN, Rcpp (>= 0.12.15), RcppDE, Rcsdp,
+        Rdpack, RSpectra, graphics, maotai (>= 0.1.8), mclustcomp,
+        stats, utils
 LinkingTo: Rcpp, RcppArmadillo, RcppDist, maotai
 RoxygenNote: 7.1.1
 RdMacros: Rdpack
@@ -20,9 +21,9 @@ BugReports: https://github.com/kyoustat/Rdimtools/issues
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: yes
-Packaged: 2020-09-07 21:20:31 UTC; kisung
+Packaged: 2021-04-16 17:30:52 UTC; kisung
 Author: Kisung You [aut, cre] (<https://orcid.org/0000-0002-8584-459X>),
   Changhee Suh [ctb]
 Maintainer: Kisung You <kyoustat@gmail.com>
 Repository: CRAN
-Date/Publication: 2020-09-07 23:21:37
+Date/Publication: 2021-04-18 10:30:02 UTC

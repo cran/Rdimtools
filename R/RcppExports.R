@@ -215,10 +215,6 @@ method_eigenmaps <- function(W) {
     .Call(`_Rdimtools_method_eigenmaps`, W)
 }
 
-method_sammon <- function(X, Yinit) {
-    .Call(`_Rdimtools_method_sammon`, X, Yinit)
-}
-
 method_lleW <- function(mat_tgt, vec_tgt, regparam) {
     .Call(`_Rdimtools_method_lleW`, mat_tgt, vec_tgt, regparam)
 }
@@ -293,5 +289,13 @@ dt_lmds <- function(X, ndim, ptype, npts) {
 
 dt_rpca <- function(X, ndim, ptype, mu, lambda) {
     .Call(`_Rdimtools_dt_rpca`, X, ndim, ptype, mu, lambda)
+}
+
+dt_phate <- function(X, ndim, ptype, k, alpha, dtype, maxiter, abstol, smacof) {
+    .Call(`_Rdimtools_dt_phate`, X, ndim, ptype, k, alpha, dtype, maxiter, abstol, smacof)
+}
+
+dt_mmds <- function(X, ndim, ptype, maxiter, abstol) {
+    .Call(`_Rdimtools_dt_mmds`, X, ndim, ptype, maxiter, abstol)
 }
 

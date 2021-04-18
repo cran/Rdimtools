@@ -15,7 +15,7 @@ Status](https://travis-ci.org/kyoustat/Rdimtools.svg?branch=master)](https://tra
 feature selection and manifold learning - and intrnsic dimension
 estimation (IDE) methods. We aim at building one of the *most
 comprehensive* toolbox available online, where current version delivers
-139 DR algorithms and 17 IDE methods.
+141 DR algorithms and 17 IDE methods.
 
 The philosophy is simple, **the more we have at hands, the better we can
 play**.
@@ -78,8 +78,8 @@ plot(mydfm$Y, pch=19, col=lab, xlab="axis 1", ylab="axis 2", main="Diffusion Map
 ![](http://people.cs.uchicago.edu/~dinoj/manifold/swissroll.gif)
 
 Swill Roll is a classic example of 2-dimensional manifold embedded in
-\(\mathbb{R}^3\) and one of 11 famous model-based samples from
-`aux.gensamples()` function. Given the ground truth that \(d=2\), let’s
+ℝ<sup>3</sup> and one of 11 famous model-based samples from
+`aux.gensamples()` function. Given the ground truth that *d* = 2, let’s
 apply several methods for intrinsic dimension estimation.
 
 ``` r
@@ -108,7 +108,7 @@ text(x=xtick,  par("usr")[3],
 <img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" style="display: block; margin: auto;" />
 
 We can observe that all 5 methods we tested estimated the intrinsic
-dimension around \(d=2\). It should be noted that the estimated
+dimension around *d* = 2. It should be noted that the estimated
 dimension may not be integer-valued due to characteristics of each
 method.
 
