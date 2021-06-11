@@ -9,7 +9,7 @@ knitr::opts_chunk$set(
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  ## install.packages("devtools")
-#  devtools::install_github("kyoustat/Rdimtools")
+#  devtools::install_github("kisungyou/Rdimtools")
 
 ## ----setup, message=FALSE, warning=FALSE--------------------------------------
 library(Rdimtools)

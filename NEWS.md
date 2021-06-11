@@ -1,3 +1,12 @@
+# Rdimtools 1.0.8
+
+* Change of maintainer's contact.
+* Some functions are converted to pure C++.
+
+# Rdimtools 1.0.7
+
+* Fixed an error in `do.olpp()` thanks to Nicholas Spyrison.
+
 # Rdimtools 1.0.6
 
 * Replaced nearest neighbor library.
@@ -26,7 +35,7 @@
 
 # Rdimtools 1.0.1
 
-* NEWS reformatted and [package website](http://kyoustat.com/Rdimtools/) is now available.
+* NEWS reformatted and [package website](https://kisungyou.com/Rdimtools/) is now available.
 * Dependency on R package [ADMM](https://CRAN.R-project.org/package=ADMM) is removed.
 
 

@@ -1,13 +1,13 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Rdimtools <a href='https://kyoustat.com/Rdimtools/'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# Rdimtools <a href='https://kisungyou.com/Rdimtools/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/Rdimtools?color=green)](https://cran.r-project.org/package=Rdimtools)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/Rdimtools?color=green)](https://cran.r-project.org/package=Rdimtools)
 [![Travis-CI Build
-Status](https://travis-ci.org/kyoustat/Rdimtools.svg?branch=master)](https://travis-ci.org/kyoustat/Rdimtools)
+Status](https://travis-ci.org/kisungyou/Rdimtools.svg?branch=master)](https://travis-ci.org/kisungyou/Rdimtools)
 [![](https://cranlogs.r-pkg.org/badges/Rdimtools)](https://cran.r-project.org/package=Rdimtools)
 <!-- badges: end -->
 
@@ -40,7 +40,7 @@ or the development version from github:
 
 ``` r
 ## install.packages("devtools")
-devtools::install_github("kyoustat/Rdimtools")
+devtools::install_github("kisungyou/Rdimtools")
 ```
 
 ## Minimal Example : Dimension Reduction
@@ -75,7 +75,7 @@ plot(mydfm$Y, pch=19, col=lab, xlab="axis 1", ylab="axis 2", main="Diffusion Map
 
 ## Minimal Example : Dimension Estimation
 
-![](http://people.cs.uchicago.edu/~dinoj/manifold/swissroll.gif)
+![](https://people.cs.uchicago.edu/~dinoj/manifold/swissroll.gif)
 
 Swill Roll is a classic example of 2-dimensional manifold embedded in
 ℝ<sup>3</sup> and one of 11 famous model-based samples from
@@ -118,5 +118,5 @@ The logo icon is made by
 [Freepik](https://www.flaticon.com/authors/freepik/) from
 [www.flaticon.com](https://www.flaticon.com/).The rotating Swiss Roll
 image is taken from [Dinoj
-Surendran](http://people.cs.uchicago.edu/~dinoj/manifold/swissroll.html)’s
+Surendran](https://people.cs.uchicago.edu/~dinoj/manifold/swissroll.html)’s
 website.
