@@ -4,18 +4,24 @@
 \alias{do.mds}
 \title{(Classical) Multidimensional Scaling}
 \usage{
-do.mds(X, ndim = 2)
+do.mds(X, ndim = 2, ...)
 }
 \arguments{
 \item{X}{an \eqn{(n\times p)} matrix whose rows are observations and columns represent independent variables.}
 
 \item{ndim}{an integer-valued target dimension.}
+
+\item{...}{extra parameters including \describe{
+\item{preprocess}{an additional option for preprocessing the data.
+Default is \code{"null"}. See also \code{\link{aux.preprocess}} for more details.}
+}}
 }
 \value{
 a named \code{Rdimtools} S3 object containing
 \describe{
 \item{Y}{an \eqn{(n\times ndim)} matrix whose rows are embedded observations.}
 \item{projection}{a \eqn{(p\times ndim)} whose columns are basis for projection.}
+\item{trfinfo}{a list containing information for out-of-sample prediction.}
 \item{algorithm}{name of the algorithm.}
 }
 }
@@ -48,8 +54,5 @@ par(opar)
 }
 \references{
 \insertRef{kruskal_multidimensional_1964}{Rdimtools}
-}
-\author{
-Kisung You
 }
 \concept{linear_methods}

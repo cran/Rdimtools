@@ -255,6 +255,10 @@ v2aux_pagerank <- function(A) {
     .Call(`_Rdimtools_v2aux_pagerank`, A)
 }
 
+v2aux_pdist2 <- function(X, Y) {
+    .Call(`_Rdimtools_v2aux_pdist2`, X, Y)
+}
+
 dt_cscore <- function(X, ndim, label, myscore, mylbd) {
     .Call(`_Rdimtools_dt_cscore`, X, ndim, label, myscore, mylbd)
 }
@@ -269,6 +273,18 @@ dt_lasso <- function(X, ndim, y, lambda) {
 
 dt_enet <- function(X, ndim, y, lambda1, lambda2) {
     .Call(`_Rdimtools_dt_enet`, X, ndim, y, lambda1, lambda2)
+}
+
+cpp_fosmod_orthogonalize_vec <- function(orthovec, others) {
+    .Call(`_Rdimtools_cpp_fosmod_orthogonalize_vec`, orthovec, others)
+}
+
+cpp_fosmod_orthogonalize <- function(orthovecs, others) {
+    .Call(`_Rdimtools_cpp_fosmod_orthogonalize`, orthovecs, others)
+}
+
+cpp_fosmod_crosscorr <- function(data, ortho) {
+    .Call(`_Rdimtools_cpp_fosmod_crosscorr`, data, ortho)
 }
 
 dt_pca <- function(X, ndim, cor) {

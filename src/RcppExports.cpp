@@ -767,6 +767,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// v2aux_pdist2
+arma::mat v2aux_pdist2(arma::mat& X, arma::mat& Y);
+RcppExport SEXP _Rdimtools_v2aux_pdist2(SEXP XSEXP, SEXP YSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type Y(YSEXP);
+    rcpp_result_gen = Rcpp::wrap(v2aux_pdist2(X, Y));
+    return rcpp_result_gen;
+END_RCPP
+}
 // dt_cscore
 Rcpp::List dt_cscore(arma::mat& X, int ndim, arma::uvec& label, std::string myscore, double mylbd);
 RcppExport SEXP _Rdimtools_dt_cscore(SEXP XSEXP, SEXP ndimSEXP, SEXP labelSEXP, SEXP myscoreSEXP, SEXP mylbdSEXP) {
@@ -821,6 +833,42 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type lambda1(lambda1SEXP);
     Rcpp::traits::input_parameter< double >::type lambda2(lambda2SEXP);
     rcpp_result_gen = Rcpp::wrap(dt_enet(X, ndim, y, lambda1, lambda2));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_fosmod_orthogonalize_vec
+arma::mat cpp_fosmod_orthogonalize_vec(arma::vec& orthovec, arma::mat& others);
+RcppExport SEXP _Rdimtools_cpp_fosmod_orthogonalize_vec(SEXP orthovecSEXP, SEXP othersSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::vec& >::type orthovec(orthovecSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type others(othersSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_fosmod_orthogonalize_vec(orthovec, others));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_fosmod_orthogonalize
+arma::mat cpp_fosmod_orthogonalize(arma::mat& orthovecs, arma::mat& others);
+RcppExport SEXP _Rdimtools_cpp_fosmod_orthogonalize(SEXP orthovecsSEXP, SEXP othersSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type orthovecs(orthovecsSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type others(othersSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_fosmod_orthogonalize(orthovecs, others));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_fosmod_crosscorr
+arma::rowvec cpp_fosmod_crosscorr(arma::mat& data, arma::mat& ortho);
+RcppExport SEXP _Rdimtools_cpp_fosmod_crosscorr(SEXP dataSEXP, SEXP orthoSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type ortho(orthoSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_fosmod_crosscorr(data, ortho));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1010,10 +1058,14 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Rdimtools_bmds_compute_SSR", (DL_FUNC) &_Rdimtools_bmds_compute_SSR, 2},
     {"_Rdimtools_main_bmds", (DL_FUNC) &_Rdimtools_main_bmds, 9},
     {"_Rdimtools_v2aux_pagerank", (DL_FUNC) &_Rdimtools_v2aux_pagerank, 1},
+    {"_Rdimtools_v2aux_pdist2", (DL_FUNC) &_Rdimtools_v2aux_pdist2, 2},
     {"_Rdimtools_dt_cscore", (DL_FUNC) &_Rdimtools_dt_cscore, 5},
     {"_Rdimtools_admm_lasso", (DL_FUNC) &_Rdimtools_admm_lasso, 3},
     {"_Rdimtools_dt_lasso", (DL_FUNC) &_Rdimtools_dt_lasso, 4},
     {"_Rdimtools_dt_enet", (DL_FUNC) &_Rdimtools_dt_enet, 5},
+    {"_Rdimtools_cpp_fosmod_orthogonalize_vec", (DL_FUNC) &_Rdimtools_cpp_fosmod_orthogonalize_vec, 2},
+    {"_Rdimtools_cpp_fosmod_orthogonalize", (DL_FUNC) &_Rdimtools_cpp_fosmod_orthogonalize, 2},
+    {"_Rdimtools_cpp_fosmod_crosscorr", (DL_FUNC) &_Rdimtools_cpp_fosmod_crosscorr, 2},
     {"_Rdimtools_dt_pca", (DL_FUNC) &_Rdimtools_dt_pca, 3},
     {"_Rdimtools_dt_mds", (DL_FUNC) &_Rdimtools_dt_mds, 2},
     {"_Rdimtools_dt_fa", (DL_FUNC) &_Rdimtools_dt_fa, 4},

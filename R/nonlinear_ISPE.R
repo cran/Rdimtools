@@ -86,7 +86,7 @@ do.ispe <- function(X, ndim=2, proximity=function(x){dist(x, method="euclidean")
   ## MAIN COMPUTATION
   # 1. Proximity Matrix R : don't forget to make it into a matrix.
   R = proximity(X)
-  if ((inherits(R, "dist"))||(class(R)=="dist")){
+  if (inherits(R,"dist")){
     R = as.matrix(R)
   }
   # 2. initial coordinates
